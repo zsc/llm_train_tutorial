@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">从零到可复现：LLM 训练实战（算法向，Lightning + DeepSpeed）—**索引**</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter01.md — 总览与可复现环境</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter03.md — 架构细节：LLaMA 风格与 8k 扩展</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter05.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 05 — 大批量训练与学习率策略</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter06.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：多数据集动态混比——从“大锅饭”到“交响乐”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter07.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 7 章 — 优化器与数值稳定</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter08.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 8 章：数据加载与存储格式（CPFS）— 榨干 IO 吞吐</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter09.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章 — 并行与内存：Lightning + DeepSpeed 配方</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter10.md — 评估：验证困惑度</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter11.md — 端到端：从零预训练（1T tokens）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章 端到端：CPT / 继续预训练</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 13 章：成本/时长粗估（¥）与 TCO</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter14.md — 常见问题与诊断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter15.md — 附录与参考</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <p>（交流可以用英文，所有文档中文）</p>
+<h2 id="_1">项目目标</h2>
+<p>编写一份《从零到可复现：LLM 训练实战（算法向，Lightning + DeepSpeed）》的中文课程markdown
+文件组织是 index.md + chapter1.md + ...
+不写代码</p>
+<h3 id="_2"></h3>
+<p>写一本中文公开教程 markdown讨论 LLM 模型的训练细节，目标读者是 ai scientist (重点在算法侧，不在 infra)。从原理到所有重要实操细节。底下的 infra 是基于 pytorch lightning deepspeed（预计 64x H100 80GB 规模，一次训练以过完 1T token 一遍为准）
+计划覆盖的模型规模：3B / 7B / 13B。模型基本结构为纯文字 token llama（基本不改，但允许使用 RoPE scaling（PI/NTK-aware/YaRN） 来支持 8k）。目标上下文长度：4k / 8k。
+包括从零预训练和 CPT 两种。给出成本/时长粗估（电费、GPU 小时、云/自建机房对比）。
+讨论多数据集动态混比。假设数据集在 CPFS。
+包含数据集的预处理成 token，和 token 的训练时动态加载。
+主要看验证困惑度。
+详细讨论 scaling law（需要到 Chinchilla-style 最优解的推导与噪声尺度定律，以及2024 年对 Chinchilla law 的刷新），large batch size(<strong>Global batch（以 tokens 计）</strong>的目标与可受区间. 希望讨论 large-batch scaling &amp; LR scaling 的经验法则（linear / sqrt）),讨论 iter 数和 global batch size 关系， learning rate schedule，训练 token/s 的算法优化（ pytorch lightning deepspeed 下）。包含激活检查点 / 重计算、张量并行切分维度、梯度累积步数 的目标与约束。
+AdamW 为主. 对比 Lion / Adafactor 或 Paged AdamW（DeepSpeed）.
+讨论如何用 bpe 优化 tokenizer.
+详细讨论数据加载（WebDataset / Petastorm / Parquet）偏好。
+讨论FlashAttention v2、fused RMSNorm/SwiGLU、fused RoPE、Paged Optimizer 等.
+教程由 index.md + chapter1.md + chapter2.md + ... 组成。
+所有金额用人民币¥。</p>
+<h2 id="_3">章节结构要求</h2>
+<p>每个章节应包含：</p>
+<ol>
+<li><strong>开篇段落</strong>：简要介绍本章内容和学习目标</li>
+<li><strong>文字论述</strong>：以文字论述为主，适当配上公式和 ASCII 图说明。如有数学公式，用 latex. 要有 rule-of-thumb。不写代码。</li>
+<li><strong>本章小结</strong>：总结关键概念和公式</li>
+<li><strong>常见陷阱与错误</strong> (Gotchas)：每章包含该主题的常见错误和调试技巧</li>
+</ol>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter15.html" class="nav-link prev">← chapter15.md — 附录与参考</a></nav>
+        </main>
+    </div>
+</body>
+</html>

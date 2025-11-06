@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>chapter15.md — 附录与参考</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">从零到可复现：LLM 训练实战（算法向，Lightning + DeepSpeed）—**索引**</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter01.md — 总览与可复现环境</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter03.md — 架构细节：LLaMA 风格与 8k 扩展</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter05.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 05 — 大批量训练与学习率策略</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter06.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：多数据集动态混比——从“大锅饭”到“交响乐”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter07.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 7 章 — 优化器与数值稳定</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter08.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 8 章：数据加载与存储格式（CPFS）— 榨干 IO 吞吐</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter09.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章 — 并行与内存：Lightning + DeepSpeed 配方</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter10.md — 评估：验证困惑度</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter11.md — 端到端：从零预训练（1T tokens）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章 端到端：CPT / 继续预训练</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 13 章：成本/时长粗估（¥）与 TCO</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter14.md — 常见问题与诊断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter15.md — 附录与参考</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="chapter15md">chapter15.md — 附录与参考</h1>
+<h2 id="_1">开篇段落</h2>
+<p>本章是整个教程的“工具箱”与“知识库索引”，不引入新的核心概念。我们的目标是提供一个快速查阅的参考中心，集中收录在前续章节中反复使用的关键符号、基线超参数、配置文件模板以及核心参考文献。它存在的意义在于，当你开始一项新的训练任务，或是在调试中对某个参数的合理性产生疑问时，能够迅速回归此地，找到一个经过验证的、坚实的出发点。无论你是需要快速查找一个符号的定义，还是想为一次新的训练任务寻找一个可靠的启动配置，亦或是希望深入阅读支撑这些实践的原始论文，本章都将为你提供直接、详尽的入口。</p>
+<hr />
+<h2 id="151">15.1 符号表（统一约定）</h2>
+<p>在规模化实验中，一套清晰、无歧义的符号系统是保证团队沟通效率与研究可复现性的基石。下面这张表不仅定义了符号，更附加了注解，以阐明其在本书语境下的精确内涵。</p>
+<p>| 符号              | 含义                                 | 常见取值/单位 | 注解 (Annotation) |</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+<th>常见取值/单位</th>
+<th>注解 (Annotation)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>N_params</code></td>
+<td>模型非嵌入参数量</td>
+<td>B (Billion, 10⁹)</td>
+<td><strong>重点</strong>：特指 Transformer block 中的参数，不包含 token embedding 和输出层权重。这是因为在 Scaling Law 的讨论中，<code>N_params</code> 与 <code>FLOPs</code> 的关系更直接，而 embedding 的大小与 <code>vocab_size</code> 相关，有时会独立分析。</td>
+</tr>
+<tr>
+<td><code>T_tokens</code></td>
+<td>训练总 tokens（数据集规模）</td>
+<td>T (Trillion, 10¹²)</td>
+<td>代表模型在整个训练生命周期中“看到”的 token 总量。这是计算总 <code>FLOPs</code> 和规划训练时长的核心输入。</td>
+</tr>
+<tr>
+<td><code>L_ctx</code></td>
+<td>上下文长度</td>
+<td>4096, 8192</td>
+<td>单个训练样本的最大 token 序列长度。它直接影响了单一样本的计算量和显存占用。</td>
+</tr>
+<tr>
+<td><code>GB_tok</code></td>
+<td><strong>Global batch（以 tokens 计）</strong></td>
+<td>2M, 4M</td>
+<td><strong>核心概念</strong>：在一次优化器更新（<code>optimizer.step()</code>）中，模型处理的 token 总数。<code>GB_tok = μ_tok × A × D</code>。这是影响训练动态（如噪声尺度 <code>ρ</code>）和收敛性的关键超参。</td>
+</tr>
+<tr>
+<td><code>μ_tok</code></td>
+<td>单卡 micro-batch（以 tokens 计）</td>
+<td>e.g., <code>4096 * 4</code></td>
+<td>单个 GPU 在一次前向/后向计算中处理的 token 数量。<code>μ_tok = L_ctx * sequences_per_gpu</code>。它的上限受单卡显存（OOM）的严格约束。</td>
+</tr>
+<tr>
+<td><code>A</code></td>
+<td>梯度累积步数 (<code>GB_tok / (μ_tok * D)</code>)</td>
+<td>4, 8, 16, ...</td>
+<td>为了在显存有限的情况下模拟出大的 <code>GB_tok</code>，我们累积 <code>A</code> 步的梯度进行一次参数更新。这是计算与显存之间的经典权衡。</td>
+</tr>
+<tr>
+<td><code>D</code></td>
+<td>Data 并行因子</td>
+<td>64, 32, ...</td>
+<td>即数据并行的 world size。<code>D = 总 GPU 数 / (TP * PP)</code>。</td>
+</tr>
+<tr>
+<td><code>TP</code></td>
+<td>Tensor 并行因子</td>
+<td>2, 4, 8</td>
+<td>将模型的单个大权重矩阵（如 FFN 层）切分到多个 GPU 上，以解决单 GPU 显存无法容纳模型参数的问题。通常在节点内（通过 NVLink）使用。</td>
+</tr>
+<tr>
+<td><code>PP</code></td>
+<td>Pipeline 并行因子</td>
+<td>1</td>
+<td>将模型的不同层放置在不同 GPU 上。对于本教程的 Decoder-only 架构和高带宽互联环境，PP 引入的 bubble 开销较大，通常不作为首选，故默认为 1。</td>
+</tr>
+<tr>
+<td><code>η</code></td>
+<td>学习率（峰值/基础值）</td>
+<td>1e-5 to 3e-4</td>
+<td>学习率调度器中的峰值学习率。其选择与 <code>GB_tok</code> 密切相关（参考 LR Scaling 法则）。</td>
+</tr>
+<tr>
+<td><code>β₁, β₂, ε</code></td>
+<td>AdamW 优化器超参</td>
+<td>0.9, 0.95, 1e-8</td>
+<td><code>β₂=0.95</code> 是 LLM 训练中的一个关键经验值，相比传统的 0.999，它对梯度历史的遗忘更快，被认为在大批量、高噪声场景下更稳定。</td>
+</tr>
+<tr>
+<td><code>wd</code></td>
+<td>Weight Decay</td>
+<td>0.01, 0.1</td>
+<td>LLaMA 等模型中常用的 <code>wd=0.1</code> 是一个相对较大的值，起到了很强的正则化作用，有助于防止在海量数据上过拟合。</td>
+</tr>
+<tr>
+<td><code>ρ</code></td>
+<td>噪声尺度（Noise Scale）</td>
+<td>-</td>
+<td>衡量梯度噪声与梯度本身大小之比，与 <code>GB_tok</code> 和学习率 <code>η</code> 紧密相关，是理解大批量训练动态的核心理论工具。</td>
+</tr>
+<tr>
+<td><code>FLOPs</code></td>
+<td>训练浮点运算量</td>
+<td>PetaFLOPs</td>
+<td>估算公式 <code>≈ 6 · N_params · T_tokens</code>，其中 <code>6</code> 来自 <code>2</code> (Fwd+Bwd) × <code>3</code> (矩阵乘法近似)。这是衡量总计算量的“物理”单位，独立于硬件效率。</td>
+</tr>
+<tr>
+<td><code>PUE</code></td>
+<td>数据中心电能使用效率</td>
+<td>1.1 ~ 1.5</td>
+<td>总能耗 / IT 设备能耗。值越接近 1，据中心制冷等配套设施的能效越高。</td>
+</tr>
+<tr>
+<td><code>¥/GPU·h</code></td>
+<td>GPU 小时成本（云/自建）</td>
+<td>¥</td>
+<td>一个综合成本指标，自建时需考虑硬件折旧、运维人力等，云上则是直接的标价。</td>
+</tr>
+<tr>
+<td><code>kWh</code></td>
+<td>千瓦时（电量单位）</td>
+<td>-</td>
+<td>1 kWh 即“一度电”，是计算电费的基础。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="152">15.2 默认超参清单（基线配置）</h2>
+<p>下表提供的并非“银弹”，而是经过社区广泛验证的、稳健的<strong>起点（Starting Points）</strong>。它们的设计哲学源于 Chinchilla-style 的计算最优原则，并在 LLaMA 系列模型的成功实践中得到了印证。当你开启一个新的训练项目时，从这里出发可以最大程度地避免早期不必要的“炼丹”。</p>
+<h4 id="a-architecture"><strong>A. 模型架构 (Architecture)</strong></h4>
+<p>这部分参数定义了模型的“骨架”，决定了其容量和计算特性。</p>
+<p>| 参数 (Parameter)                    | 3B 配置 (3B Config)        | 7B 配置 (7B Config)        | 13B 配置 (13B Config)      | 说明 (Notes) |</p>
+<table>
+<thead>
+<tr>
+<th>参数 (Parameter)</th>
+<th>3B 配置 (3B Config)</th>
+<th>7B 配置 (7B Config)</th>
+<th>13B 配置 (13B Config)</th>
+<th>说明 (Notes)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hidden_size</code></td>
+<td>3200</td>
+<td>4096</td>
+<td>5120</td>
+<td>模型的核心维度。通常是 <code>num_attention_heads</code> × <code>head_dim</code> (e.g., 32 * 128 = 4096) 的整数倍，以保证计算效率。</td>
+</tr>
+<tr>
+<td><code>num_hidden_layers</code></td>
+<td>32</td>
+<td>32</td>
+<td>40</td>
+<td>模型的深度。增加层数可以提升模型的表达能力，但也会增加训练难度和推理延迟。</td>
+</tr>
+<tr>
+<td><code>num_attention_heads</code></td>
+<td>32</td>
+<td>32</td>
+<td>40</td>
+<td>注意力头数。通常与 <code>hidden_size</code> 成比例，以保持每个头的维度（<code>head_dim</code>）在一个合理范围（如 128）。</td>
+</tr>
+<tr>
+<td><code>num_key_value_heads</code></td>
+<td>32 (MHA)</td>
+<td>8 (GQA)</td>
+<td>8 (GQA)</td>
+<td><strong>关键优化</strong>：Grouped-Query Attention (GQA)。通过让多组 Query 头共享同一组 Key/Value 头，显著减少了推理时 KV-Cache 的显存占用，是长上下文推理的必备技术。</td>
+</tr>
+<tr>
+<td><code>intermediate_size</code></td>
+<td>8640</td>
+<td>11008</td>
+<td>13824</td>
+<td>SwiGLU FFN 的中间维度。LLaMA 的计算公式为 <code>ceil(2/3 * 4 * hidden_size)</code> 并向上取整到 128 的倍数，这是一个经过实验验证的、在效果和效率上平衡的选择。</td>
+</tr>
+<tr>
+<td><code>vocab_size</code></td>
+<td>32000 - 64000</td>
+<td>32000 - 64000</td>
+<td>32000 - 64000</td>
+<td>词表大小，强依赖于你的语料。一个好的 <code>vocab_size</code> 应该能有效覆盖语料中的高频词和子词，同时避免过大导致 embedding 层参数过多。通常是 2 的幂或能被 128 整除。</td>
+</tr>
+<tr>
+<td><code>rope_theta</code> (base)</td>
+<td>10000</td>
+<td>10000</td>
+<td>10000</td>
+<td>RoPE 的基础频率。当使用 PI/NTK/YaRN 等 scaling 方法时，这个基础值会被动态调整以适应更长的上下文。</td>
+</tr>
+<tr>
+<td><code>context_length</code> (<code>L_ctx</code>)</td>
+<td>4096 / 8192</td>
+<td>4096 / 8192</td>
+<td>4096 / 8192</td>
+<td>训练时的上下文长度。注意，通过 RoPE scaling 扩展到 8k 是在 4k 预训练模型基础上微调或直接从头训练，配置会有所不同。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="b-training-optimizer"><strong>B. 训练与优化器 (Training &amp; Optimizer)</strong></h4>
+<p>这部分参数控制着学习过程本身，直接决定了模型的收敛速度和最终性能。</p>
+<p>| 参数 (Parameter)                    | 3B 配置 (3B Config)        | 7B 配置 (7B Config)        | 13B 配置 (13B Config)      | 说明 (Notes) |</p>
+<table>
+<thead>
+<tr>
+<th>参数 (Parameter)</th>
+<th>3B 配置 (3B Config)</th>
+<th>7B 配置 (7B Config)</th>
+<th>13B 配置 (13B Config)</th>
+<th>说明 (Notes)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>global_batch_size_tokens</code> (<code>GB_tok</code>)</td>
+<td>2,097,152 (2M)</td>
+<td>4,194,304 (4M)</td>
+<td>4,194,304 (4M)</td>
+<td><strong>训练的黄金法则</strong>。Chinchilla 指出，大模型需要足够大的 batch size 才能有效学习。4M tokens 是一个业界公认的甜点区，能提供足够稳定的梯度信号。</td>
+</tr>
+<tr>
+<td><code>learning_rate</code> (<code>η</code>)</td>
+<td>3.0e-4</td>
+<td>3.0e-4</td>
+<td>1.5e-4</td>
+<td>峰值学习率。遵循“大模型、小学习率”的原则。对于更大的 <code>GB_tok</code>，可以根据 <code>sqrt</code> 或线性 scaling 法则适当增大学习率，但这需要实验验证。</td>
+</tr>
+<tr>
+<td><code>lr_scheduler</code></td>
+<td>cosine with warmup</td>
+<td>cosine with warmup</td>
+<td>cosine with warmup</td>
+<td>余弦退火调度器是 LLM 训练的标配。它前期缓慢上升（warmup），然后在大部分训练时间内缓慢下降，有助于稳定收敛。</td>
+</tr>
+<tr>
+<td><code>warmup_steps</code></td>
+<td>2000</td>
+<td>2000</td>
+<td>2000</td>
+<td>预热步数。通常设置为总训练步数的 1-5%。过短的 warmup 可能导致初训练不稳定，过长则浪费了高学习率的有效训练时间。</td>
+</tr>
+<tr>
+<td><code>min_lr_ratio</code></td>
+<td>0.1</td>
+<td>0.1</td>
+<td>0.1</td>
+<td>学习率最终会衰减到 <code>η * min_lr_ratio</code>。保持一个较小的最终学习率有助于在训练末期对模型进行微调。</td>
+</tr>
+<tr>
+<td><code>optimizer</code></td>
+<td>AdamW</td>
+<td>AdamW</td>
+<td>AdamW</td>
+<td>AdamW 因其鲁棒性和解耦的权重衰减而成为首选。DeepSpeed 的 Paged AdamW 可以在 CPU/NVMe offload 场景下进一步减少内存碎片，提升效率。</td>
+</tr>
+<tr>
+<td><code>beta1</code> (<code>β₁</code>)</td>
+<td>0.9</td>
+<td>0.9</td>
+<td>0.9</td>
+<td>一阶动量（梯度均值）的衰减率。</td>
+</tr>
+<tr>
+<td><code>beta2</code> (<code>β₂</code>)</td>
+<td>0.95</td>
+<td>0.95</td>
+<td>0.95</td>
+<td><strong>关键经验值</strong>：二阶动量（梯度平方均值）的衰减。0.95 意味着对历史梯度的遗忘更快，这被认为在处理大规模、非平稳的 LLM 训练数据时能提供更及时的梯度方差估计，从而提高稳定性。</td>
+</tr>
+<tr>
+<td><code>weight_decay</code> (<code>wd</code>)</td>
+<td>0.1</td>
+<td>0.1</td>
+<td>0.1</td>
+<td>一个相对较强的正则化项，对于防止在 1T+ tokens 的大规模数据上过拟合至关重要。</td>
+</tr>
+<tr>
+<td><code>grad_clip</code></td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>梯度裁剪的全局范数阈值。这是防止梯度爆炸、保证训练稳定的“保险丝”。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="c-parallelism-memory"><strong>C. 并行与内存 (Parallelism &amp; Memory)</strong></h4>
+<p>这些配置是算法与硬件基础设施的接口，目标是在给定的 64x H100 集群上实现最高的训练吞吐量（tokens/s）。</p>
+<p>| 参数 (Parameter)                    | 3B 配置 (3B Config)        | 7B 配置 (7B Config)        | 13B 配置 (13B Config)      | 说明 (Notes) |</p>
+<table>
+<thead>
+<tr>
+<th>参数 (Parameter)</th>
+<th>3B 配置 (3B Config)</th>
+<th>7B 配置 (7B Config)</th>
+<th>13B 配置 (13B Config)</th>
+<th>说明 (Notes)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tensor_parallel_size</code> (<code>TP</code>)</td>
+<td>2 or 4</td>
+<td>4 or 8</td>
+<td>8</td>
+<td>13B 模型在 H100 上，<code>TP=8</code> 是一个高效的选择，能充分利用 8-GPU 节点内的高速 NVLink 互联。对于 7B，<code>TP=4</code> 或 <code>TP=8</code> 均可，需要根据实际 profile 决定。</td>
+</tr>
+<tr>
+<td><code>activation_checkpointing</code></td>
+<td>True</td>
+<td>True</td>
+<td>True</td>
+<td><strong>内存优化的核心</strong>。通过在前向传播时丢弃中间激活值，在后向传播时重新计算，用计算时间换取巨大的显存节省。对于训练大模型来说，这几乎是必须开启的。</td>
+</tr>
+<tr>
+<td><code>precision</code></td>
+<td><code>bf16</code></td>
+<td><code>bf16</code></td>
+<td><code>bf16</code></td>
+<td><code>bfloat16</code> 提供了与 <code>float32</code> 几乎相同的动态范围，但显存和计算量减半。相比 <code>float16</code>，它更好地避免梯度下溢问题，是 A100/H100 等现代 GPU 上的首选。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="153-yamljson">15.3 配置模板 (YAML/JSON)</h2>
+<p>理论最终要落地为代码可读的配置。以下模板展示了如何使用 PyTorch Lightning 组织训练逻辑，并交由 DeepSpeed 执行底层的并行与优化。</p>
+<h3 id="1531-pretrain_7b_8kyaml">15.3.1 训练主配置文件 (<code>pretrain_7b_8k.yaml</code>)</h3>
+<p>这是一个用户侧的、高度集成的配置文件，定义了实验的“科学”部分：模型、数据、优化策略。</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ------------------ 模型配置 (Model) ------------------</span>
+<span class="c1"># 定义了模型的宏观和微观结构</span>
+<span class="nt">model</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;llama_style_7b&quot;</span><span class="w"> </span><span class="c1"># 用于日志记录和模型加载</span>
+<span class="w">  </span><span class="nt">architecture</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">hidden_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
+<span class="w">    </span><span class="nt">num_hidden_layers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
+<span class="w">    </span><span class="nt">num_attention_heads</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
+<span class="w">    </span><span class="nt">num_key_value_heads</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span><span class="w"> </span><span class="c1"># 启用 GQA, 对于推理至关重要</span>
+<span class="w">    </span><span class="nt">intermediate_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">11008</span>
+<span class="w">    </span><span class="nt">vocab_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32000</span>
+<span class="w">    </span><span class="nt">context_length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8192</span>
+
+<span class="w">    </span><span class="c1"># RoPE Scaling 配置 (可选, 用于扩展上下文)</span>
+<span class="w">    </span><span class="c1"># 如果不使用，请注释掉或删除此部分</span>
+<span class="w">    </span><span class="nt">rope_scaling</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;yarn&#39;</span><span class="w">      </span><span class="c1"># 可选 &#39;pi&#39;, &#39;ntk-aware&#39;</span>
+<span class="w">      </span><span class="nt">factor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span><span class="w">       </span><span class="c1"># 从 4k 扩展到 8k, 因子为 2</span>
+<span class="w">      </span><span class="nt">original_max_position_embeddings</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
+
+<span class="c1"># ------------------ 数据配置 (Data) ------------------</span>
+<span class="c1"># 定义了数据从哪里来，以及如何组织</span>
+<span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cpfs://path/to/tokenized_data_shards&quot;</span><span class="w"> </span><span class="c1"># 推荐使用分片的 WebDataset/Parquet</span>
+<span class="w">  </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;webdataset&quot;</span><span class="w"> </span><span class="c1"># 或 &quot;parquet&quot;</span>
+<span class="w">  </span><span class="nt">seq_len</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8192</span>
+
+<span class="w">  </span><span class="c1"># 动态混合策略，在每个 step 动态采样</span>
+<span class="w">  </span><span class="nt">dynamic_mixing</span><span class="p">:</span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wiki_en&quot;</span><span class="p p-Indicator">,</span><span class="nt"> weight</span><span class="p">:</span><span class="w"> </span><span class="nv">0.3</span><span class="p p-Indicator">,</span><span class="nt"> path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cpfs://path/to/wiki_shards&quot;</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;books&quot;</span><span class="p p-Indicator">,</span><span class="nt"> weight</span><span class="p">:</span><span class="w"> </span><span class="nv">0.5</span><span class="p p-Indicator">,</span><span class="nt"> path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cpfs://path/to/books_shards&quot;</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;github_code&quot;</span><span class="p p-Indicator">,</span><span class="nt"> weight</span><span class="p">:</span><span class="w"> </span><span class="nv">0.2</span><span class="p p-Indicator">,</span><span class="nt"> path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cpfs://path/to/code_shards&quot;</span><span class="w"> </span><span class="p p-Indicator">}</span>
+
+<span class="w">  </span><span class="nt">num_workers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span><span class="w"> </span><span class="c1"># 每个 GPU 的数据加载进程数, 推荐 4-8</span>
+
+<span class="c1"># ------------------ 优化器与调度器 (Optimizer &amp; Scheduler) ------------------</span>
+<span class="c1"># 定义了模型参数如何更新</span>
+<span class="nt">optimizer</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;AdamW&quot;</span><span class="w"> </span><span class="c1"># Lightning 会自动映射到 Pytorch 的 AdamW</span>
+<span class="w">  </span><span class="nt">lr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0e-4</span>
+<span class="w">  </span><span class="nt">betas</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.9</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.95</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">weight_decay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
+<span class="w">  </span><span class="nt">eps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0e-8</span>
+
+<span class="nt">scheduler</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cosine&quot;</span><span class="w"> </span><span class="c1"># 内部会映射为 CosineAnnealingLR</span>
+<span class="w">  </span><span class="nt">warmup_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span>
+<span class="w">  </span><span class="nt">min_lr_ratio</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w"> </span><span class="c1"># 最终学习率为 peak_lr * 0.1</span>
+
+<span class="c1"># ------------------ 训练器配置 (Trainer) ------------------</span>
+<span class="c1"># 这是 PyTorch Lightning 的核心，负责编排整个训练流程</span>
+<span class="nt">trainer</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># 硬件与并行策略</span>
+<span class="w">  </span><span class="nt">devices</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span>
+<span class="w">  </span><span class="nt">num_nodes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<span class="w">  </span><span class="nt">accelerator</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gpu&quot;</span>
+<span class="w">  </span><span class="nt">strategy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;deepspeed&quot;</span><span class="w"> </span><span class="c1"># 告诉 Lightning 使用 DeepSpeed 策略</span>
+
+<span class="w">  </span><span class="c1"># 精度与性能</span>
+<span class="w">  </span><span class="nt">precision</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bf16-mixed&quot;</span>
+
+<span class="w">  </span><span class="c1"># 训练循环控制</span>
+<span class="w">  </span><span class="nt">max_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">250000</span><span class="w"> </span><span class="c1"># 示例: 4M tokens/batch * 250k steps = 1T tokens</span>
+<span class="w">  </span><span class="nt">val_check_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span><span class="w"> </span><span class="c1"># 每 1000 步在验证集上评估一次 PPL</span>
+
+<span class="w">  </span><span class="c1"># 日志与检查点</span>
+<span class="w">  </span><span class="nt">log_every_n_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">  </span><span class="nt">logger</span><span class="p">:</span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">class_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lightning.pytorch.loggers.TensorBoardLogger</span>
+<span class="w">      </span><span class="nt">save_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;logs/&quot;</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pretrain_7b_8k_run_01&quot;</span>
+
+<span class="w">  </span><span class="c1"># 将下面的 DeepSpeed JSON 文件路径传递给 Lightning</span>
+<span class="w">  </span><span class="nt">deepspeed_config</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./configs/deepspeed_zero3_paged.json&quot;</span>
+</code></pre></div>
+
+<h3 id="1532-deepspeed-deepspeed_zero3_pagedjson">15.3.2 DeepSpeed 配置文件 (<code>deepspeed_zero3_paged.json</code>)</h3>
+<p>这是一个后端配置文件，告诉 DeepSpeed 如何执行内存优化和并行计算。Lightning 会智能地从主配置中填充 <code>"auto"</code> 字段。</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;train_micro_batch_size_per_gpu&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;train_batch_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// 全局批大小(样本数), Lightning 会根据 GB_tok 和 L_ctx 计算</span>
+<span class="w">  </span><span class="nt">&quot;gradient_accumulation_steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+
+<span class="w">  </span><span class="nt">&quot;zero_optimization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;stage&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="c1">// 完全分片参数、梯度和优化器状态</span>
+<span class="w">    </span><span class="nt">&quot;offload_optimizer&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;device&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// 将优化器状态卸载到 CPU 内存, 节省大量显存</span>
+<span class="w">      </span><span class="nt">&quot;pin_memory&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="c1">// 使用锁页内存加速 CPU-GPU 数据传输</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;offload_param&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;device&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// 将模型参数也卸载到 CPU，仅在需要时加载到 GPU</span>
+<span class="w">      </span><span class="nt">&quot;pin_memory&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;overlap_comm&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="c1">// 尽可能重叠计算和通信</span>
+<span class="w">    </span><span class="nt">&quot;contiguous_gradients&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="c1">// 使用连续内存存储梯度，提高通信效率</span>
+<span class="w">    </span><span class="nt">&quot;sub_group_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1e9</span><span class="p">,</span><span class="w"> </span><span class="c1">// 用于参数分组通信的阈值</span>
+<span class="w">    </span><span class="nt">&quot;stage3_prefetch_bucket_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// 预取参数的桶大小</span>
+<span class="w">    </span><span class="nt">&quot;stage3_param_persistence_threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// 大于此阈值的参数将保留在 GPU 上</span>
+<span class="w">    </span><span class="nt">&quot;stage3_max_live_parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1e9</span><span class="w"> </span><span class="c1">// GPU 上同时存在的最大参数量</span>
+<span class="w">  </span><span class="p">},</span>
+
+<span class="w">  </span><span class="c1">// 虽然 Lightning 管理优化器，但 DeepSpeed 需要此配置块来启用 PagedAdamW 等特性</span>
+<span class="w">  </span><span class="nt">&quot;optimizer&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PagedAdamW&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// 相比 AdamW, 能更好地管理内存碎片</span>
+<span class="w">    </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;lr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;betas&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;eps&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;weight_decay&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+
+<span class="w">  </span><span class="c1">// 同样，调度器由 Lightning 控制，此处仅为占位符</span>
+<span class="w">  </span><span class="nt">&quot;scheduler&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WarmupDecayLR&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;warmup_min_lr&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;warmup_max_lr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;warmup_num_steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;total_num_steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+
+<span class="w">  </span><span class="nt">&quot;bf16&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">},</span>
+
+<span class="w">  </span><span class="nt">&quot;gradient_clipping&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+
+<span class="w">  </span><span class="nt">&quot;steps_per_print&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+
+<span class="w">  </span><span class="nt">&quot;wall_clock_breakdown&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="c1">// 设 true 可获取详细的时间分析</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<hr />
+<h2 id="154">15.4 参考论文与进一步阅读</h2>
+<p>纸上得来终觉浅，欲知此事须躬行。但行之前，站在巨人的肩膀上是必要的。</p>
+<h3 id="1541">15.4.1 核心论文</h3>
+<ol>
+<li>
+<p><strong>Training Compute-Optimal Large Language Models</strong> (Hoffmann et al., 2022 - <strong>Chinchilla</strong>)
+    &gt; <strong>为何重要</strong>：<strong>本教程的理论基石</strong>。它通过大规模实验推导出，在给定的计算预算下，模型参数量 <code>N</code> 和训练数据量 <code>T</code> 存在一个最优配比关系（大致为 <code>N ∝ T^0.5</code>）。这意味着，与其训练一个巨大的模型在少量数据上，不如训练一个中等大小的模型在海量数据上。本教程所有关于 <code>1T</code> tokens 的训练目标和模型规模的选择都源于此。</p>
+</li>
+<li>
+<p><strong>LLaMA: Open and Efficient Foundation Language Models</strong> (Touvron et al., 2023 - <strong>LLaMA</strong>)
+    &gt; <strong>为何重要</strong>：本教程模型架构的“食谱”。LLaMA 并非提出了全新的组件，而是巧妙地组合了社区中已有的最佳实践：RMSNorm（替代 LayerNorm，更稳定）、SwiGLU（替代 ReLU，效果更好）、RoPE（替代绝对位置编码，外推性更好）。这个组合被证明极为高效和强大，成为后续开源模型模仿的典范。</p>
+</li>
+<li>
+<p><strong>FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness</strong> (Dao et al., 2022) &amp; <strong>FlashAttention-2</strong> (Dao, 2023)
+    &gt; <strong>为何重要</strong>：<strong>训练吞吐量的“发动机”</strong>。通过将注意力计算的多个步骤融合成一个 CUDA kernel，并采用 tiling 技术来优化 GPU SRAM 和 HBM 之间的数据移动，FlashAttention 在不牺牲任何精度的情况下，实现了数量级的加速和显存节省。它是长上下文训练成为可能的关键技术之一。</p>
+</li>
+<li>
+<p><strong>ZeRO: Memory Optimizations Toward Training Trillion Parameter Models</strong> (Rajbhandari et al., 2020 - <strong>DeepSpeed ZeRO</strong>)
+    &gt; <strong>为何重要</strong>：<strong>大规模训练的“杠杆”</strong>。ZeRO 通过在数据并行的 worker 之间切分模型状态（参数、梯度、优化器状态），打破了“单 GPU 必须容纳完整模型”的限制。ZeRO-3 更是将模型参数也进行切分，使得理论上可以用任意数量的 GPU 训练任意大的模型，只要总显存足够。</p>
+</li>
+</ol>
+<h3 id="1542">15.4.2 进阶阅读与社区资源</h3>
+<ol>
+<li><strong>RoFormer</strong> &amp; <strong>YaRN</strong>: <code>Su et al., 2021</code> 提出了 RoPE 的原始思想。<code>Peng et al., 2023</code> 的 YaRN 则是目前最有效的 RoPE Scaling 技术之一，能以极小的性能损失将模型的上下文窗口扩展数倍。</li>
+<li><strong>Decoupled Weight Decay Regularization</strong> (Loshchilov &amp; Hutter, 2017 - <strong>AdamW</strong>): 理解为什么 AdamW 优于传统的 Adam，尤其是在需要强正则化的 LLM 训练中。</li>
+<li><strong>PyTorch Lightning &amp; DeepSpeed 官方文档</strong>: 最佳的实践总是在官方文档中更新。特别是 Lightning 的 DeepSpeed 策略文档和 DeepSpeed 官网的配置生成器，是解决具体工程问题的首选。</li>
+<li><strong>Hugging Face Blog</strong>: Hugging Face 的工程师和研究员经常发布关于 LLM 训练、量化、推理优化的高质量技术博客，内容非常贴近实践。</li>
+<li><strong>Lilian Weng's Blog "Lil'Log"</strong>: OpenAI 研究员 Lilian Weng 的博客，对 LLM 相关的技术有系统性、深入浅出的梳理，是构建知识体系的绝佳材料。</li>
+</ol>
+<hr />
+<h2 id="_2">本章小结</h2>
+<p>本附录章节是整个实战教程的“速查手册”与“知识图谱”。我们固化了核心的<strong>符号系统</strong>以保证交流的精确性，为从 3B 到 13B 的模型提供了可直接上手的<strong>超参数基线</strong>和设计理念，并展示了可插拔的 <strong>YAML/JSON 配置模板</strong>，旨在将开启新实验的“摩擦力”降至最低。最后，通过一份精心策划的<strong>参考文献列表</strong>，我们为希望深究其背后原理的读者铺平了道路，连接了从理论到实践的桥梁。将本章作为你日常训练工作中的常备参考，将帮助你更高效、更规范、更有信心地进行 LLM 的探索与创新。</p>
+<h2 id="gotchas">常见陷阱与错误 (Gotchas)</h2>
+<ol>
+<li><strong>超参的孤立调整</strong>：最常见的错误是只修改一个参数而忽略其连锁反应。例如，将 <code>GB_tok</code> 减半，但忘记按 <code>sqrt</code> 法则相应地降低学习率 <code>η</code>，可能导致训练发散。<strong>规则</strong>：将超参视为一个相互关联的系统，特别是 <code>GB_tok</code>, <code>η</code>, <code>wd</code> 这“三巨头”。</li>
+<li><strong>Tokenizer 词表与数据不匹配</strong>：在 CPT 阶段，使用基座模型的 tokenizer 处理一个包含大量新领域词汇（如代码、特定语言）的数据集，会导致大量的 <code>&lt;unk&gt;</code> token，严重损害模型学习新知识的能力。<strong>技巧</strong>：在 CPT 前，务必用新数据对基座 tokenizer 进行词表扩展。</li>
+<li><strong>RoPE Scaling 配置错误</strong>：错误地设置 <code>rope_scaling</code> 的 <code>factor</code> 或 <code>original_max_position_embeddings</code>，或者在模型代码中未能正确应用 scaling 逻辑，会导致模型在长于原始上下文后性能急剧下降，甚至输出乱码。<strong>调试</strong>：编写一个单元测试，检查 scaling 后位置编码的插值或外推行为是否符合预期。</li>
+<li><strong>DeepSpeed 与 Lightning 的“双重管理”</strong>：在 Lightning 的 <code>configure_optimizers</code> 中手动设置优化器和调度器，同时又在 DeepSpeed 的 JSON 文件中详细定义它们，可能会导致行为冲突或其中一方的配置被忽略。<strong>最佳实践</strong>：让 Lightning 作为“总指挥”，在 YAML/代码中定义优化器和调度器，DeepSpeed JSON 中的相关字段设为 <code>"auto"</code> 或仅用于指定类型（如 <code>PagedAdamW</code>）。</li>
+<li><strong>无声的 I/O 瓶颈</strong>：训练看似正常运行，但通过 <code>nvidia-smi</code> 或 <code>nvitop</code> 观察到 GPU 利用率长期低于 80%。这通常不是计算问题，而是数据加载跟不上计算速度。<strong>诊断</strong>：使用 PyTorch Profiler 或 <code>cProfile</code> 分析数据加载 pipeline，检查 <code>num_workers</code> 设置、磁盘读取速度或网络（对于 CPFS）带宽是否达到瓶颈。</li>
+</ol>
+<p>--- END OF FILE chapter15.md ---</p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter14.html" class="nav-link prev">← chapter14.md — 常见问题与诊断</a><a href="CLAUDE.html" class="nav-link next">Untitled →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

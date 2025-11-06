@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">从零到可复现：LLM 训练实战（算法向，Lightning + DeepSpeed）—**索引**</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter01.md — 总览与可复现环境</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter03.md — 架构细节：LLaMA 风格与 8k 扩展</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter05.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 05 — 大批量训练与学习率策略</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter06.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：多数据集动态混比——从“大锅饭”到“交响乐”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter07.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 7 章 — 优化器与数值稳定</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter08.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 8 章：数据加载与存储格式（CPFS）— 榨干 IO 吞吐</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter09.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章 — 并行与内存：Lightning + DeepSpeed 配方</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter10.md — 评估：验证困惑度</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter11.md — 端到端：从零预训练（1T tokens）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章 端到端：CPT / 继续预训练</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 13 章：成本/时长粗估（¥）与 TCO</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter14.md — 常见问题与诊断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter15.md — 附录与参考</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h2 id="chapter02md-tokenizer-bpe"><code>chapter02.md</code> — Tokenizer 与数据预处理（BPE 优化）</h2>
+<h3 id="1">1. 开篇段落</h3>
+<p>本章是连接原始文本语料与模型数值输入的关键桥梁，也是整个 LLM 训练流程中 <strong>杠杆效应最强</strong> 的环节之一。一个精心设计和优化的 Tokenizer 如同为模型安装了一副高清、宽视角的“眼睛”，它定义了模型理解和生成文本的基本单元，其质量直接影响最终模型的性能天花板、计算效率乃至对特定领域（如代码、多语言、数学公式）的掌握程度。本章的学习目标是：深入掌握 <strong>Byte-Pair Encoding (BPE)</strong> 的训练原理与关键超参的精细权衡；理解并实现高效的 <strong>packed sequence</strong> 策略以最大化训练吞吐量；并最终将海量文本语料转换为适合大规模并行加载、高性能的二进制格式（如 <code>.idx/.bin</code> 或 <code>Parquet</code>），为后续的万亿 token 级训练铺平道路。</p>
+<h3 id="2">2. 文字论述</h3>
+<h4 id="21">2.1 语料治理概览（面向训练的轻量级视角）</h4>
+<p>在启动 Tokenizer 训练之前，我们必须对原始语料进行一系列预处理。尽管完整的数据治理（Data Governance）是一个庞大的独立工程，涉及复杂的流水线和数据血缘追踪，但作为算法科学家，我们需要关注并确保几个核心环节的质量，因为它们直接影响模型的稳定性和最终能力。</p>
+<ul>
+<li>
+<p><strong>全局去重 (Global Deduplication)</strong></p>
+<ul>
+<li><strong>目的</strong>：大规模网络语料（如 Common Crawl）中存在海量的精确或近似重复内容（例如，网站页眉页脚、引用转发、文章转载）。若不去除，模型将在这些冗余数据上浪费巨量算力，导致其对高频模式的“过拟合”，损害泛化能力和多样性。验证集和测试集的污染尤其致命，会导致评估指标虚高，产生模型性能优越的假象。</li>
+<li><strong>方法</strong>：对于 TB 级别的语料，精确的 n-gram 比较不可行。工业界标准做法是采用 <strong>MinHash + LSH (Locality-Sensitive Hashing)</strong>。<ul>
+<li><strong>MinHash</strong>: 将每个文档表示为一个固定大小的整数签名（signature），这个签名可以近似地保持文档间的 Jaccard 相似度。</li>
+<li><strong>LSH</strong>: 将这些签名放入多个哈希桶中，使得相似的签名有很大概率落入同一个桶。我们只需在桶内进行精确比较，大大降低了计算复杂度。</li>
+</ul>
+</li>
+<li><strong>Rule-of-thumb</strong>：至少对文档级别进行一次严格的全局去重。对于高质量数据集，可以进一步进行段落级别的去重。</li>
+</ul>
+</li>
+<li>
+<p><strong>启发式过滤 (Heuristic Filtering)</strong></p>
+<ul>
+<li><strong>目的</strong>：移除低质量、无信息或可能对模型产生负面影响的文本。</li>
+<li><strong>常见策略</strong>：<ul>
+<li><strong>长度过滤</strong>：移除过短（如少于 200 字符）或过长（如超过 100,000 字符）的文档。</li>
+<li><strong>符号/数字比例</strong>：移符号或数字占比异常高的文档，它们通常是乱码、代码片段或表格数据，可能需要专门处理。</li>
+<li><strong>词汇丰富度</strong>：使用“重复词比例”等指标过滤掉内容单调的文本（如 "A A A A..."）。</li>
+<li><strong>语言识别</strong>：使用 <code>fastText</code> 等库识别并过滤掉非目标语种的文本，或为多语言模型打上语种标签。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>PII 与安全过滤 (PII &amp; Safety Filtering)</strong></p>
+<ul>
+<li><strong>目的</strong>：移除个人身份信息（PII）如姓名、电话、邮箱、身份证号等，并过滤掉有害内容（仇恨言论、暴力、色情等）。</li>
+<li><strong>方法</strong>：通常结合 <strong>正则表达式</strong> 和 <strong>基于模型的分类器</strong>。这是一个复杂的领域，通常需要专门的团队和工具链支持。对于研究性质的训练，至少应采用开源的 PII 移除工具和内容分类器进行一轮清洗。</li>
+</ul>
+</li>
+</ul>
+<p>完成上述步骤后，我们得到一个相对干净、去重的文本语料库，可以用于训练一个高质量的 Tokenizer。</p>
+<h4 id="22-bpe-llm">2.2 BPE 训练与优化：LLM 的“字母表”</h4>
+<p>BPE (Byte-Pair Encoding) 算法通过迭代合并最高频的字节对，构建了一个从字节到高层语义概念（子词）的层级化词表。它优雅地解决了纯词级（OOV问题）和纯字符/字节级（序列过长） tokenizer 的弊端。</p>
+<p><strong>Tokenizer 实现管线对比：<code>huggingface/tokenizers</code> vs <code>sentencepiece</code></strong></p>
+<p>理解两种主流实现方式的差异，有助于我们做出更明智的选择。</p>
+<ul>
+<li><strong><code>sentencepiece</code> (Google)</strong>：倾向于一个端到端的解决方案。它将输入视为原始字节流，通过用户定义的规则（如 NFKC 规范化）处理后，直接应用 BPE 合并。其核心设计哲学是“无损”，即任何文本都能被 tokenize 和 de-tokenize 回原始形式，且不依赖于语言特定的预切分规则（如空格）。空格被特殊处理为一个元符号 <code></code> (U+2581)。</li>
+<li><strong><code>huggingface/tokenizers</code> (Hugging Face)</strong>：提供了一个更模块化、可定制的管线，常包含四个阶段：<ol>
+<li><strong>Normalizer</strong>: 文本规范化，如 <code>NFC</code>, <code>NFKC</code>, 小写转换，去除多余空格。</li>
+<li><strong>PreTokenizer</strong>: 预切分，根据规则（如空格、标点）将文本分割成初始的“词”单元。这是 BPE 算法开始合并的基础。</li>
+<li><strong>Model</strong>: BPE 核心算法，在 PreTokenizer 产生的词块内部进行迭代合并。</li>
+<li><strong>Post-Processor</strong>: 后处理，添加特殊 token，如 <code>&lt;s&gt;</code> 和 <code>&lt;/s&gt;</code>。</li>
+</ol>
+</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>Input:<span class="w"> </span>&quot;<span class="w">  </span>Hello,<span class="w">   </span>world!!<span class="w">  </span>&quot;
+<span class="w">  </span>|
+[Normalizer:<span class="w"> </span>Strip,<span class="w"> </span>NFKC]
+<span class="w">  </span>|
+V:<span class="w"> </span>&quot;Hello,<span class="w"> </span>world!!&quot;
+<span class="w">  </span>|
+[PreTokenizer:<span class="w"> </span>WhitespaceSplit]
+<span class="w">  </span>|
+V:<span class="w"> </span>[&quot;Hello,&quot;,<span class="w"> </span>&quot;world!!&quot;]
+<span class="w">  </span>|
+[Model:<span class="w"> </span>BPE<span class="w"> </span>on<span class="w"> </span>each<span class="w"> </span>sub-word]
+<span class="w">  </span>|
+V:<span class="w"> </span>[[&quot;He&quot;,<span class="w"> </span>&quot;llo&quot;,<span class="w"> </span>&quot;,&quot;],<span class="w"> </span>[&quot;wor&quot;,<span class="w"> </span>&quot;ld&quot;,<span class="w"> </span>&quot;!!&quot;]]
+<span class="w">  </span>|
+[Post-Processor:<span class="w"> </span>Add<span class="w"> </span>BOS/EOS]
+<span class="w">  </span>|
+Output:<span class="w"> </span>[<span class="nt">&lt;s&gt;</span>,<span class="w"> </span>&quot;He&quot;,<span class="w"> </span>&quot;llo&quot;,<span class="w"> </span>&quot;,&quot;,<span class="w"> </span>&quot;wor&quot;,<span class="w"> </span>&quot;ld&quot;,<span class="w"> </span>&quot;!!&quot;,<span class="w"> </span><span class="nt">&lt;/s&gt;</span>]
+</code></pre></div>
+
+<p><strong>关键超参与权衡的深度剖析：</strong></p>
+<ol>
+<li><strong><code>vocab_size</code> (词表大小)</strong>：<strong>这是最具战略性的决策</strong>。<ul>
+<li><strong>影</strong>：<ol>
+<li><strong>压缩率</strong>：<code>vocab_size</code> 越大，越可能将长词或常用短语编码为单个 token，使得平均每个词对应的 token 数减少，序列变短。</li>
+<li><strong>模型参数</strong>：<code>lm_head</code>（输出层）和 <code>token_embeddings</code>（输入层）的参数量与 <code>vocab_size</code> 成正比。公式为 <code>Params ≈ 2 * vocab_size * hidden_dim</code>。对于一个 <code>hidden_dim=4096</code> 的 7B 模型，将 <code>vocab_size</code> 从 32k 增加到 64k，会增加 <code>2 * (64000 - 32000) * 4096 ≈ 268M</code> 的参数。</li>
+<li><strong>表达能力与粒度</strong>：大词表能更精细地捕捉语义单元，尤其在代码（函数名、变量）、多语言混合语料中优势明显。小词表则迫使模型在子词层面组合语义，可能增强其形态学上的泛化能力。</li>
+</ol>
+</li>
+<li><strong>权衡表格</strong>:
+| <code>vocab_size</code> | 优点                                                                | 缺点                                                                | 适用场景                               |</li>
+</ul>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><code>vocab_size</code></th>
+<th style="text-align: left;">优点</th>
+<th style="text-align: left;">缺点</th>
+<th style="text-align: left;">适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>小 (32k)</strong></td>
+<td style="text-align: left;">嵌入层参数少，对形态丰富语言友好，迫使模型学习组合泛化。</td>
+<td style="text-align: left;">序列更长，增加计算负担（尤其在 Attention 中），对代码/多语言不友好。</td>
+<td style="text-align: left;">LLaMA-1/2 时代，以英文为主的通用语料。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中 (65k)</strong></td>
+<td style="text-align: left;">兼顾了压缩率和参数量，对中英文混合语料表现稳健。</td>
+<td style="text-align: left;">相比 128k 对代码的表达可能稍弱。</td>
+<td style="text-align: left;">当前主流选择，平衡性好。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>大 (128k+)</strong></td>
+<td style="text-align: left;">极高的压缩率（序列短），对代码和多语言非常友好，单个 token 语义更丰富。</td>
+<td style="text-align: left;">显著增加模型参数和显存占用，可能过拟合语料中的罕见词或噪声。</td>
+<td style="text-align: left;">LLaMA-3 时代，高质量、大规模多语言/代码语料。</td>
+</tr>
+</tbody>
+</table>
+<div class="codehilite"><pre><span></span><code><span class="k">*</span>   **Rule-of-thumb**:
+    <span class="k">*</span>   **启动项目**：从 **65k** 开始是一个非常安全的基线。
+    <span class="k">*</span>   **预算紧张/模型小**：可以考虑 **32k**。
+    <span class="k">*</span>   **代码/多语言是核心**：并且有高质量数据支持，大胆上调至 **96k 或 128k**。
+</code></pre></div>
+
+<ol start="2">
+<li><strong>数字、空白与结构化信息的处理</strong><ul>
+<li><strong>数字</strong>：LLaMA 系列 Tokenizer 将数字按单个 digit 切分（<code>123</code> -&gt; <code>1</code>, <code>2</code>, <code>3</code>）。这赋予了模型出色的算术推理和处理任意数字的能力，是当前推荐的标准实践。</li>
+<li><strong>空白</strong>：对于代码或需要保留格式的文本，必须保留多个连续空格和换行符。<code>huggingface/tokenizers</code> 中的 <code>PreTokenizer.WhitespaceSplit()</code> 或 <code>sentencepiece</code> 的字节级处理都能很好地满足这一需求。</li>
+<li><strong>字节级回退 (Byte-level Fallback)</strong>：当遇到 <code>&lt;unk&gt;</code>（未知 token）时，一个健壮的 Tokenizer 应该能回退到 UTF-8 字节级别进行编码。这确保了 <strong>任何字符串</strong> 都可以被示，杜绝了真正意义上的 OOV 问题。这是 <code>sentencepiece</code> 的原生特性，在 <code>huggingface/tokenizers</code> 中可以通过 <code>decoders.ByteLevel</code> 实现。</li>
+</ul>
+</li>
+</ol>
+<h4 id="23-chunking-and-packing">2.3 训练前分块与打包 (Chunking and Packing)：最大化计算效率</h4>
+<p>模型训练的 <code>forward</code> 和 <code>backward</code> 操作在固定尺寸的张量上效率最高。因此，我们需要将变长的文档序列转换为固定长度 <code>L_ctx</code> (e.g., 4096) 的训练样本。</p>
+<ul>
+<li>
+<p><strong>策略一：Un-packed (Padding)</strong> - <strong>应极力避免</strong></p>
+<ul>
+<li>简单地将每个文档 tokenize 后，用 <code>&lt;pad&gt;</code> token 填充到 <code>L_ctx</code>。</li>
+<li><strong>致命缺陷</strong>：假设一个 batch 中有大量短文档，有效 token 的比例可能低于 50%。Transformer 的自注意力计算复杂度是 <code>O(L_ctx^2)</code>，这意味着大量的计算和显存带宽被浪费在处理无意义的 <code>&lt;pad&gt;</code> token 上。<strong>在万亿 token 级别的训练中，这种浪费是不可接受的</strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>策略二：Packed (Concatenation)</strong> - <strong>大规模预训练的标准</strong></p>
+<ul>
+<li><strong>流程</strong>：<ol>
+<li>将语料库中的所有文档逐一 tokenize。</li>
+<li>在每个文档的 token 序列末尾添加一个 <code>&lt;/s&gt;</code> (EOS) token。</li>
+<li>将所有处理后的 token 序列拼接成一个巨大的、一维的 token "超级流"。</li>
+<li>从这个超级流中，不重叠地、连续地切出长度为 <code>L_ctx</code> 的序列块。</li>
+</ol>
+</li>
+<li><strong>图示与 Attention Mask</strong>:</li>
+</ul>
+</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>Token<span class="w"> </span>Stream:<span class="w"> </span>[doc1_toks...,<span class="w"> </span><span class="nt">&lt;/s&gt;</span>,<span class="w"> </span>doc2_toks...,<span class="w"> </span><span class="nt">&lt;/s&gt;</span>,<span class="w"> </span>doc3_toks...]
+<span class="w">                </span><span class="nt">&lt;--</span><span class="w"> </span><span class="err">Chunk</span><span class="w"> </span><span class="err">1</span><span class="w"> </span><span class="err">(</span><span class="na">len=</span><span class="s">L_ctx)</span><span class="w"> </span><span class="err">--</span><span class="nt">&gt;</span><span class="w"> </span><span class="nt">&lt;--</span><span class="w"> </span><span class="err">Chunk</span><span class="w"> </span><span class="err">2</span><span class="w"> </span><span class="err">(</span><span class="na">len=</span><span class="s">L_ctx)</span><span class="w"> </span><span class="err">--</span><span class="nt">&gt;</span>
+
+Example<span class="w"> </span>Chunk<span class="w"> </span>1:<span class="w"> </span>[d1_t1,<span class="w"> </span>d1_t2,<span class="w"> </span>...,<span class="w"> </span><span class="nt">&lt;/s&gt;</span>,<span class="w"> </span>d2_t1,<span class="w"> </span>d2_t2,<span class="w"> </span>...]
+
+Attention<span class="w"> </span>Mask<span class="w"> </span>(Causal<span class="w"> </span>Packing<span class="w"> </span>-<span class="w"> </span>理论上更精确):
+Query<span class="w"> </span>\<span class="w"> </span>Key<span class="w"> </span>|<span class="w"> </span>d1_t1<span class="w"> </span>|<span class="w"> </span>d1_t2<span class="w"> </span>|<span class="w"> </span><span class="nt">&lt;/s&gt;</span><span class="w"> </span>|<span class="w"> </span>d2_t1<span class="w"> </span>|<span class="w"> </span>d2_t2
+-------------------------------------------------
+d1_t1<span class="w">       </span>|<span class="w">   </span>1<span class="w">   </span>|<span class="w">   </span>0<span class="w">   </span>|<span class="w">   </span>0<span class="w">   </span>|<span class="w">   </span>0<span class="w">   </span>|<span class="w">   </span>0
+d1_t2<span class="w">       </span>|<span class="w">   </span>1<span class="w">   </span>|<span class="w">   </span>1<span class="w">   </span>|<span class="w">   </span>0<span class="w">   </span>|<span class="w">   </span>0<span class="w">   </span>|<span class="w">   </span>0
+<span class="nt">&lt;/s&gt;</span><span class="w">        </span>|<span class="w">   </span>1<span class="w">   </span>|<span class="w">   </span>1<span class="w">   </span>|<span class="w">   </span>1<span class="w">   </span>|<span class="w">   </span>0<span class="w">   </span>|<span class="w">   </span>0<span class="w">   </span><span class="nt">&lt;--</span><span class="w"> </span><span class="err">doc1</span><span class="w"> </span><span class="err">结束</span>
+<span class="err">d2_t1</span><span class="w">       </span><span class="err">|</span><span class="w">   </span><span class="err">0</span><span class="w">   </span><span class="err">|</span><span class="w">   </span><span class="err">0</span><span class="w">   </span><span class="err">|</span><span class="w">   </span><span class="err">0</span><span class="w">   </span><span class="err">|</span><span class="w">   </span><span class="err">1</span><span class="w">   </span><span class="err">|</span><span class="w">   </span><span class="err">0</span><span class="w">   </span><span class="err">&lt;--</span><span class="w"> </span><span class="err">doc2</span><span class="w"> </span><span class="err">开始</span>
+<span class="err">d2_t2</span><span class="w">       </span><span class="err">|</span><span class="w">   </span><span class="err">0</span><span class="w">   </span><span class="err">|</span><span class="w">   </span><span class="err">0</span><span class="w">   </span><span class="err">|</span><span class="w">   </span><span class="err">0</span><span class="w">   </span><span class="err">|</span><span class="w">   </span><span class="err">1</span><span class="w">   </span><span class="err">|</span><span class="w">   </span><span class="err">1</span>
+
+<span class="err">Attention</span><span class="w"> </span><span class="err">Mask</span><span class="w"> </span><span class="err">(Simple/Permissive</span><span class="w"> </span><span class="err">Packing</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">实践中更常用):</span>
+
+<span class="err">-</span><span class="w"> </span><span class="err">完全忽略文档边界，整个</span><span class="w"> </span><span class="err">chunk</span><span class="w"> </span><span class="err">使用标准的因果注意力掩码。</span>
+<span class="err">-</span><span class="w"> </span><span class="err">模型被期望通过</span><span class="w"> </span><span class="err">`&lt;/s</span><span class="nt">&gt;</span>`<span class="w"> </span>token<span class="w"> </span>自行学习文档的边界。
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="w">   </span><span class="o">**</span><span class="nx">Rule</span><span class="o">-</span><span class="nx">of</span><span class="o">-</span><span class="nx">thumb</span><span class="o">**</span><span class="err">：</span><span class="o">**</span><span class="nx">对于从零预训练</span><span class="err">，</span><span class="nx">直接使用忽略文档边界的</span><span class="w"> </span><span class="nx">Simple</span><span class="w"> </span><span class="nx">Packing</span><span class="o">**</span><span class="err">。</span><span class="nx">其实现简单</span><span class="err">，</span><span class="nx">吞吐量最高</span><span class="err">。</span><span class="nx">实证研究表明</span><span class="err">，</span><span class="nx">这对模型最终性能的影响微乎其微</span><span class="err">，</span><span class="nx">因为在海量数据中</span><span class="err">，</span><span class="nx">跨文档的</span><span class="w"> </span><span class="nx">attention</span><span class="w"> </span><span class="nx">噪声会被模型自然地平滑掉</span><span class="err">。</span>
+</code></pre></div>
+
+<h4 id="24-io">2.4 构建最终数据集格式：为高速 IO 做准备</h4>
+<p>预处理的最后一步是将 packed token 序列持久化存储，以便在训练期间被成百上千个 GPU worker 高效、并行地读取。</p>
+<ol>
+<li>
+<p><strong><code>.idx/.bin</code> 格式 (MMap-able Binary)</strong></p>
+<ul>
+<li><strong>结构</strong>：一个 <code>.bin</code> 文件存储所有 token ID（<code>np.uint16</code> 或 <code>np.uint32</code>）的巨大二进制数组，一个 <code>.idx</code> 文件存储元数据（如版本、数据类型、总 token 数）。</li>
+<li><strong>核心优势：<code>mmap</code></strong>。<code>mmap</code> (memory-map) 是一种操作系统特性，它将文件内容直接映射到进程的虚拟地址空间。这意味着数据不需要从文件系统缓存拷贝到应用内存，而是由操作系统在需要时按页（page）懒加载。对于多 worker 读取同一文件，<code>mmap</code> 提供了极高的效率和内存共享。</li>
+<li><strong>适用场景</strong>：单机多卡或共享文件系统（如 CPFS/NFS）的 HPC 环境。这是追求极致 IO 性能的经典选择。</li>
+</ul>
+</li>
+<li>
+<p><strong>Parquet 格式 (Columnar Storage)</strong></p>
+<ul>
+<li><strong>结构</strong>：一种高效的列式存储格式。我们可以将每个 packed sequence 存为一行，包含 <code>token_ids</code>（一个数组/列表）列，还可以附加其他元数据列，如 <code>source_dataset_id</code>。</li>
+<li><strong>核心优势：生态与灵活性</strong>。Parquet 是大数据生态（Spark, Dask）的标格式。使用 <code>pyarrow</code> 库可以非常高效地流式读取和解码。它支持多种压缩算法（Snappy, ZSTD），可以在磁盘占用和读取速度之间做权衡。</li>
+<li><strong>适用场景</strong>：需要与数据分析工具链深度集成，或需要存储丰富元数据的场景。在云存储（如 S3, GCS）上表现良好。</li>
+</ul>
+</li>
+<li>
+<p><strong>WebDataset (Sharded Tar Archives)</strong></p>
+<ul>
+<li><strong>结构</strong>：将数据分片（shard）存储为一系列 <code>.tar</code> 文件。每个 <code>.tar</code> 文件内部包含多个样本，每个样本可以有多个文件（如 <code>.json</code> for metadata, <code>.txt</code> for text）。</li>
+<li><strong>核心优势：流式处理与解耦</strong>。WebDataset 天然支持流式读取，非常适合对象存储和分布式环境。它避免了需要一个中心化的索引文件，每个 worker 可以独立处理一部分 <code>.tar</code> 文件。</li>
+<li><strong>适用场景</strong>：云原生训练环境，数据源在对象存储上，强调去中心化和流式处理。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><strong>Rule-of-thumb</strong>：<ul>
+<li><strong>HPC / 共享文件系统</strong>优先选择 <strong><code>.idx/.bin</code></strong>，其 <code>mmap</code> 带来的 IO 效率几乎是无开销的。</li>
+<li><strong>云环境 / 需要与数据分析集成</strong>：<strong>Parquet</strong> 是一个更现代化、更灵活的选择。</li>
+<li><strong>数据准备和训练阶段高度解耦的流式作业</strong>：可以考虑 <strong>WebDataset</strong>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3">3. 本章小结</h3>
+<ul>
+<li><strong>Tokenizer 是战略决策</strong>：其设计深刻影响模型的能力上限和计算成本。<strong><code>vocab_size</code></strong> 是核心权衡点，平衡着压缩率、参数量和表达粒度。<strong>65k</strong> 是一个稳健的现代基线。</li>
+<li><strong>细节是魔鬼</strong>：数字、空白和特殊符号的处理方式，以及是否具备字节级回退能力，共同决定了 Tokenizer 的鲁棒性。采用模块化的 <code>huggingface/tokenizers</code> 能提供更精细的控制。</li>
+<li><strong>效率源于打包 (Packing)</strong>：在大规模预训练中，必须使用 <strong>Packed Sequence</strong> 策略，将 tokenized 文档流拼接后分块，以消除因 padding 造成的巨大计算浪费。</li>
+<li><strong>为 IO 优化存储</strong>：选择合适二进制格式是训练吞吐量的最后保障。<strong><code>.idx/.bin</code></strong> 通过 <code>mmap</code> 提供极致性能，<strong>Parquet</strong> 则在灵活性和生态系统上更胜一筹。</li>
+</ul>
+<h3 id="4-gotchas">4. 常见陷阱与错误 (Gotchas)</h3>
+<ol>
+<li><strong>词表污染 (Vocabulary Contamination)</strong>：用包含验证/测试集的语料来训练 Tokenizer。这会泄露评估数据的信息，导致 PPL 等指标虚高。<strong>解决方案</strong>：严格划分数据集，Tokenizer 只能在训练集的子集（通常是 10-50B token）上训练。</li>
+<li><strong>整数类型溢出</strong>：当 <code>vocab_size</code> &gt; 65,536 时，若仍用 <code>uint16</code> 存储 token ID，将导致 ID 回绕，数据被严重破坏且难以排查。<strong>解决方案</strong>：根据 <code>vocab_size</code> 选用正确的数据类型（<code>np.uint16</code> vs <code>np.uint32</code>）。</li>
+<li><strong>不一致的文本规范化 (Inconsistent Normalization)</strong>：在 Tokenizer 训练和实际 tokenize 数据时使用了不同的 Unicode 规范化（如 <code>NFC</code> vs <code>NFKC</code>）。这会导致 token ID 不匹配。<strong>解决方案</strong>：在整个流程中锁定规范方法。</li>
+<li><strong>Tokenizer 速度瓶颈</strong>：使用纯 Python 实现的 Tokenizer 处理 TB 级数据会成为整个预处理流程的瓶颈。<strong>解决方案</strong>：必须使用 Rust-based 的高性能库（如 <code>huggingface/tokenizers</code>）并利用多进程并行处理。</li>
+<li><strong>打包时的边界处理不当 (Off-by-One in Packing)</strong>：在拼接和切分 token 流时，由于 <code>&lt;/s&gt;</code> 的添加和 <code>L_ctx</code> 的整除计算，很容易出现 off-by-one 错误，导致序列长度不匹配或数据丢失。<strong>解决方案</strong>：编写单元测试，对一个小文件进行打包，并手动验证输出的 token 序列是否正确拼接和切分。对于流末尾不足一个 <code>L_ctx</code> 的部分，通常直接丢弃。</li>
+</ol>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter1.html" class="nav-link prev">← chapter01.md — 总览与可复现环境</a><a href="chapter3.html" class="nav-link next">chapter03.md — 架构细节：LLaMA 风格与 8k 扩展 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

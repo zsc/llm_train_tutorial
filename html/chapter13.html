@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第 13 章：成本/时长粗估（¥）与 TCO</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">从零到可复现：LLM 训练实战（算法向，Lightning + DeepSpeed）—**索引**</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter01.md — 总览与可复现环境</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter03.md — 架构细节：LLaMA 风格与 8k 扩展</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter05.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 05 — 大批量训练与学习率策略</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter06.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：多数据集动态混比——从“大锅饭”到“交响乐”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter07.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 7 章 — 优化器与数值稳定</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter08.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 8 章：数据加载与存储格式（CPFS）— 榨干 IO 吞吐</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter09.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章 — 并行与内存：Lightning + DeepSpeed 配方</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter10.md — 评估：验证困惑度</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter11.md — 端到端：从零预训练（1T tokens）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章 端到端：CPT / 继续预训练</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 13 章：成本/时长粗估（¥）与 TCO</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter14.md — 常见问题与诊断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter15.md — 附录与参考</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="13-tco">第 13 章：成本/时长粗估（¥）与 TCO</h1>
+<h2 id="_1">开篇段落</h2>
+<p>本章的目标不是提供一份精确到分的财务报告，而是为 AI Scientist 建立一个<strong>可复用、可推理的成本估算框架</strong>。在大型语言模型的研发竞赛中，计算资源如同燃料，而精确估算燃料消耗的能力，是区分业余爱好者和专业团队的核心技能之一。理解训练一个 LLM 的资源消耗，不仅关乎项目规划和预算申请，更直接影响技术路线选择（如模型规模、数据量）、资源获取策略（云 vs. 自建、按需 vs. 竞价）乃至研究方向的可行性判断。本章将深入剖析从零预训练一个 1T token 规模 LLM 所涉及的全部主要成本构成，并提供一个基于我们假设硬件（64x H100 80GB）的高度可定制化的估算表格。学完本章，你将能够：</p>
+<ol>
+<li><strong>精通计算量估算</strong>：从模型参数和训练数据量，精确推算理论计算量（FLOPs），并理解其构成。</li>
+<li><strong>洞悉性能瓶颈</strong>：掌握 MFU（模型浮点利用率）和 <code>tokens/s</code> 两个核心指标，理解它们如何将理论计算量转化为实际训练时长，并知道影响它们的关键因素。</li>
+<li><strong>全面理解 TCO</strong>：不仅能计算 GPU 和电力成本，还能系统性地分析云计算（OpEx）与自建机房（CapEx + OpEx）在总拥有成本（TCO）上的复杂权衡。</li>
+<li><strong>规避估算陷阱</strong>：利用提供的估算模板和“常见陷阱”清单，为你的项目进行稳健的“信封背面计算”，并向管理层清晰地阐述资源需求的依据。</li>
+</ol>
+<hr />
+<h2 id="_2">文字论述</h2>
+<p>训练 LLM 的成本结构可以被视为一个金字塔。塔基是<strong>理论计算量</strong>，中间是<strong>硬件效率和时长</strong>，塔尖是最终的<strong>财务成本</strong>。我们将逐层向上解析。</p>
+<h3 id="1-flops">1. 塔基：理计算量（FLOPs）的精确估算</h3>
+<p>一切估算的起点，是确定完成训练任务需要多少次浮点运算。对于 Decoder-only 的 Transformer 模型，业界公认的黄金法则是：</p>
+<p>$$
+\text{FLOPs}_{\text{train}} \approx 6 \cdot N_{\text{params}} \cdot T_{\text{tokens}}
+$$</p>
+<p>这个公式简洁而强大，但理解其背后的构成至关重要：</p>
+<ul>
+<li>$N_{\text{params}}$: 模型的<strong>非嵌入</strong>参数量。为什么是非嵌入？因为词嵌入矩阵的计算量与词表大小 <code>V</code> 和序列长度 <code>L</code> 相关，而不是总参数量 <code>N</code>。对于大型模型（N &gt; 1B, V ~ 50k），绝大部分参数和计算量集中在 Transformer Block 的 <code>nn.Linear</code> 层中，因此这个简化是成立的。</li>
+<li>$T_{\text{tokens}}$: 训练语料库的总 token 数量，是我们的目标工作量。</li>
+<li><strong>系数 <code>6</code> 的由来</strong>:<ul>
+<li><strong>前向传播 (Forward Pass)</strong>: 对于每个 token，其通过模型时经历的矩阵乘法（<code>nn.Linear</code>）计算量总和约等于 $2 \cdot N_{\text{params}}$ FLOPs。(一个 <code>A @ B</code> 的矩阵乘法，<code>A</code> 是 <code>m*k</code>，<code>B</code> 是 <code>k*n</code>，需要 <code>2*m*k*n</code> FLOPs。Transformer 中线性层的权重总和构成了 $N_{\text{params}}$)。</li>
+<li><strong>反向传播 (Backward Pass)</strong>: 根据链式法则，计算梯度所需的计算量大约是前向传播的 <strong>2 倍</strong>，即 $4 \cdot N_{\text{params}}$ FLOPs。</li>
+<li>两者相加：$2 \cdot N_{\text{params}} + 4 \cdot N_{\text{params}} = 6 \cdot N_{\text{params}}$ FLOPs per token。</li>
+</ul>
+</li>
+</ul>
+<p><strong>公式忽略了什么？</strong>
+该公式主要捕获了 <code>nn.Linear</code> 层的计算量，而忽略了如 Self-Attention 中的矩阵乘法（Query-Key-Value）、LayerNorm/RMSNorm、激活函数和 Softmax 等。然而，对于 LLaMA 这类数十亿参数的模型，线性层的计算量占比超过 99%，因此这个公式的误差极小，完全适用于宏观估算。</p>
+<h3 id="2-mfu-tokenssecond">2. 中坚：从理论到现实（MFU 与 Tokens/Second）</h3>
+<p>拥有了理论计算量 FLOPs，我们如何将其转化为<strong>墙上时间（Wall Clock Time）</strong>？这需要引入硬件效率度量。</p>
+<p>$$
+\text{Time (seconds)} = \frac{\text{FLOPs}_{\text{train}}}{\text{Effective Cluster Performance (FLOPs/s)}}
+$$</p>
+<p>其中，<code>Effective Cluster Performance = (#GPUs) * HFLOPs_per_GPU * MFU</code>。</p>
+<ul>
+<li>$\text{#GPUs}$: GPU 数量，本教程中为 64。</li>
+<li>$\text{HFLOPs}_{\text{per_GPU}}$: 单块 GPU 的理论峰值性能。H100 80GB SXM 在 BF16/FP16 Tensor Core 上的理论峰值约为 <strong>2000 TFLOPs</strong>（$2 \times 10^{15}$ FLOPs/s）。<strong>注意</strong>：这是稀疏化（Sparsity）关闭时的性能，实际训练中我们通常使用这个数值。</li>
+<li><strong>MFU (Model FLOPs Utilization)</strong>: 模型浮点利用率，这是<strong>连接理论与现实的桥梁</strong>。它衡量了你的训练任务在多大程度上压榨出了硬件的理论性能。MFU 永远小于 100%，其限制因素包括：<ul>
+<li><strong>内存带宽墙</strong>: GPU 核心计算速度远超于从 HBM（高带宽内存）中存取数据的速度。对于 FlashAttention 这类访存密集型算子，性能瓶颈在内存而非计算。</li>
+<li><strong>通信销</strong>: 在分布式训练中，梯度同步（All-Reduce）需要通过 NVLink/NVSwitch 和 InfiniBand 进行大量数据交换。网络带宽和拓扑结构直接影响通信效率，这部分时间 GPU 核心可能在等待。</li>
+<li><strong>软件开销</strong>: CUDA kernel launch 的延迟、Python 解释器的开销、数据加载 pipeline 的不畅，都会让 GPU 产生微小的空闲，累积起来影响巨大。</li>
+<li><strong>并行策略的“气泡” (Bubble)</strong>: 流水线并行（Pipeline Parallelism）中，不同阶段之间不可避免地存在等待时间，即“气泡”，降低了总体利用率。</li>
+</ul>
+</li>
+</ul>
+<p><strong>Rule-of-thumb for MFU on H100 Clusters</strong>:</p>
+<ul>
+<li><strong>低于 30%</strong>: 可能存在严重的瓶颈，如数据加载缓慢、通信效率低下或实现代码有待优化。</li>
+<li><strong>30% - 50%</strong>: 一个<strong>健康且经过良好优化</strong>的区间。使用 FlashAttention v2、fused kernels 和优化的通信库（NCCL）是达到这个区间的关键。</li>
+<li><strong>高于 50%</strong>: 极为出色，通常只在超大模型、超长序列或特定优化下才能达到。</li>
+</ul>
+<h4 id="tokens-per-second"><strong>实践中的核心指标：Tokens per Second</strong></h4>
+<p>对于算法工程师而言，MFU 略显抽象。我们更关心一个直接可观测的指标：<strong>吞吐量</strong>。</p>
+<p>$$
+\text{Time (seconds)} = \frac{T_{\text{tokens}}}{\text{Tokens}_{\text{per_second_total}}}
+$$</p>
+<p>这个指标非常直观：用总任务量除以每秒完成的任务量。我们可以进一步将 MFU 和 <code>tokens/s</code> 关联起来：</p>
+<p>$$
+\text{Achieved TFLOPs/GPU} = \frac{6 \cdot N_{\text{params}} \cdot \text{Tokens}_{\text{per_second_per_GPU}}}{10^{12}}
+$$
+$$
+\text{MFU} = \frac{\text{Achieved TFLOPs/GPU}}{\text{Peak TFLOPs/GPU}}
+$$</p>
+<p><strong>影响 <code>tokens/s</code> 的因素</strong>：</p>
+<ul>
+<li><strong>模型大小</strong>：模型越大，计算越密集，<code>tokens/s</code> 越低。</li>
+<li><strong>序列长度</strong>：序列越长，Attention 计算量呈平方级增长，但由于计算强度增加，<strong>MFU 通常会提高</strong>，而 <code>tokens/s</code> 会下降。</li>
+<li><strong>并行策略</strong>：Tensor Parallelism 会引入额外的通信开销，可能降低 <code>tokens/s</code>。</li>
+<li><strong>软件栈</strong>：是否使用 FlashAttention v2、fused RMSNorm/SwiGLU 等，对 <code>tokens/s</code> 有<strong>决定性</strong>影响。</li>
+</ul>
+<h3 id="3-tco">3. 塔尖：财务成本分析 (TCO)</h3>
+<p>现在我们可以将时间换算成金钱。成本模型主要分为两种：</p>
+<h4 id="a-opex-">A. 云计算 (OpEx - 运营支出模型)</h4>
+<p>云计算的模式是“即用即付”，财务模型简单直接。</p>
+<p>$$
+¥_{\text{gpu_cloud}} = (\text{Total GPU Hours}) \cdot (¥/\text{GPU} \cdot \text{h})
+$$</p>
+<ul>
+<li><code>Total GPU Hours = (#GPUs) * Time(hours)</code></li>
+<li><code>¥/GPU·h</code>: 云厂商单价。这并非一个固定值：<ul>
+<li><strong>按需实例 (On-Demand)</strong>: 价格最高，灵活性最好。国内 H100 价格约 <strong>¥20 - ¥30 / GPU·h</strong>。</li>
+<li><strong>预留实例 (Reserved)</strong>: 长期（1-3年）承诺使用，可获得显著折扣（40%-60% off）。</li>
+<li><strong>竞价/抢占式实例 (Spot/Preemptible)</strong>: 价格最低，可能是按需的 1-3 折。但实例可能随时被云厂商收回，需要极强的断点续训和容错机制。<strong>对于长达数月的预训练务，完全依赖竞价实例风险极高。</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong>云的隐形成本</strong>:</p>
+<ul>
+<li><strong>数据存储</strong>: 1T token 的数据集（约 2TB）和大量的模型检查点（一个 13B 模型的完整检查点可达 200-300GB）会产生持续的存储费用。</li>
+<li><strong>网络流量</strong>: 尤其是数据传出（Egress）云的费用非常昂贵。训练过程中的跨区数据同步或日志传输也可能产生费用。</li>
+<li><strong>高附加值服务</strong>: 日志、监控、容器管理等平台服务也可能收费。</li>
+</ul>
+<h4 id="b-capex-opex">B. 自建机房 (CapEx + OpEx 模型)</h4>
+<p>自建机房需要巨大的前期资本投入（Capital Expenditure），并伴随着持续的运营支出（Operating Expenditure）。</p>
+<p><strong>TCO (总拥有成本) 公式</strong>:
+$$
+\text{TCO}_{\text{on-prem}} = \text{CapEx}_{\text{amortized}} + \text{OpEx}
+$$</p>
+<ul>
+<li>
+<p><strong>CapEx (资本支出)</strong>:</p>
+<ul>
+<li><strong>计算服务器</strong>: 8x H100 SXM 服务器（如 DGX H100）是核心，价格在 <strong>¥2,500,000 - ¥3,500,000</strong>。64 卡集群需要 8 台。</li>
+<li><strong>网络设备</strong>: 高速 InfiniBand/RoCE 交换机（如 NVIDIA Quantum-2），是保证集群扩展效率的关键，成本可达服务器总成本的 15%-25%。</li>
+<li><strong>存储系统</strong>: 高性能并行文件系统（如 CPFS），满足海量数据和检查点的读写需求。</li>
+<li><strong>数据中心基础设施</strong>: 机柜、PDU、冷却系统。</li>
+</ul>
+<p><strong>摊销 (Amortization)</strong>: CapEx 通常按 3-5 年进行摊销。例如，一台 ¥320 万的服务器按 3 年摊销，每小时的硬件成本约为 <code>3,200,000 / (3 * 365 * 24) ≈ ¥122/小时</code>，即 <strong>¥15.25 / GPU·h</strong>。</p>
+</li>
+<li>
+<p><strong>OpEx (运营支出)</strong>:</p>
+<ul>
+<li>
+<p><strong>电力成本</strong>: 这是最大的运营支出项，计算公式如下：
+    $$
+¥_{\text{power}} = (\text{#GPUs} \cdot \text{Power}_{\text{per_GPU}}) \cdot \text{PUE} \cdot \text{Time (hours)} \cdot (¥/\text{kWh})
+$$</p>
+<ul>
+<li>$\text{Power}_{\text{per_GPU}}$: H100 SXM 满载功耗约 700W，我们按 <strong>0.7 kW</strong> 估算。</li>
+<li><strong>PUE</strong>: 现代化绿色数据中心 PUE 可达 <strong>1.2</strong>，传统数据中心可能高达 <strong>1.8</strong>。这意味着每 1kW 用于计算的电，就有 0.8kW 用于制冷等。</li>
+<li><code>¥/kWh</code>: 中国工业用电价格区间为 <strong>¥0.8 - ¥1.2</strong>。<ul>
+<li><strong>数据中心托管费</strong>: 如果是租赁机位，会产生机柜空间和带宽费用。</li>
+<li><strong>运维人力</strong>: 需要专业的 SRE/DevOps 团队来维护集群的稳定运行，这是巨大的隐性成本。</li>
+<li><strong>软硬件维保</strong>: 服务器和交换机的维保合同。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>对比：云 vs. 自建</strong>
+| 特性 | 云计算 (Cloud) | 自建机房 (On-Premise) |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">特性</th>
+<th style="text-align: left;">云计算 (Cloud)</th>
+<th style="text-align: left;">自建机房 (On-Premise)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>财务模型</strong></td>
+<td style="text-align: left;">OpEx (运营支出)</td>
+<td style="text-align: left;">CapEx (资本支出) + OpEx</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>初始投资</strong></td>
+<td style="text-align: left;">低 (接近零)</td>
+<td style="text-align: left;">极高 (数千万 ¥)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>灵活性/弹性</strong></td>
+<td style="text-align: left;">极高，按需增减</td>
+<td style="text-align: left;">低，扩容周期长</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术门槛</strong></td>
+<td style="text-align: left;">相对较低 (专注算法)</td>
+<td style="text-align: left;">极高 (需硬件/网络/系统专家)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>长期单位成本</strong></td>
+<td style="text-align: left;">高</td>
+<td style="text-align: left;">较低 (若利用率足够高)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>适合场景</strong></td>
+<td style="text-align: left;">探索性研究、规模波动大、快速启动的项目</td>
+<td style="text-align: left;">长期、大规模、持续性的训练任务</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4">4. 高级估算模板：综合实战演练</h3>
+<p>下表在一个更详细的框架下，对 1T token 训练任务进行估算。</p>
+<p><strong>核心假设</strong>:</p>
+<ul>
+<li>训练数据量 $T_{\text{tokens}}$ = <strong>1T</strong> ($10^{12}$)</li>
+<li>硬件 = <strong>64 × H100 80GB SXM</strong></li>
+<li><strong>MFU 假设</strong> = <strong>40%</strong> (这是一个经过良好优化的目标)</li>
+<li>H100 理论峰值 = <strong>2000 TFLOPs</strong> (BF16)</li>
+<li><strong>云成本</strong>: ¥25/GPU·h (按需), ¥10/GPU·h (长期合约/混合竞价)</li>
+<li><strong>自建成本</strong>: ¥15/GPU·h (3年摊销), PUE=1.4, 电价=¥1.0/kWh</li>
+<li><strong>R&amp;D 开销系数</strong>: <strong>1.2x</strong> (计入 20% 的调试、实验和失败重试成本)</li>
+</ul>
+<p>| 指标/成本项 | 3B (<code>N=3e9</code>) | 7B (<code>N=7e9</code>) | 13B (<code>N=13e9</code>) | 公式 / 说明 |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">指标/成本项</th>
+<th style="text-align: left;">3B (<code>N=3e9</code>)</th>
+<th style="text-align: left;">7B (<code>N=7e9</code>)</th>
+<th style="text-align: left;">13B (<code>N=13e9</code>)</th>
+<th style="text-align: left;">公式 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1. 理论计算量 (EFLOPs)</strong></td>
+<td style="text-align: left;"><strong>18,000</strong></td>
+<td style="text-align: left;"><strong>42,000</strong></td>
+<td style="text-align: left;"><strong>78,000</strong></td>
+<td style="text-align: left;"><code>6 * N * 1e12 / 1e18</code> (1 EFLOPS = $10^{18}$ FLOPs)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2. 集群有效性能 (PFLOPs)</strong></td>
+<td style="text-align: left;">\multicolumn{3}{c</td>
+<td style="text-align: left;">}{<strong>51,200</strong> (即 51.2 EFLOPs/s)}</td>
+<td style="text-align: left;"><code>64 * 2000 TFLOPs * 40% (MFU)</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3. 理想训练时长 (小时)</strong></td>
+<td style="text-align: left;"><strong>~351.6</strong></td>
+<td style="text-align: left;"><strong>~820.3</strong></td>
+<td style="text-align: left;"><strong>~1523.4</strong></td>
+<td style="text-align: left;"><code>(1) / (2) / 3600</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>4. 理想训练时长 (天)</strong></td>
+<td style="text-align: left;"><strong>~14.6</strong></td>
+<td style="text-align: left;"><strong>~34.2</strong></td>
+<td style="text-align: left;"><strong>~63.5</strong></td>
+<td style="text-align: left;"><code>(3) / 24</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5. 总 GPU 小时</strong></td>
+<td style="text-align: left;"><strong>22,500</strong></td>
+<td style="text-align: left;"><strong>52,500</strong></td>
+<td style="text-align: left;"><strong>97,500</strong></td>
+<td style="text-align: left;"><code>(3) * 64</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>6. 预估吞吐/GPU (tok/s)</strong></td>
+<td style="text-align: left;"><strong>~12,400</strong></td>
+<td style="text-align: left;"><strong>~5,300</strong></td>
+<td style="text-align: left;"><strong>~2,850</strong></td>
+<td style="text-align: left;"><code>(1e12 / (3)) / 64</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">---</td>
+<td style="text-align: left;">---</td>
+<td style="text-align: left;">---</td>
+<td style="text-align: left;">---</td>
+<td style="text-align: left;">---</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7. 云成本(按需, ¥)</strong></td>
+<td style="text-align: left;"><strong>~¥562,500</strong></td>
+<td style="text-align: left;"><strong>~¥1,312,500</strong></td>
+<td style="text-align: left;"><strong>~¥2,437,500</strong></td>
+<td style="text-align: left;"><code>(5) * 25</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>8. 云成本(合约, ¥)</strong></td>
+<td style="text-align: left;"><strong>~¥225,000</strong></td>
+<td style="text-align: left;"><strong>~¥525,000</strong></td>
+<td style="text-align: left;"><strong>~¥975,000</strong></td>
+<td style="text-align: left;"><code>(5) * 10</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">---</td>
+<td style="text-align: left;">---</td>
+<td style="text-align: left;">---</td>
+<td style="text-align: left;">---</td>
+<td style="text-align: left;">---</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9. 自建硬件摊销 (¥)</strong></td>
+<td style="text-align: left;"><strong>~¥337,500</strong></td>
+<td style="text-align: left;"><strong>~¥787,500</strong></td>
+<td style="text-align: left;"><strong>~¥1,462,500</strong></td>
+<td style="text-align: left;"><code>(5) * 15</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>10. 总耗电量 (MWh)</strong></td>
+<td style="text-align: left;"><strong>~15.7</strong></td>
+<td style="text-align: left;"><strong>~36.7</strong></td>
+<td style="text-align: left;"><strong>~68.2</strong></td>
+<td style="text-align: left;"><code>64*0.7kW*1.4*(3)/1000</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>11. 电力成本 (¥)</strong></td>
+<td style="text-align: left;"><strong>~¥15,700</strong></td>
+<td style="text-align: left;"><strong>~¥36,700</strong></td>
+<td style="text-align: left;"><strong>~¥68,200</strong></td>
+<td style="text-align: left;"><code>(10) * 1000 * 1.0</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>12. 自建 TCO (硬件+电, ¥)</strong></td>
+<td style="text-align: left;"><strong>~¥353,200</strong></td>
+<td style="text-align: left;"><strong>~¥824,200</strong></td>
+<td style="text-align: left;"><strong>~¥1,530,700</strong></td>
+<td style="text-align: left;"><code>(9) + (11)</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">---</td>
+<td style="text-align: left;">---</td>
+<td style="text-align: left;">---</td>
+<td style="text-align: left;">---</td>
+<td style="text-align: left;">---</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13. [最终] 计入R&amp;D开销 (云按需)</strong></td>
+<td style="text-align: left;"><strong>~¥675,000</strong></td>
+<td style="text-align: left;"><strong>~¥1,575,000</strong></td>
+<td style="text-align: left;"><strong>~¥2,925,000</strong></td>
+<td style="text-align: left;"><code>(7) * 1.2</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14. [最终] 计入R&amp;D开销 (自建)</strong></td>
+<td style="text-align: left;"><strong>~¥423,840</strong></td>
+<td style="text-align: left;"><strong>~¥989,040</strong></td>
+<td style="text-align: left;"><strong>~¥1,836,840</strong></td>
+<td style="text-align: left;"><code>(12) * 1.2</code></td>
+</tr>
+</tbody>
+</table>
+<p>这个更详细的表格揭示了：</p>
+<ul>
+<li><strong>MFU 是关键</strong>：如果你的 MFU 只有 20%，所有的时间和成本都会翻倍。</li>
+<li><strong>规模的非线性成本</strong>：从 7B 到 13B，参数量增加不到 2 倍，但成本和时间也几乎翻倍，这给模型选型带来了巨大的经济压力。</li>
+<li><strong>云与自建的抉择</strong>：对于一次性的 13B 模型训练，自建的前期投入远超云成本。但如果计划每年进行 3-4 次这样的训练，自建的 TCO 优势将迅速显现。</li>
+</ul>
+<hr />
+<h2 id="_3">本章小结</h2>
+<p>本章我们构建了一个从理论到实践，再到财务的 LLM 训练成本估算全流程。</p>
+<ol>
+<li><strong>估算起点是理论计算量</strong>：<ul>
+<li>黄金公式：$\text{FLOPs}_{\text{train}} \approx 6 \cdot N_{\text{params}} \cdot T_{\text{tokens}}$ 是所有估算的基石。</li>
+</ul>
+</li>
+<li><strong>效率是连接现实的桥梁</strong>：<ul>
+<li><strong>MFU</strong> 是衡量集群计算效率的根本指标，受限于内存、网络和软件栈。在 H100 上，<strong>30%-50%</strong> 是一个健康的优化目标。</li>
+<li><strong>Tokens/second</strong> 是算法工程师最应关注的实测指标，它直接决定了训练时长。</li>
+</ul>
+</li>
+<li><strong>成本模型决定资源策略</strong>：<ul>
+<li><strong>云</strong>提供极高的<strong>灵活性和低启动成本</strong>，但长期单位成本高昂，适合敏捷研发和需求不确定的场景。</li>
+<li><strong>自建</strong>需要巨大的<strong>资本投入和专业运维</strong>，但能实现最低的长期单位成本，适合拥有明确、持续大规模训练需求的核心团队。</li>
+</ul>
+</li>
+<li><strong>估算必须考虑冗余</strong>：<ul>
+<li>永远不要只计算理想情况下的“一趟过”成本。引入 <strong>R&amp;D 开销系数（如 1.2x - 1.5x）</strong>来覆盖调试、实验和失败重试，会让你的预算更加切合实际。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="gotchas">常见陷阱与错误 (Gotchas)</h2>
+<ol>
+<li><strong>MFU 理想化谬误</strong>：直接用硬件理论峰值 TFLOPs 进行计算，是新手最常犯的错误。这会导致对训练时长的预估<strong>极度乐观</strong>（通常是实际时间的 1/3 到 1/2），造成项目延期和预算超支。<strong>永远要基于一个保守而现实的 MFU（如 30%）开始估算。</strong></li>
+<li><strong>忽略 R&amp;D 开销系数</strong>：成功的训练背后是无数次失败的尝试。将总成本乘以一个 1.2x 到 1.5x 的系数，用以覆盖调参、解决 bug、硬件故障重启等不可避免的开销。一个“跑通”的配置，背后可能消耗了数倍于单次成功运行的资源。</li>
+<li><strong>检查点 I/O 梦魇</strong>：对于 13B+ 模型，一个包含优化器状态的完整检查点大小可达数百 GB。在 64 个节点上同时将其写入共享存储（如 CPFS），可能造成严重的 I/O 瓶颈，使训练暂停数分钟甚至更久。这会显著降低<strong>有效</strong> <code>tokens/s</code>，延长总体时间。估算时需要考虑或实测检查点保存的开销。</li>
+<li><strong>竞价实例的惑陷阱</strong>：云的竞价实例价格极具诱惑力，但其“随时被抢占”的特性对于长周期训练是致命的。频繁的抢占不仅会丢失最近一次 checkpoint 到抢占时刻之间的训练进度，还可能因为集群状态不一致导致恢复失败。除非有极其鲁棒的自动化容错和恢复系统，否则应谨慎使用。</li>
+<li><strong>自建成本的“冰山之下”</strong>：在计算自建成本时，只考虑服务器硬件的摊销是严重低估。电力、制冷、数据中心托管、高速网络、专业运维团队的薪资，这些 OpEx 才是冰山下的主体。一个完整的 TCO 分析必须包含所有这些要素。</li>
+<li><strong>上下文长度的诅咒</strong>：从 4k 上下文切换到 8k，虽然理论 FLOPs 不变，但由于 Attention 矩阵变大，对 HBM 带宽和计算模式的压力剧增，通常会导致 <code>tokens/s</code> 显著下降（可能下降 20%-40%）。在估算时，必须使用与目标上下文长度匹配的吞吐量数据。</li>
+</ol>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter12.html" class="nav-link prev">← 第十二章 端到端：CPT / 继续预训练</a><a href="chapter14.html" class="nav-link next">chapter14.md — 常见问题与诊断 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

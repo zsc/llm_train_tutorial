@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>chapter01.md — 总览与可复现环境</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">从零到可复现：LLM 训练实战（算法向，Lightning + DeepSpeed）—**索引**</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter01.md — 总览与可复现环境</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter03.md — 架构细节：LLaMA 风格与 8k 扩展</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter05.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 05 — 大批量训练与学习率策略</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter06.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：多数据集动态混比——从“大锅饭”到“交响乐”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter07.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 7 章 — 优化器与数值稳定</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter08.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 8 章：数据加载与存储格式（CPFS）— 榨干 IO 吞吐</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter09.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章 — 并行与内存：Lightning + DeepSpeed 配方</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter10.md — 评估：验证困惑度</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter11.md — 端到端：从零预训练（1T tokens）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章 端到端：CPT / 继续预训练</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 13 章：成本/时长粗估（¥）与 TCO</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter14.md — 常见问题与诊断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter15.md — 附录与参考</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="chapter01md">chapter01.md — 总览与可复现环境</h1>
+<h2 id="1">1. 开篇段落</h2>
+<p>欢迎来到《从零到可复现：LLM 训练实战》的第一章。本章是整个课程的基石，我们不直接深入复杂的算法，而是聚焦于保障大规模语言模型训练这一昂贵的“科学实验”能够<strong>可靠、可复现、可观测</strong>的 foundational practices。成功的 LLM 训练，其挑战往往并非源于算法的晦涩，而是源于在数百万亿次浮点运算中对混沌的控制。一次 1T token 的训练，其成本堪比一次小型火箭发射，任何由于环境不一致、随机性失控导致的“意外”结果，都是不可接受的资源浪费。在本章结束时，你将掌握一套工业级的实验管理框架：如何系统性地控制训练中的随机来源，建立一套精确无歧义的符号与单位体系用于沟通和计算，并设计出能够从容应对硬件或系统故障的日志与检查点策略。这不仅是工程上的最佳实践，更是保障算法研究结论有效性的科学前提。</p>
+<h2 id="2">2. 文字论述</h2>
+<h3 id="21">2.1 实验可复现性：科学训练的圣杯</h3>
+<p>在LLM领域，可复现性（Reproducibility）绝非学术上的吹毛求疵，而是决定项目成败的生命线。它确保了算法改进的有效性可以被验证，训练过程中的 bug 可以被定位，以及团队成员之间的协作有共同的基准。我们追求的可复现性有两个层次：</p>
+<ol>
+<li><strong>比特级复现 (Bit-wise Reproducibility)</strong>: 在完全相同的软硬件环境下，两次独立运行的结果（包括每一轮的 loss、模型权重等）完全一致。这是算法调试和验证阶段的黄金标准。</li>
+<li><strong>统计级复现 (Statistical Reproducibility)</strong>: 在不同时间或相似（但不完全相同）的硬件环境下，多次运行宏观结果（如最终的 PPL、loss 曲线的整体趋势和收敛点）在统计意义上无显著差异。这是大规模生产训练的务实目标。</li>
+</ol>
+<p>以下是实现这两个层次可复现性的关键控制点：</p>
+<ul>
+<li>
+<p><strong>全局与局部随机种子 (Global &amp; Local Random Seeds)</strong></p>
+<ul>
+<li><strong>核心</strong>: 训练过程中的随机性主要源于：模型参数的初始化、dropout、数据 shuffling 和数据增强（若有）。控制这一切的起点是设定一个全局随机种子。</li>
+<li><strong>实践</strong>: 一个健壮的训练框架会实现一个 <code>seed_everything</code> 函数，在程序入口处调用。它至少应覆盖：<ul>
+<li><code>random.seed(seed)</code></li>
+<li><code>np.random.seed(seed)</code></li>
+<li><code>torch.manual_seed(seed)</code></li>
+<li><code>torch.cuda.manual_seed(seed)</code> (如果使用单GPU)</li>
+<li><code>torch.cuda.manual_seed_all(seed)</code> (如果使用多GPU)</li>
+</ul>
+</li>
+<li><strong>分布式环境</strong>: 在 PyTorch Lightning 这类框架中，需要确保种子在所有分布式进程（rank）上被正确设置，并且通常会为数据加载、模型初始化等不同阶段派生出不同的种子，以避免它们之间不必要的关联。例如，数据加载的 worker 种子可以是 <code>global_seed + worker_id</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>CUDA 确定性行为 (CUDA Deterministic Behavior)</strong></p>
+<ul>
+<li><strong>背景</strong>: 为了最大化并行计算效率，NVIDIA 的 cuDNN 库中许多算法（特别是卷积和某些 reduction 操作）本质上是<strong>非确定性</strong>的。例如，浮点数的原子加法 <code>atomicAdd</code> 在并行执行时，其累加顺序是不固定的，而浮点数加法不满足结合律 <code>(a+b)+c ≠ a+(b+c)</code>，导致每次结果可能存在微小差异。</li>
+<li><strong>控制开关</strong>:<ul>
+<li><code>torch.backends.cudnn.deterministic = True</code>: 强制 cuDNN 使用确定性算法。这可能会禁用一些最高效的算法。</li>
+<li><code>torch.backends.cudnn.benchmark = False</code>: <code>benchmark=True</code> 时，cuDNN 会在每次遇到新的输入尺寸时，自动测试多种算法并选择最快的。这个选择过程本身可能引入不确性，且会增加初次迭代的耗时。在输入尺寸固定的 LLM 训练中，其收益有限，但关闭可增强确定性。</li>
+</ul>
+</li>
+<li><strong>Rule-of-thumb (性能与确定性的权衡)</strong>:<ul>
+<li><strong>算法验证/调试阶段</strong>: <strong>必须开启</strong>确定性模式 (<code>deterministic=True</code>, <code>benchmark=False</code>)。此时性能损失（可能高达 20-30%）是值得的，因为它能帮助你隔离 bug，确保算法逻辑的正确性。</li>
+<li><strong>大规模生产训练</strong>: <strong>建议关闭</strong>确定性模式以换取极致的吞吐量。此时，我们依赖于统计级复现。只要多次运行的 loss 曲线在噪声范围内重合，我们就认为训练是健康的。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>数据加载顺序 (Data Loading Order)</strong></p>
+<ul>
+<li><strong>陷阱</strong>: <code>torch.utils.data.DataLoader</code> 的 <code>num_workers &gt; 0</code> 是最常见的非确定性来源。多个并行的 worker 进程会以不可预测的顺序完成数据块的预处理和加载。</li>
+<li><strong>解决方案</strong>:<ol>
+<li><strong>Worker 内部 seeding</strong>: 通过 <code>worker_init_fn</code> 为每个 worker 设置独立的种子。这能保证每个 worker 内部的数据处理（如某些随机采样）是确定的，但不能保证 worker 之间返回数据的顺序。</li>
+<li><strong>全局预 shuffling (黄金标准)</strong>: 在训练开始前，对整个数据集进行一次彻底的、有确定性种子的 shuffle，生成一个索引文件（或一个记录了文件顺序的 manifest 文件）。训练时，<code>DataLoader</code> 不再进行随机 shuffle，而是严格按照这个预先计算好的索引顺序来读取数据。所有 worker 都从这个共享的顺序队列中取任务。这是实现数据加载比特级复现的最稳健方法。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>分布式通信与浮点累积误差 (Distributed Communication &amp; Floating-Point Error)</strong></p>
+<ul>
+<li><strong>根源</strong>: 在数据并行训练中，每个 step 的梯度同步依赖于 <code>AllReduce</code> 操作。这个操作在多个 GPU 之间对梯度张量进行求和。如前所述，大规模并行求和的顺序是不确定的。</li>
+<li><strong>影响</strong>: 单步的差异可能只有 <code>1e-8</code> 级别，但在数万甚至数十万步的训练中，这些微小的差异会通过梯度更新、优化器状态（动量）等非线性系统不断累积和放大，最终导致 loss 曲线可观测到的偏离。</li>
+<li><strong>应对</strong>: 这是我们在大规模训练中几乎无法追求比特级复现的根本原因。我们不应尝试用环境变量（如 <code>NCCL_ALGO</code>）去“修复”它，而应接受它，并建立监控机制来确保这种偏离在可控的统计范围内。</li>
+</ul>
+</li>
+</ul>
+<h3 id="22">2.2 统一语言：符号、记号与单位</h3>
+<p>精确的术语是科学交流的基石。在LLM训练中，模糊的表述（如“batch size”）会导致代价高昂的误解。以下是我们贯穿整个教程的标准化符号体系：</p>
+<p>| 符号              | 含义与深度解释                               |</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义与深度解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>N_params</code></td>
+<td><strong>模型非嵌入参数量 (B)</strong>。通常指 Transformer blocks 中的参数。我们将其与 embedding table 分开因为 <code>6·N·T</code> 的 FLOPs 估算主要适用于前者。Embedding 的计算量相对较小。</td>
+</tr>
+<tr>
+<td><code>T_tokens</code></td>
+<td><strong>训练总 tokens (T)</strong>。这是衡量训练规模的核心指标，代表了模型“阅读”过的语料总量。本教程默认 <code>1T</code> (1万亿) tokens。</td>
+</tr>
+<tr>
+<td><code>L_ctx</code></td>
+<td><strong>上下文长度</strong>。单个训练样本的序列长度。例如 <code>4096</code> 或 <code>8192</code>。</td>
+</tr>
+<tr>
+<td><code>GB_tok</code></td>
+<td><strong>Global Batch in Tokens</strong>。<strong>这是最重要的批量单位</strong>，是整个训练优化的“原子操作”单元。它指代<strong>单次 optimizer step</strong>所见过的 token 总数。Scaling Law 和 LR scaling 法则都是基于这个值。</td>
+</tr>
+<tr>
+<td><code>μ_tok</code></td>
+<td><strong>Micro-batch in Tokens</strong>。单张 GPU 在一次独立的 <code>forward -&gt; backward</code> 传递中处理的 token 数量。<code>μ_tok = sequences_per_gpu × L_ctx</code>。这个值直接受限于单张 GPU 的显存。</td>
+</tr>
+<tr>
+<td><code>A</code></td>
+<td><strong>梯度累积步数</strong>。为了在显存有限的情况下实现大的 <code>GB_tok</code>，我们执行 <code>A</code> 次 <code>forward -&gt; backward</code>，累梯度，然后执行一次 <code>optimizer.step()</code>。</td>
+</tr>
+<tr>
+<td><code>D</code></td>
+<td><strong>数据并行度 (Data Parallel Degree)</strong>。参与数据并行的 GPU 数量。</td>
+</tr>
+<tr>
+<td><code>FLOPs</code></td>
+<td><strong>训练浮点运算量</strong>。对于 Decoder-only 模型，一个被广泛验证的近似公式是： $FLOPs \approx 6 \cdot N_{\text{params}} \cdot T_{\text{tokens}}$。这个 <code>6</code> 来自于：forward pass 的 <code>2NT</code> (主要在两个 MLP 的 MatMul 和 Attention 的 MatMul) 和 backward pass 的 <code>4NT</code> (理论上是 forward 的两倍)。这个公式为我们估算成本和时间提供了理论基础。</td>
+</tr>
+<tr>
+<td><code>PUE</code></td>
+<td><strong>电能使用效率 (Power Usage Effectiveness)</strong>。数据中心总能耗 / IT 设备能耗。一个现代化的数据中心 PUE 约在 1.1-1.2 之间。</td>
+</tr>
+<tr>
+<td><code>¥</code> / <code>kWh</code></td>
+<td><strong>成本与能耗单位</strong>。所有金额统一为人民币（¥），电量为千瓦时（kWh）。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ASCII 图解：批大小的层级关系</strong></p>
+<div class="codehilite"><pre><span></span><code>========================= ONE GLOBAL BATCH (Optimizer Step) =========================
+Total tokens processed for one weight update: GB_tok = D <span class="gs">* A *</span> μ_tok
+-------------------------------------------------------------------------------------
+|                                                                                   |
+|  [Accumulation Step 1]  [Accumulation Step 2]  ...  [Accumulation Step A]          |
+
+|  [Accumulation Step 1]  [Accumulation Step 2]  ...  [Accumulation Step A]          |
+|          |                  |                             |                       |
+|   (grads accumulated)   (grads accumulated)       (grads updated to weights)      |
+|          |                  |                             |                       |
+|   --- Micro-Batch Execution on D GPUs ---       ... (repeated A times) ...        |
+|  | GPU0: μ_tok | | GPU1: μ_tok | ... | GPUD: μ_tok |                              |
+|   -------------------------------------                                           |
+|                                                                                   |
+
+=====================================================================================
+</code></pre></div>
+
+<h3 id="23">2.3 观测与恢复：日志、指标与检查点</h3>
+<p>大规模训练是脆弱的马拉松，而不是短跑。节点故障、网络抖动、甚至电源波动都可能中断训练。强大的观测与恢复机制是我们的安全网。</p>
+<ul>
+<li>
+<p><strong>训练日志与指标：训练的“仪表盘”</strong></p>
+<ul>
+<li><strong>核心算法指标</strong>:<ul>
+<li><code>loss</code> (training loss): 监控收敛性，通常会进行平滑处理（如滑动平均）以观察趋势。</li>
+<li><code>val_ppl</code> (validation perplexity): 在留出验证集上的困惑度，是评估模型泛化能力的关键。</li>
+<li><code>learning_rate</code>: 验证 LR schedule 是否按预期工作。</li>
+<li><code>grad_norm</code> (gradient norm): 在梯度裁剪前的全局梯度范数，用于监控梯度爆炸或消失。</li>
+</ul>
+</li>
+<li><strong>性能与效率指标</strong>:<ul>
+<li><code>tokens_per_second_per_gpu</code>: 单 GPU 的有效吞吐量。</li>
+<li><code>total_tokens_per_second</code>: 整个集群的吞吐量。</li>
+<li><code>MFU (Model FLOPs Utilization)</code>: <code>实际 TFLOPs / 理论峰值 TFLOPs</code>，衡量硬件利用效率。H100 上 MFU 达到 50-60% 是一个很好的目标。</li>
+</ul>
+</li>
+<li><strong>工具与实践</strong>: PyTorch Lightning 的 <code>Logger</code> 接口与 TensorBoard、W&amp;B 等工具无缝集成。<ul>
+<li><strong>Rule-of-thumb</strong>: 在训练启动时，<strong>将完整的配置文件（YAML/JSON）、git commit hash 和 <code>pip freeze</code> 的结果</strong>作为文本日志记录下来。这保证了任何一次实验的所有环境和配置细节都可以被精确追溯。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>检查点策略：从灾难中恢复</strong></p>
+<ul>
+<li><strong>目标</strong>: 检查点不仅是模型的权重，它是<strong>整个训练状态机在某个时间点的完整快照</strong>。一个完备的检查点必须能够让训练在中断后，从完全相同的状态继续，就好像从未发生过中断一样。</li>
+<li><strong>完备检查点的内容</strong>:<ol>
+<li><strong>模型 <code>state_dict</code></strong>: 模型的权重。</li>
+<li><strong>优化器 <code>state_dict</code></strong>: <strong>至关重要</strong>。包含 AdamW 的一阶矩（动量）和二阶矩（方差）等状态。丢失它会导致训练恢复后性剧烈震荡。</li>
+<li><strong>学习率调度器 <code>state_dict</code></strong>: 记录当前在 schedule 的哪个位置。</li>
+<li><strong>训练进度</strong>: 当前的 <code>global_step</code> / <code>epoch</code>。</li>
+<li><strong>数据加载器状态</strong>: 当前读取到数据集的哪个位置，确保不重复或遗漏数据。</li>
+<li><strong>随机数生成器状态</strong>: <code>torch.get_rng_state()</code> 等，保证 dropout 模式等随机过程可以被恢复。</li>
+</ol>
+</li>
+<li><strong>存储与 I/O 优化</strong>:<ul>
+<li><strong>频率</strong>: 保存检查点会暂停训练，是一个 I/O 密集型操作。13B 模型的 bf16 检查点（含优化器状态）大小约为 <code>13*2 (weights) + 13*8 (optimizer states) = 130 GB</code>。频繁保存会严重影响吞吐。策略通常是“按时”（如每4小时）和“按最佳PPL”保存。</li>
+<li><strong>分片保存 (Sharded Checkpoint)</strong>: DeepSpeed 等框架会将模型和优化器状态分片保存在各个 rank 上。例如，在 64 卡上，每个 rank 只需处理约 2GB 的数据。这极大地利用了并行 I/O，将保存/载时间从数十分钟缩短到几十秒。</li>
+<li><strong>异步保存</strong>: 在后台线程或进程中执行保存操作，让主训练循环的等待时间最小化。</li>
+<li><strong>原子性</strong>: <strong>始终遵循“先写入临时目录/文件，成功后再原子性地重命名”的原则</strong>。这可以防止在写入过程中因节点故障而产生损坏的、不可用的检查点文件。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3">3. 本章小结</h2>
+<p>本章我们为整个 LLM 训练旅程搭建了坚固的“地基”。其核心思想是将 LLM 训练视为一门严谨的、可度量的科学实验。</p>
+<ul>
+<li><strong>拥抱分层可复现性</strong>: 在调试阶段，不惜性能代价追求比特级复现，以确保算法的正确性。在规模化训练阶段，接受分布式系统固有的非确定性，转向追求统计级复现，并建立监控体系。</li>
+<li><strong>坚持使用精确的语言</strong>: 以 <code>GB_tok</code> (全局 token 批次) 作为思考和配置的核心，用 <code>6·N·T</code> FLOPs 公式作为预算和性能评估的标尺。这能消除团队内外的通壁垒。</li>
+<li><strong>防患于未然</strong>: 训练的脆弱性是常态。通过详尽的日志（包含代码和环境快照）和原子性的、完备的、分片的检查点策略，我们能将意外中断的损失降到最低，保障项目的顺利推进。</li>
+</ul>
+<p>掌握了这些基础实践，我们才能在后续章节中，安心地探索 scaling laws、优化器选择、并行策略等更深层次的算法与技术。</p>
+<h2 id="4-gotchas">4. 常见陷阱与错误 (Gotchas)</h2>
+<ol>
+<li>
+<p><strong>恢复训练后 Loss 曲线“跳崖”</strong>:</p>
+<ul>
+<li><strong>陷阱</strong>: 从检查点恢复训练，loss 突然升高，然后才慢慢下降，仿佛“从头再来”。</li>
+<li><strong>根源</strong>: <strong>只加载了模型权重，没有加载优化器状态</strong>。AdamW 等优化器内部维护的动量和方差信息（相当于梯度的“历史记忆”）丢失了。优化器在恢复后突然面对一个“陌生”的梯度，导致更新步长和方向出现剧烈偏差。</li>
+<li><strong>诊断</strong>: 对比恢复前后的 <code>optimizer.state_dict()</code>，会发现恢复后是的或初始化的。务必确保检查点和加载逻辑都包含了优化器。</li>
+</ul>
+</li>
+<li>
+<p><strong>不同机器/集群间的“玄学”差异</strong>:</p>
+<ul>
+<li><strong>陷阱</strong>: 完全相同的代码、配置和数据，在一个集群上跑得很好，在另一个集群上却出现 loss 发散或性能差异。</li>
+<li><strong>根源</strong>: <strong>环境漂移 (Environment Drift)</strong>。这可能源于细微但关键的差异：NCCL 版本、CUDA 驱动、cuDNN 库版本、CPU 微架构（影响某些浮点运算），甚至是 IB 网络的配置。</li>
+<li><strong>解决</strong>: 使用容器技术（如 Docker、Singularity/Apptainer）将整个软件栈（从操作系统库到 Python 包）打包成一个不可变的镜像。这是根治环境依赖问题的最有效方法。</li>
+</ul>
+</li>
+<li>
+<p><strong>“静默”的数据损坏</strong>:</p>
+<ul>
+<li><strong>陷阱</strong>: 训练运行数天后，loss 曲线突然开始出现无法解释的尖峰或缓慢劣化。检查所有代码和配置都无问题。</li>
+<li><strong>根源</strong>: 存储在 CPFS 上的某个数据分片文件（如 <code>.tar</code> 或 Parquet 文件）可能发生了“位翻转”或损坏。数据加载器读取了错误的数据，导致模型看到了“毒丸”样本。</li>
+<li><strong>预防</strong>: 在数据预处理阶段，为每个数据分片计算并存储其哈希值（如 SHA256）。在训练时，数据加载器可以在加载每个分片后（或以一定概率抽样）校验其哈希值，一旦不匹配就立即报错并跳过该损坏文件。</li>
+</ul>
+</li>
+<li>
+<p><strong>检查点与代码版本不匹配</strong>:</p>
+<ul>
+<li><strong>陷阱</strong>: 你修改了模型结构（比如增加或删除了一个层），然后试图从旧代码生成的检查点中恢复训练。PyTorch 的 <code>load_state_dict</code> 默认 <code>strict=True</code> 会直接报错。如果改为 <code>strict=False</code>，程序能跑起来，但可能会出现灾难性的后果。</li>
+<li><strong>后果</strong>: 未被加载的层（新层）将使用随机初始化的权重，而已被删除的层的优化器状态则被丢弃。这会导致模型内部状态极度不协调，训练很可能立即崩溃或走向一个糟糕的局部最点。</li>
+<li><strong>最佳实践</strong>: 检查点应与生成它的 git commit hash 强绑定。在加载检查点时，程序应首先验证当前代码的 git hash 是否与检查点元信息中的 hash 一致。如果不一致，应强制用户明确处理（如编写专门的权重迁移脚本），而不是“静默”地忽略差异。</li>
+</ul>
+</li>
+</ol>
+            </article>
+            
+            <nav class="page-nav"><a href="index.html" class="nav-link prev">← 从零到可复现：LLM 训练实战（算法向，Lightning + DeepSpeed）—**索引**</a><a href="chapter2.html" class="nav-link next">Untitled →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

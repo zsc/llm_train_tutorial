@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>从零到可复现：LLM 训练实战（算法向，Lightning + DeepSpeed）—**索引**</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item active" >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">从零到可复现：LLM 训练实战（算法向，Lightning + DeepSpeed）—**索引**</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter01.md — 总览与可复现环境</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter03.md — 架构细节：LLaMA 风格与 8k 扩展</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter05.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 05 — 大批量训练与学习率策略</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter06.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：多数据集动态混比——从“大锅饭”到“交响乐”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter07.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 7 章 — 优化器与数值稳定</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter08.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 8 章：数据加载与存储格式（CPFS）— 榨干 IO 吞吐</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter09.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章 — 并行与内存：Lightning + DeepSpeed 配方</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter10.md — 评估：验证困惑度</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter11.md — 端到端：从零预训练（1T tokens）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章 端到端：CPT / 继续预训练</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 13 章：成本/时长粗估（¥）与 TCO</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter14.md — 常见问题与诊断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter15.md — 附录与参考</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="llm-lightning-deepspeed">从零到可复现：LLM 训练实战（算法向，Lightning + DeepSpeed）—<strong>索引</strong></h1>
+<blockquote>
+<p>目标：面向 <strong>AI Scientist</strong> 的中文公开教程，专注算法与训练策略（<strong>非 infra 运维</strong>），在 <strong>PyTorch Lightning + DeepSpeed</strong> 框架下，复现并扩展 <strong>LLaMA 风格纯文本模型</strong>（3B / 7B / 13B），上下文 <strong>4k / 8k（RoPE scaling: PI / NTK-aware / YaRN）</strong>，覆盖<strong>从零预训练</strong>与 <strong>CPT（Continued Pre-Training）</strong>两条路径。
+规模假设：<strong>64 × H100 80GB</strong>，单次训练以<strong>完整过 1T tokens</strong> 为基准；数据存储为 <strong>CPFS</strong>；主要验证指标 <strong>验证困惑度（perplexity）</strong>。
+金额一律以 <strong>人民币（¥）</strong> 计。</p>
+</blockquote>
+<hr />
+<h2 id="_1">教程使用方式</h2>
+<ul>
+<li><strong>阅读路径 A（从零预训练）</strong>：<code>chapter01</code> → <code>chapter03</code> → <code>chapter05</code> → <code>chapter06</code> → <code>chapter07</code> → <code>chapter09</code> → <code>chapter11</code> → <code>chapter10</code></li>
+<li><strong>阅读路径 B（CPT/继续预训练）</strong>：<code>chapter01</code> → <code>chapter02</code> → <code>chapter04</code> → <code>chapter06</code> → <code>chapter08</code>  <code>chapter12</code> → <code>chapter10</code></li>
+<li><strong>只想快速上手跑通 7B/13B</strong>：<code>chapter01</code>（环境与复现性）→ <code>chapter09</code>（Lightning+DeepSpeed 配方）→ <code>chapter11/12</code>（端到端配置）</li>
+</ul>
+<hr />
+<h2 id="_2">读者画像与不做什么</h2>
+<ul>
+<li><strong>面向读者</strong>：算法研究员 / 训练负责人 / 具备 PyTorch 分布式经验的工程科学家。</li>
+<li><strong>不覆盖</strong>：大规模数据抓取与治理流水线、K8s 集群管理、作业调度系统、存储/网络调参与成本议价细节（仅做 <strong>TCO 级粗估</strong>）。</li>
+</ul>
+<hr />
+<h2 id="_3">计算与软件基线（建议）</h2>
+<ul>
+<li><strong>硬件</strong>：64× H100 80GB（SXM/NVLink/NVSwitch），IB/400GbE；PUE 假设在成本章给公式与档位。</li>
+<li><strong>软件</strong>：PyTorch（2.x）、PyTorch Lightning（2.x）、DeepSpeed（ZeRO/Paged Optimizer）、FlashAttention v2、fused RMSNorm/SwiGLU、fused RoPE。</li>
+<li><strong>数据</strong>：CPFS（大文件小文件均可，训练侧采用 <strong>shard + 流式</strong>）。</li>
+<li><strong>模型</strong>：LLaMA 风格 Decoder-only（RMSNorm、SwiGLU、RoPE）；上下文 4k / 8k（采用 RoPE scaling: PI / NTK-aware / YaRN）。</li>
+</ul>
+<hr />
+<h2 id="_4">目录（文件结构）</h2>
+<ul>
+<li><strong>index.md</strong>（当前文件）</li>
+<li>
+<p><strong>chapter01.md — 总览与可复现环境</strong></p>
+</li>
+<li>
+<p>复现实验要求与随机性控制（seed、CUDA/Determinism、NCCL）</p>
+</li>
+<li>记号/符号约定（见下表）与单位统一（tokens、FLOPs、¥、kWh）</li>
+<li>训练日志、指标与检查点（Lightning Logger、zstd 压缩、断点续训策略）</li>
+<li>
+<p><strong>chapter02.md — Tokenizer 与数据预处理（BPE 优化）</strong></p>
+</li>
+<li>
+<p>语料去重与分块概览（面向 CPT/预训练的“轻治理”）</p>
+</li>
+<li><strong>BPE 训练与优化</strong>：vocab size、字符覆盖率、合并规则、数字与空白、特殊符号</li>
+<li>训练前 <strong>chunking/packing</strong> 策略（packed vs un-packed）、padding 与效率</li>
+<li>构建 <strong>.idx/.bin</strong> 或 <strong>Parquet</strong> token 数据、统计分布与长度直方图</li>
+<li>
+<p><strong>chapter03.md — 架构细节：LLaMA 风格与 8k 扩展</strong></p>
+</li>
+<li>
+<p>模型结构与超参搜索空间（3B/7B/13B 的典型宽深比例、头数、head_dim）</p>
+</li>
+<li><strong>RoPE scaling</strong>（PI / NTK-aware / YaRN）适用场景与权衡</li>
+<li><strong>FlashAttention v2</strong>、<strong>fused RMSNorm/SwiGLU</strong>、<strong>fused RoPE</strong> 的数值与吞吐影响</li>
+<li>dropout、rmsnorm ε、init、残差配比与稳定性</li>
+<li>
+<p><strong>chapter04.md — Scaling Laws 深入</strong></p>
+</li>
+<li>
+<p>从 Kaplan 到 <strong>Chinchilla-style</strong>：计算最优点推导（参数量 N、训练 tokens T 的闭式关系）</p>
+</li>
+<li><strong>噪声尺度定律（Noise Scale）</strong> 与学习率/批大小关系</li>
+<li>2024 年对 Chinchilla 规律的刷新与实践建议（长上下文、分布偏移）</li>
+<li>结合 1T tokens 目标推导 3B/7B/13B 的合理 compute 预算</li>
+<li>
+<p><strong>chapter05.md — 大批量训练与学习率策略</strong></p>
+</li>
+<li>
+<p><strong>Global Batch（以 tokens 计）</strong> 的定义与可接受区间</p>
+</li>
+<li><strong>LR scaling</strong> 经验法则：<strong>linear / sqrt</strong> 两派及折中</li>
+<li>迭代步数（iters）↔ global batch size ↔ <strong>总 tokens</strong> 的约束关系</li>
+<li><strong>LR schedule</strong>：cosine、linear decay、one-cycle、warmup/cooldown</li>
+<li>梯度裁剪、weight decay、正则与稳定性观测</li>
+<li>
+<p><strong>chapter06.md  多数据集动态混比</strong></p>
+</li>
+<li>
+<p>混比目标：困惑度收敛、领域泛化、分布鲁棒</p>
+</li>
+<li><strong>动态混比调度</strong>：温度采样、重要性加权、配额上限/下限、阶段性 curriculum</li>
+<li>长度分桶与 <strong>on-the-fly</strong> rebalancing；CPT 中「新域优先」与「基座保真」</li>
+<li>
+<p><strong>chapter07.md — 优化器与数值稳定</strong></p>
+</li>
+<li>
+<p><strong>AdamW</strong> 主线：β、ε、decoupled weight decay、fused AdamW</p>
+</li>
+<li><strong>Lion / Adafactor / DeepSpeed Paged AdamW</strong> 对比与适用性</li>
+<li>梯度累积、混合精度（bf16 主推）、溢出监控与损失缩放</li>
+<li>
+<p><strong>chapter08.md — 数据加载与存储格式（CPFS）</strong></p>
+</li>
+<li>
+<p><strong>WebDataset（tar+IDX 流式）</strong>、<strong>Parquet（PyArrow）</strong>、<strong>Petastorm</strong> 的取舍</p>
+</li>
+<li>预取、pin memory、异步解码、长度感知的 dynamic packing</li>
+<li>shard 切分策略、CPFS 并发 IO 与吞吐压测方法</li>
+<li>
+<p><strong>chapter09.md — 并行与内存：Lightning + DeepSpeed 配方</strong></p>
+</li>
+<li>
+<p>ZeRO 阶段选择、<strong>Paged Optimizer</strong>、offload 策略</p>
+</li>
+<li><strong>Tensor Parallel 切分维度</strong>、（可选）Pipeline Parallel 的取舍</li>
+<li><strong>Activation Checkpoint / 重计算</strong> 的收益与开销</li>
+<li><strong>梯度累积步数</strong>、micro-batch、显存预算与稳定区间</li>
+<li>tokens/s 的 <strong>Lightning + DeepSpeed</strong> 实战加速技巧与 Profiling</li>
+<li>
+<p><strong>chapter10.md — 评估：验证困惑度</strong></p>
+</li>
+<li>
+<p>PPL 的定义、滑动窗口评估（长上下文）与去偏</p>
+</li>
+<li>分布外评估（held-out）、CPT 的前/后对比</li>
+<li>分布漂移与「过拟合数据混比」的诊断</li>
+<li>
+<p><strong>chapter11.md — 端到端：从零预训练（1T tokens）</strong></p>
+</li>
+<li>
+<p>3B / 7B / 13B 三套「可跑通」基线配置（4k/8k 各一）</p>
+</li>
+<li>推荐默认超参表、失败模式与排障 checklist</li>
+<li>训练日志样例解读：loss 曲线、噪声尺度估计、学习率热力图</li>
+<li>
+<p><strong>chapter12.md — 端到端：CPT / 继续预训练</strong></p>
+</li>
+<li>
+<p>与 base 预训练的差异：混比、LR/schedule、冻结策略（是否不冻结嵌入）</p>
+</li>
+<li>「域拉升」与「基座保持」的策略分层</li>
+<li>
+<p><strong>chapter13.md — 成本/时长粗估（¥）与 TCO</strong></p>
+</li>
+<li>
+<p>理论 <strong>FLOPs = 6·N_params·T_tokens</strong>（decoder-only 近似）与<strong>算力—时间</strong>换算</p>
+</li>
+<li><strong>GPU 小时</strong>、<strong>电费（kWh, PUE）</strong>、<strong>云 vs 自建</strong>（折旧/摊销）的 <strong>TCO 公式</strong></li>
+<li>以 <strong>64×H100</strong>、1T tokens 为例的<strong>可复用估算表格</strong>（3B/7B/13B）</li>
+<li>
+<p><strong>chapter14.md — 常见问题与诊断</strong></p>
+</li>
+<li>
+<p>loss 爆炸/NaN、学习率不匹配、大 batch 不收敛</p>
+</li>
+<li>长上下文退化、RoPE scaling 伪影、Tokenizer 泄漏</li>
+<li>数据加载瓶颈与 hot-spot shard</li>
+<li>
+<p><strong>chapter15.md — 附录与参考</strong></p>
+</li>
+<li>
+<p>符号表、默认超参清单、YAML/JSON 模板</p>
+</li>
+<li>参考论文与进一步阅读（Scaling laws、RoPE scaling、FlashAttention、Lion/Adafactor 等）</li>
+</ul>
+<hr />
+<h2 id="_5">符号与单位（统一约定）</h2>
+<p>| 符号              | 含义                                 |</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>N_params</code></td>
+<td>模型非嵌入参数量（B = 10⁹ 级别）</td>
+</tr>
+<tr>
+<td><code>T_tokens</code></td>
+<td>训练总 tokens（本教程默认 <strong>1T</strong>）</td>
+</tr>
+<tr>
+<td><code>L_ctx</code></td>
+<td>上下文长度（4k / 8k）</td>
+</tr>
+<tr>
+<td><code>GB_tok</code></td>
+<td><strong>Global batch（以 tokens 计）</strong></td>
+</tr>
+<tr>
+<td><code>μ_tok</code></td>
+<td>单卡 micro-batch（以 tokens 计）</td>
+</tr>
+<tr>
+<td><code>A</code></td>
+<td>梯度累积步数</td>
+</tr>
+<tr>
+<td><code>D/TP/PP</code></td>
+<td>Data/Tensor/Pipeline 并行因子</td>
+</tr>
+<tr>
+<td><code>η</code></td>
+<td>学习率（peak/base）</td>
+</tr>
+<tr>
+<td><code>β₁, β₂, ε, wd</code></td>
+<td>优化器超参（AdamW 等）</td>
+</tr>
+<tr>
+<td><code>ρ</code></td>
+<td>噪声尺度（Noise Scale）</td>
+</tr>
+<tr>
+<td><code>FLOPs</code></td>
+<td>训练浮点量，近似 <strong><code>6·N_params·T_tokens</code></strong></td>
+</tr>
+<tr>
+<td><code>PUE</code></td>
+<td>数据中心电能使用效率</td>
+</tr>
+<tr>
+<td><code>¥/GPU·h</code></td>
+<td>GPU 小时成本（云/自建）</td>
+</tr>
+<tr>
+<td><code>kWh</code></td>
+<td>用电量计量单位</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="chapter13">成本/时长粗估：可插拔公式（详细见 <code>chapter13</code>）</h2>
+<blockquote>
+<p>在不承诺任何外部价格的前提下，提供<strong>一键替换参数</strong>的估框架（<strong>单位：¥</strong>）：</p>
+</blockquote>
+<ul>
+<li><strong>训练 compute 近似</strong>：<code>FLOPs_train ≈ 6 · N_params · T_tokens</code></li>
+<li><strong>有效吞吐（tokens/s）</strong>：由 <code>chapter09</code> 的 tokens/s 实测或经验区间代入</li>
+<li><strong>总时长（s）</strong>：<code>T_seconds = T_tokens / tokens_per_second</code></li>
+<li><strong>GPU 小时</strong>：<code>GPUh = (#GPUs) · T_seconds / 3600</code></li>
+<li><strong>GPU 成本</strong>：<code>¥_gpu = GPUh · (¥/GPU·h)</code></li>
+<li>
+<p><strong>电费估算</strong>：</p>
+</li>
+<li>
+<p>IT 功耗 <code>≈ 0.7 kW × #GPUs</code>（以 H100 80GB 典型训练功耗量级计，可按实际测量替换）</p>
+</li>
+<li>总功耗 <code>= IT 功耗 × PUE</code></li>
+<li><code>¥_power = (总功耗 kW) × (T_seconds/3600) × (¥/kWh)</code></li>
+<li><strong>TCO 粗估</strong>：<code>¥_total ≈ ¥_gpu + ¥_power + 其它（存储/网络/运维/摊销）</code></li>
+</ul>
+<blockquote>
+<p>我们在 <code>chapter13</code> 给出 <strong>3B/7B/13B × 4k/8k</strong> 的计算模板（表格），可直接替换 <code>tokens/s</code>、<code>¥/GPU·h</code>、<code>¥/kWh</code>、<code>PUE</code> 得出本地/云两套结果。</p>
+</blockquote>
+<hr />
+<h2 id="_6">关键实践要点（贯穿全书）</h2>
+<ol>
+<li><strong>以困惑度为核心指标</strong>：离线 dev/val 切片固定；长上下文使用滑窗 PPL。</li>
+<li><strong>先定总 tokens，再配 N 与 batch</strong>：遵循 <strong>Chinchilla-style</strong> 预算，结合噪声尺度调 <code>GB_tok</code> 与 LR。</li>
+<li><strong>优先吞吐的前提下保稳定</strong>：FlashAttn v2 + fused op + bf16；必要时激活重计算；观察梯度范数与 optimizer state 占比。</li>
+<li><strong>动态混比而非“一盘端”</strong>：阶段性调度 + 温度采样；CPT 中保持 base 分布的“守门人”比例。</li>
+<li><strong>度量优先</strong>：tokens/s、有效利用率（step time breakdown）、IO 饱和度、ZeRO bucket 命中率。</li>
+<li><strong>配置可迁移</strong>：统一 YAML/JSON schema（附录提供），3B/7B/13B 共用一套可缩放参数。</li>
+</ol>
+<hr />
+<h2 id="_7">代码与资源结构（建议）</h2>
+<div class="codehilite"><pre><span></span><code><span class="o">.</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">index</span><span class="o">.</span><span class="n">md</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">chapter01</span><span class="o">.</span><span class="n">md</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="n">chapter15</span><span class="o">.</span><span class="n">md</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">configs</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">pretrain_3b_4k</span><span class="o">.</span><span class="n">yaml</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">pretrain_7b_8k_ntk</span><span class="o">.</span><span class="n">yaml</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">cpt_13b_mix</span><span class="w"> </span><span class="n">schedule</span><span class="o">.</span><span class="n">yaml</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">deepspeed_zero</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span><span class="n">_paged</span><span class="o">.</span><span class="n">json</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">scripts</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">prepare_tokenizer_bpe</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">build_token_dataset</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">launch_trainer</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">eval_ppl</span><span class="o">.</span><span class="n">py</span>
+<span class="err">└──</span><span class="w"> </span><span class="n">tools</span><span class="o">/</span>
+<span class="w">    </span><span class="err">├──</span><span class="w"> </span><span class="n">webdataset_reader</span><span class="o">.</span><span class="n">py</span>
+<span class="w">    </span><span class="err">├──</span><span class="w"> </span><span class="n">parquet_streamer</span><span class="o">.</span><span class="n">py</span>
+<span class="w">    </span><span class="err">└──</span><span class="w"> </span><span class="n">noise_scale_estimator</span><span class="o">.</span><span class="n">py</span>
+</code></pre></div>
+
+<blockquote>
+<p>每章给出 <strong>最小可运行片段</strong> 与 <strong>配置对照表</strong>，尽量做到「复制配置即可跑」。</p>
+</blockquote>
+<hr />
+<h2 id="_8">许可与引用</h2>
+<ul>
+<li>教程文本建议以 <strong>CC BY 4.0</strong> 授权；示例代码建议 <strong>Apache-2.0</strong>（具体以仓库为准）。</li>
+<li>引用与重用请注明来源：《从零到可复现：LLM 训练实战（Lightning+DeepSpeed）》。</li>
+</ul>
+<hr />
+<h2 id="_9">反馈与贡献</h2>
+<ul>
+<li>欢迎在 <code>chapter14</code> 指出你遇到的异常日志/曲线与最小复现脚本。</li>
+<li>贡献指南：PR 前先对齐 <strong>数据合规</strong> 与 <strong>安全红线</strong>（不提供可复现的敏感/侵权数据样本）。</li>
+</ul>
+<hr />
+<h3 id="_10">附：章节速查（超短摘要）</h3>
+<ul>
+<li><code>01</code> 环境复现与符号；<code>02</code> Tokenizer/BPE &amp; 打包；<code>03</code> 模型与 RoPE scaling；</li>
+<li><code>04</code> Scaling laws（Chinchilla/Noise scale/2024 新进展）；<code>05</code> 大 batch 与 LR；</li>
+<li><code>06</code> 数据集动态混比；<code>07</code> 优化器（AdamW/Lion/Adafactor/Paged AdamW）；</li>
+<li><code>08</code> 数据加载（WebDataset/Petastorm/Parquet）；<code>09</code> 并行与内存（TP/ZeRO/CKPT）；</li>
+<li><code>10</code> 验证 PPL；<code>11</code> 预训练端到端；<code>12</code> CPT 端到端；<code>13</code> 成本/时长（¥）；</li>
+<li><code>15</code> 附录：符号、默认超参、模板与文献。</li>
+</ul>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter1.html" class="nav-link next">chapter01.md — 总览与可复现环境 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

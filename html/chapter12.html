@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第十二章 端到端：CPT / 继续预训练</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">从零到可复现：LLM 训练实战（算法向，Lightning + DeepSpeed）—**索引**</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter01.md — 总览与可复现环境</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter03.md — 架构细节：LLaMA 风格与 8k 扩展</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter05.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 05 — 大批量训练与学习率策略</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter06.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：多数据集动态混比——从“大锅饭”到“交响乐”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter07.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 7 章 — 优化器与数值稳定</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter08.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 8 章：数据加载与存储格式（CPFS）— 榨干 IO 吞吐</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter09.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章 — 并行与内存：Lightning + DeepSpeed 配方</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter10.md — 评估：验证困惑度</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter11.md — 端到端：从零预训练（1T tokens）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章 端到端：CPT / 继续预训练</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 13 章：成本/时长粗估（¥）与 TCO</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter14.md — 常见问题与诊断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter15.md — 附录与参考</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="cpt">第十二章 端到端：CPT / 继续预训练</h1>
+<h2 id="_1">开篇段落</h2>
+<p>欢迎来到第十二章，本章将深入探讨<strong>继续预训练（Continued Pre-Training, CPT）</strong>的端到端实践，这是一项在现代大模型生命周期管理中愈发核心的技术。与从零预训练（Pre-training from scratch）那种“一次性”的巨大投入不同，CPT 是一种更具经济效益和战略价值的“增量式”演进。它允许我们为一个已经强大的基座模型注入新领域的专业知识、更新过时的世界信息，或强化特定的技能，从而打造一个“活的”、持续进化的模型。本章将系统性地拆解 CPT 的核心哲学，深入剖析其在<strong>数据策略、优化器与学习率调度、监控与评</strong>等方面的关键差异，并提供一套可立即上手的配置指南与诊断清单。我们的目标是让你掌握在“新域能力拉升”与“基座泛化保持”之间取得精妙平衡的艺术，从而高效地实现模型价值的最大化。</p>
+<h2 id="cpt-cpt-sft">CPT 的哲学：为何选择 CPT 而非 SFT 或从零训练？</h2>
+<p>在深入技术细节前，我们必须明确 CPT 的定位。它处在从零预训练和指令微调（Supervised Fine-Tuning, SFT）之间，解决的是不同的问题。</p>
+<ul>
+<li><strong>从零预训练</strong>：构建模型的<strong>基础世界模型</strong>和<strong>语言能力</strong>。这是一个无监督或自监督的过程，需要海量的通用数据和巨大的计算资源。</li>
+<li><strong>指令微调（SFT）</strong>：教会模型<strong>如何与人对话</strong>，遵循指令的<strong>格式和行为</strong>。SFT 的数据通常是 <code>(prompt, response)</code> 对，其核心是塑造模型的行为模式，而非注入大规模的事实性知识。</li>
+<li><strong>继续预训练（CPT）</strong>：在不破坏基础世界模型的前提下，<strong>扩展型的知识边界</strong>和<strong>适应新的数据分布</strong>。CPT 的数据仍然是海量的非结构化文本，其目标是让模型“阅读”和“吸收”新领域的知识，使其语言模型本身（即对下一个 token 的预测分布）适应新的领域。</li>
+</ul>
+<p><strong>一句话总结：CPT 负责“学什么”（知识），SFT 负责“怎么说”（行为）。</strong> 当你的目标是让模型成为一个“医学专家”而不仅仅是“扮演医学专家的聊天机器人”时，CPT 是不可或缺的一步。</p>
+<h2 id="_2">核心挑战：驾驭灾难性遗忘的艺术</h2>
+<p>CPT 的核心挑战是<strong>灾难性遗忘（Catastrophic Forgetting）</strong>。我们可以从优化理论的角度理解它：</p>
+<p>一个预训练好的基座模型，其权重 <code>θ_base</code> 处在通用数据分布 <code>P_general</code> 的一个宽阔、平坦的损失极小值区域（a wide, flat loss minimum）。这个区域的平坦性赋予了模型良好的泛化能力。</p>
+<p>CPT 的目标是找到一个新的权重 <code>θ_cpt</code>，使其在混合数据分布 <code>P_mix = (1-α)P_general + αP_new</code>上表现更优。然而，新领域数据 <code>P_new</code> 对应的损失曲面可能非常陡峭或与 <code>P_general</code> 的极小值区域相距甚远。如果训练策略过于激进（如学习率过高、新数据比例过大），优化器会把模型权重 <code>θ</code> 猛地“拽”出 <code>P_general</code> 的平坦区域，掉入一个只对 <code>P_new</code> 友好的狭窄深谷。模型在新领域上表现优异，但彻底忘记了如何在通用领域上泛化——这就是灾难性遗忘。</p>
+<div class="codehilite"><pre><span></span><code>Loss Landscape
+      ▲ Loss
+      |
+      |             /-----\
+      |            /       \      &lt;-- P_new&#39;s sharp minimum
+      |           /         <span class="gs">* θ_cpt_bad</span>
+<span class="gs">  /---\          /</span>
+<span class="gs"> /     \--------/</span>
+<span class="gs">/       *</span> θ_base
+
+<span class="k">*</span> θ_cpt_good
+
+--------------------------------------------&gt; Weight Space
+</code></pre></div>
+
+<p>CPT 的所有策略，都是为了让 <code>θ</code> 从 <code>θ_base</code> 温和地移动到 <code>θ_cpt_good</code>，一个同时兼顾两个分布的新平衡点，而不是被拉到灾难性的 <code>θ_cpt_bad</code>。</p>
+<h2 id="cpt_1">一、数据策略CPT 的灵魂与基石</h2>
+<p>数据是 CPT 中最关键的变量，它直接决定了学习的效果和遗忘的程度。</p>
+<h3 id="1">1. 混比策略：黄金比例的探索</h3>
+<p>单纯使用新数据是 CPT 的大忌。<strong>数据混合是必须的</strong>。</p>
+<ul>
+<li><strong>混比比例（Mixing Ratio, <code>α</code>）</strong>：即新数据在新旧混合数据中的占比。<ul>
+<li><strong>经验法则</strong>：<code>α</code> 通常设定在 <strong>5% 到 20%</strong> 之间。一个稳妥的起点是 10%。</li>
+<li><strong>权衡</strong>：<ul>
+<li><strong>低 <code>α</code>（如 5%）</strong>：学习新知识较慢，需要更多训练步数，但遗忘风险极低，非常安全。适用于基座能力绝对不能受损的关键任务。</li>
+<li><strong>高 <code>α</code>（如 20%）</strong>：学习新知识速度快，但遗忘风险显著增高。适用于新领域与旧领域差异不大，或对基座泛化能力有一定容忍度的场景。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>"Replay Buffer" 思想</strong>：作为旧数据的 <code>P_general</code>，不一定需要使用全部的原始预训练语料。可以精心挑选一个高质量、多样化的子集（例如 1T tokens 的原始数据中，精选 200B tokens），作为“记忆回放缓冲池”。这可以显著降低数据存储和 I/O 负担。</li>
+</ul>
+<h3 id="2">2. 混比粒度：动态采样的优越性</h3>
+<p>如何实现数据混合？有两种主要方式：</p>
+<ul>
+<li><strong>静态混合（预先混合）</strong>：在训练开始前，将新旧数据按比例混合并打乱，制作成新的训练数据集。<ul>
+<li><strong>优点</strong>：实现简单，数据加载逻辑不变。</li>
+<li><strong>缺点</strong>：不够灵活，无法在训练中调整比例。可能出现连续多个 batch 来自同一数据源的“数据热点”问题。</li>
+</ul>
+</li>
+<li><strong>动态混合（在线采样）</strong>：在训练时，数据加载器从不同的数据源（旧数据流、新数据流）中，按预设的概率或温度动态采样，实时组合成一个 batch。<ul>
+<li><strong>优点</strong>：<ol>
+<li><strong>均匀混合</strong>：确保每个 Global Batch 的数据构成都接近目标比例，训练过程更平滑。</li>
+<li><strong>灵活性</strong>：可以轻松实现课程学习（Curriculum Learning），例如在训练初期使用 10% 的新数据，后期逐步提升到 15%。</li>
+</ol>
+</li>
+<li><strong>实现</strong>：在 PyTorch Lightning 中，可以通过自定义 <code>DataModule</code> 或 <code>IterableDataset</code> 来实现，根据设定的温度 <code>τ</code> 对不同数据集的采样概率进行加权。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3">3. 数据质量与序列长度</h3>
+<ul>
+<li><strong>新数据质量</strong>：CPT 对新领域数据的质量极其敏感。低质量、噪声大的新数据会严重干扰模型的学习过程，甚至污染已有知识。必须进行严格的清洗、去重和过滤。</li>
+<li><strong>序列长度分布</strong>：检查新旧数据的序列长度分布是否匹配。如果新领域（如法律文书）平均长度远超通用领域，可能会导致模型在长文本建模上产生偏向。此时，需要确保 Packer 能有效处理，并且在评估时也关注不同长度文本的表现。</li>
+</ul>
+<h2 id="_3">二、优化器与学习率：精细的手术刀</h2>
+<p>如果说数据是药物，那么优化器和学习率就是控制剂量的手术刀。</p>
+<h3 id="1-lr">1. 学习率（LR：低、缓、稳</h3>
+<ul>
+<li><strong>峰值学习率（Peak LR）</strong>：<ul>
+<li><strong>核心法则</strong>：CPT 的峰值 LR 应显著低于从零预训练，通常是原始峰值 LR 的 <strong>1/10 到 1/5</strong>。例如，7B 模型从零训练的 peak LR 为 <code>3e-4</code>，CPT 时应选择 <code>3e-5</code> 到 <code>6e-5</code>。</li>
+<li><strong>原因</strong>：模型权重已处于良好状态，梯度更新应是微调而非重塑。过高的 LR 会产生巨大的梯度，将权重推出稳定区域。</li>
+</ul>
+</li>
+<li><strong>学习率调度器（LR Scheduler）</strong>：<ul>
+<li><strong>Warmup</strong>：可以非常短，甚至省略。一个几百步的 warmup 足以让重置后的优化器稳定下来。</li>
+<li><strong>Decay 策略</strong>：<strong>Cosine Decay</strong> 依然是黄金标准。它能确保学习率在训练结束时平滑地降至接近零，有助于模型收敛到更稳定的点。</li>
+<li><strong>总步数（Total Steps）</strong>：LR 调度器的总步数必须根据 CPT 的总训练 tokens（例如 200B）重新计算，而不是沿用原始的 1T tokens 对应的步数。这是一个非常常见的错误。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2_1">2. 优化器状态：必须从零开始</h3>
+<p>这是一个非黑即白的规则：<strong>绝对不要加载 Checkpoint 中的优化器状态</strong>。</p>
+<ul>
+<li><strong>技术解释</strong>：AdamW 等优化器维护着梯度的一阶矩（<code>m</code>，动量）和二阶矩（<code>v</code>，自适应学习率的分母）。这些状态编码了基于<strong>旧数据分布</strong>和<strong>旧学习率</strong>的梯度历史。<ul>
+<li>旧的 <code>m</code> 会带来巨大的惯性，可能在 CPT 初期将模型推向错误的方向。</li>
+<li>旧的 <code>v</code> 适应了旧的梯度尺度，直接用于新的梯度可能会导致某些参数的学习率过大或过小，造成不稳定。</li>
+</ul>
+</li>
+<li><strong>正确操作</strong>：加载模型权重后，<strong>重新初始化一个全新的优化器实例</strong>。让它在新的数据混合和学习率下，从头开始累积梯度统计信息。</li>
+</ul>
+<h3 id="3_1">3. 模型冻结策略：原则上不冻结</h3>
+<ul>
+<li><strong>主流选择</strong>：<strong>全参数训练</strong>。CPT 的目标是让知识渗透到模型的每一部分，从底层的词嵌入到高层的概念推理。冻结任何层都可能阻碍这种全局性的适应。</li>
+<li><strong>实验性探索（高风险）</strong>：在极少数情况下，如果极端担心某些基础能力（如语法结构）受损，可以尝试冻结模型的最底层几层 Transformer Block。但这通常会牺牲在新领域上的学习效果，不推荐作为首选策略。</li>
+</ul>
+<h2 id="cpt_2">三、监控与评估：CPT 的仪表盘</h2>
+<p>CPT 的成功无法仅凭训练损失来判断，必须建立一个多维度的评估体系。</p>
+<ul>
+<li><strong>核心监控指标</strong>：<ol>
+<li><strong>训练损失（Training Loss）</strong>：应平稳下降。若出现剧烈抖动，检查数据混合或学习率。</li>
+<li><strong>领域内验证困惑度（In-Domain Val PPL）</strong>：使用一个 held-out 的新领域验证集。这是衡量 CPT <strong>学习效果</strong>的核心指标，应持续下降。</li>
+<li><strong>通用域验证困惑度（General Val PPL）</strong>：使用一个 held-out 的通用领域验证集（如 C4, Pile 的一部分）。这是衡量<strong>遗忘程度</strong>的核心“护栏”指标，应保持稳定或仅轻微上涨。</li>
+</ol>
+</li>
+<li><strong>诊断图谱</strong>：</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="w"> </span><span class="err">理想的</span><span class="w"> </span><span class="n">CPT</span><span class="w">        </span><span class="p">(</span><span class="n">B</span><span class="p">)</span><span class="w"> </span><span class="err">灾难性遗忘</span><span class="w">         </span><span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="w"> </span><span class="err">学习不足</span>
+<span class="err">▲</span><span class="w"> </span><span class="n">PPL</span><span class="w">                 </span><span class="err">▲</span><span class="w"> </span><span class="n">PPL</span><span class="w">                  </span><span class="err">▲</span><span class="w"> </span><span class="n">PPL</span>
+<span class="o">|</span><span class="w">                     </span><span class="o">|</span><span class="w">                      </span><span class="o">|</span>
+<span class="o">|----</span><span class="w"> </span><span class="n">Gen</span><span class="w"> </span><span class="n">PPL</span><span class="w"> </span><span class="o">----</span><span class="w">    </span><span class="o">|----</span><span class="w"> </span><span class="n">Gen</span><span class="w"> </span><span class="n">PPL</span><span class="w"> </span><span class="o">---</span><span class="err">▲</span><span class="w">     </span><span class="o">|----</span><span class="w"> </span><span class="n">Gen</span><span class="w"> </span><span class="n">PPL</span><span class="w"> </span><span class="o">----</span>
+<span class="o">|</span><span class="w">   </span><span class="err">\</span><span class="w">                 </span><span class="o">|</span><span class="w">   </span><span class="err">\</span><span class="w">              </span><span class="o">/</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="err">\</span>
+<span class="o">|</span><span class="w">    </span><span class="err">\</span><span class="w">                </span><span class="o">|</span><span class="w">    </span><span class="err">\</span><span class="w">            </span><span class="o">/</span><span class="w">    </span><span class="o">|</span><span class="w">    </span><span class="err">\</span><span class="w"> </span><span class="kr">In</span><span class="o">-</span><span class="n">Domain</span><span class="w"> </span><span class="n">PPL</span>
+<span class="o">|</span><span class="w">     </span><span class="err">\</span><span class="w"> </span><span class="kr">In</span><span class="o">-</span><span class="n">Domain</span><span class="w"> </span><span class="n">PPL</span><span class="w"> </span><span class="o">|</span><span class="w">     </span><span class="err">\</span><span class="w">          </span><span class="o">/</span><span class="w">     </span><span class="o">|</span><span class="w">     </span><span class="p">(</span><span class="err">下降缓慢</span><span class="p">)</span>
+<span class="o">|</span><span class="w">      </span><span class="err">\</span><span class="w">              </span><span class="o">|</span><span class="w">      </span><span class="err">\</span><span class="w"> </span><span class="kr">In</span><span class="o">-</span><span class="n">Domain</span><span class="w"> </span><span class="n">PPL</span><span class="w"> </span><span class="o">|</span><span class="w">      </span>
+<span class="o">+-----------&gt;</span><span class="w"> </span><span class="n">Time</span><span class="w">    </span><span class="o">+-----------&gt;</span><span class="w"> </span><span class="n">Time</span><span class="w">     </span><span class="o">+-----------&gt;</span><span class="w"> </span><span class="n">Time</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>定期绘制这两条 PPL 曲线，上图 (A) 是我们的目标。出现 (B) 则立即降低 LR 或新数据比例；出现 (C) 则可考虑适度增加它们。
+</code></pre></div>
+
+<h2 id="7b-cpt">端到端配置清单：一个 7B 模型的 CPT 示例（扩展示例）</h2>
+<p>| 参数项 | 从零预训练（参考基线） | CPT（推荐配置） | 理由与深度剖析 |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">参数项</th>
+<th style="text-align: left;">从零预训练（参考基线）</th>
+<th style="text-align: left;">CPT（推荐配置）</th>
+<th style="text-align: left;">理由与深度剖析</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>基座模型</strong></td>
+<td style="text-align: left;"><code>None</code> (机初始化)</td>
+<td style="text-align: left;"><code>path/to/pretrained_7B_model.pt</code></td>
+<td style="text-align: left;">CPT 的基础是加载一个训练成熟的模型权重。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总训练 Tokens</strong></td>
+<td style="text-align: left;"><code>1T</code></td>
+<td style="text-align: left;"><code>200B</code></td>
+<td style="text-align: left;">CPT 是短程训练，目标是适应而非重塑。200B tokens 通常足以在一个新领域达到不错的性能。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据混比 (<code>α</code>)</strong></td>
+<td style="text-align: left;">100% 通用数据</td>
+<td style="text-align: left;">90% 通用数据 + 10% 新领域数据</td>
+<td style="text-align: left;"><strong>CPT 核心</strong>。10% 是一个平衡的起点，在安全和效率之间取得平衡。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据混合方式</strong></td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">动态采样 (Dynamic Sampling)</td>
+<td style="text-align: left;">保证每个 batch 的数据分布均匀，避免训练不稳，并为课程学习提供可能。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Global Batch Size</strong></td>
+<td style="text-align: left;"><code>4M tokens</code></td>
+<td style="text-align: left;"><code>2M - 4M tokens</code></td>
+<td style="text-align: left;">可以沿用，或适当减小。因为 LR 已经降低，过大的 batch 带来的梯度信噪比增益不再是首要矛盾。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>峰值学习率 (Peak LR)</strong></td>
+<td style="text-align: left;"><code>3.0e-4</code></td>
+<td style="text-align: left;"><strong><code>3.0e-5</code></strong></td>
+<td style="text-align: left;"><strong>CPT 核心</strong>。1/10 的原始 LR 是一个安全的起点，它以足够小的步长探索新的损失极小值区域。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LR Warmup 步数</strong></td>
+<td style="text-align: left;"><code>2000</code></td>
+<td style="text-align: left;"><code>200</code></td>
+<td style="text-align: left;">模型已处在稳定状态，一个非常短的 warmup 即可让新优化器适应梯度。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LR Scheduler</strong></td>
+<td style="text-align: left;">Cosine Decay (over ~250k steps)</td>
+<td style="text-align: left;">Cosine Decay (over ~50k steps)</td>
+<td style="text-align: left;"><strong>易错点</strong>：调度器的总步数必须基于新的、更短的训练计划重新计算。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>优化器状态加载</strong></td>
+<td style="text-align: left;"><code>False</code></td>
+<td style="text-align: left;"><strong><code>False</code> (强制)</strong></td>
+<td style="text-align: left;"><strong>CPT 核心</strong>。必须丢弃旧的 <code>m</code> 和 <code>v</code> 向量，它们包含着不适用于新任务的梯度历史。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AdamW Betas</strong></td>
+<td style="text-align: left;"><code>(0.9, 0.95)</code></td>
+<td style="text-align: left;"><code>(0.9, 0.95)</code></td>
+<td style="text-align: left;">通常无需更改。AdamW 的 betas 对 CPT 不如 LR 敏感。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Weight Decay</strong></td>
+<td style="text-align: left;"><code>0.1</code></td>
+<td style="text-align: left;"><code>0.1</code></td>
+<td style="text-align: left;">可以保持不变。过高的 weight decay 反而可能阻碍模型向新权重空间的适应。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>模型层冻结</strong></td>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;">无（全参数训练）</td>
+<td style="text-align: left;">默认进行全参数更新，以实现知识在整个模型中的充分渗透。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">本章小结</h2>
+<ul>
+<li>CPT 是介于预训练和微调之间的关键技术，旨在<strong>扩展知识</strong>而非改变行为，其核心挑战是<strong>克服灾性遗忘</strong>。</li>
+<li>成功的 CPT 依赖于三大支柱的精细调校：<ol>
+<li><strong>数据策略</strong>：<strong>新旧数据混合</strong>是铁律，<code>5%-20%</code> 的新数据比例是常见区间。推荐使用<strong>动态采样</strong>以获得更平滑的训练过程。</li>
+<li><strong>学习率与优化器</strong>：采用<strong>远低于</strong>原始训练的<strong>峰值学习率</strong>（如 1/10），配合<strong>短 warmup</strong> 和对齐新总步数的 Cosine Decay。<strong>必须重置优化器状态</strong>。</li>
+<li><strong>监控体系</strong>：同时跟踪<strong>领域内</strong>和<strong>通用域</strong>的验证 PPL，是诊断 CPT 是否成功的“仪表盘”。</li>
+</ol>
+</li>
+<li>CPT 是一场精细的平衡实验，需要耐心调参和细致观察，但其带来的模型能力提升和资源节约是巨大的。</li>
+</ul>
+<h2 id="gotchas">常见陷阱与错误 (Gotchas)</h2>
+<ol>
+<li>
+<p><strong>陷阱：灾难性遗忘</strong></p>
+<ul>
+<li><strong>症状</strong>：通用域验证 PPL 急剧上升，模型在通用任务上表现得像一个“傻瓜”。</li>
+<li><strong>诊断与修复</strong>：降低学习率（减半），或降低新数据混合比例（例如从 15% 降至 8%。这是最常见的 CPT 问题。</li>
+</ul>
+</li>
+<li>
+<p><strong>陷阱：学习停滞</strong></p>
+<ul>
+<li><strong>症状</strong>：领域内验证 PPL 下降缓慢或完全不下降。</li>
+<li><strong>诊断与修复</strong>：首先检查新数据质量。若数据无误，可尝试适度提高学习率或新数据比例。也可能是总训练 tokens 不足，模型需要“阅读”更多新数据。</li>
+</ul>
+</li>
+<li>
+<p><strong>陷阱：加载了优化器状态</strong></p>
+<ul>
+<li><strong>症状</strong>：训练初期的 loss 出现剧烈震荡、<code>NaN</code> 或不收敛。</li>
+<li><strong>诊断与修复</strong>：检查你的模型加载和优化器初始化代码。确保优化器是在加载模型权重 <em>之后</em> 重新创建的。</li>
+</ul>
+</li>
+<li>
+<p><strong>陷阱：Tokenizer 不匹配</strong></p>
+<ul>
+<li><strong>症状</strong>：模型在处理新领域术语时表现很差，频繁出现 OOV (Out-of-Vocabulary) 或将专有名词切分成无意义的碎片。</li>
+<li><strong>诊断与修复</strong>：这是一个更深层次的问题。如果新领域引入了大量新词汇，可能需要<strong>扩展 Tokenizer</strong>。这需要：1) 训练新的 Tokenizer；2) 扩展模型的 <code>token_embedding</code> 和 <code>lm_head</code> 层；3) 特殊处理新旧 embedding 的初始化。这已经超出了标准 CPT 的范畴，需要专门的模型手术，务必谨慎。</li>
+</ul>
+</li>
+<li>
+<p><strong>陷阱：隐蔽的能力衰退</strong></p>
+<ul>
+<li><strong>症状</strong>：通用 PPL 保持稳定，但模型在某些特定能力（如数学推理、代码生成）上表现变差。</li>
+<li><strong>诊断与修复</strong>：PPL 是一个宏观指标。建立一个包含多种能力的<strong>评估基准测试集（Benchmark Suite）</strong>，在 CPT 前后运行，以量化特定能力的损益。如果发现关键能力受损，可能需要在“旧数据”的 replay buffer 中，有针对性地增加该能力对应的数据比例。</li>
+</ul>
+</li>
+</ol>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter11.html" class="nav-link prev">← chapter11.md — 端到端：从零预训练（1T tokens）</a><a href="chapter13.html" class="nav-link next">第 13 章：成本/时长粗估（¥）与 TCO →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

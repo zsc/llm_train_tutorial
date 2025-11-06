@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>chapter11.md — 端到端：从零预训练（1T tokens）</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">从零到可复现：LLM 训练实战（算法向，Lightning + DeepSpeed）—**索引**</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter01.md — 总览与可复现环境</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter03.md — 架构细节：LLaMA 风格与 8k 扩展</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter05.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 05 — 大批量训练与学习率策略</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter06.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：多数据集动态混比——从“大锅饭”到“交响乐”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter07.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 7 章 — 优化器与数值稳定</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter08.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 8 章：数据加载与存储格式（CPFS）— 榨干 IO 吞吐</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter09.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章 — 并行与内存：Lightning + DeepSpeed 配方</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter10.md — 评估：验证困惑度</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter11.md — 端到端：从零预训练（1T tokens）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章 端到端：CPT / 继续预训练</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 13 章：成本/时长粗估（¥）与 TCO</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter14.md — 常见问题与诊断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter15.md — 附录与参考</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="chapter11md-1t-tokens">chapter11.md — 端到端：从零预训练（1T tokens）</h1>
+<h2 id="_1">开篇段落</h2>
+<p>本章是整个教程的实战巅峰，我们将前面章节中探讨的 Scaling Laws、优化器策略、并行技术和数据方案，融合成一套针对 3B、7B 和 13B LLaMA 风格模型的、可在 64x H100 80GB 集群上直接运行的端到端预训练“配方”。这不仅仅是一张参数表，更是对大规模训练中无数权衡与决策的总结。学习本章后，你将获得一套经过验证的、可用于启动 1T tokens 从零预训练的基线配置。更重要的是，你将深入理解每个关键超参背后的“为什么”，学会如何通过解读复杂的训练日志来诊断训练过程的健康状况，并具备将这些“配方”根据自身求进行调整和优化的能力。这些配置是稳健的起点，而非一成不变的终点，旨在助你自信地迈出从零训练的第一步。</p>
+<h2 id="1">1. 通用配置原则与环境假设</h2>
+<p>在深入具体参数之前，我们必须明确所有尺寸模型都将遵循的通用原则和环境基线。这些选择共同构成了我们训练框架的“骨架”，确保了效率、稳定性和可扩展性。</p>
+<ul>
+<li>
+<p><strong>硬件与并行策略 (回顾 Chapter 09)</strong></p>
+<ul>
+<li><strong>集群规模</strong>: 8 节点 × 8 卡/节点 = 64 × H100 80GB SXM。我们假设节点内通过高速 NVLink/NVSwitch 连接，节点间通过 InfiniBand/400GbE 连接。</li>
+<li><strong>张量并行 (TP, Tensor Parallelism)</strong>: <code>TP=8</code>。这是最大化单节点性能的基石。Transformer 中的 <code>nn.Linear</code> 和 <code>Attention</code> 模块的计算可以被优雅地沿特定维度切分。将 TP 设置为节点内的 GPU 数量（8），可以确保通信量最大、最频繁的张量切片交换（all-reduce, all-gather）发生在速度最快的 NVLink ，从而最小化通信开销。</li>
+<li><strong>流水线并行 (PP, Pipeline Parallelism)</strong>: <code>PP=1</code> (即不启用)。对于 3B-13B 规模的模型，在 H100 80GB 的显存下，TP 结合 ZeRO 已足够容纳模型。引入 PP（例如 <code>PP=2</code>）虽然能进一步切分模型，但会带来“流水线气泡”（pipeline bubble）的额外开销，即流水线中部分 GPU 处于空闲等待状态，降低了硬件利用率。因此，在此规模下，我们选择不使用 PP。</li>
+<li><strong>数据并行 (DP, Data Parallelism)</strong>: <code>DP=8</code> (64 GPUs / (TP=8 * PP=1))。数据并行是扩展训练吞吐量的主要方式。每个 DP rank 拥有一套完整的模型（在 ZeRO-3 下是分片的），处理不同批次的数据。</li>
+<li><strong>ZeRO 策略</strong>: ZeRO Stage 3 + Paged AdamW Optimizer。这是最大化显存优化的终极方案。ZeRO-3 将模型参数、梯度和优化器状态全部分片到所有 DP rank 上，极大地降低了单卡显存峰值。其代价是更高的通信量（每次前向/反向传播需要 all-gather 对应的模型参数）。配合 Paged AdamW，可以将易被换出的优化器状态 offload 到 CPU 内存，为更大的 <code>micro-batch</code> 或模型腾出宝贵的 HBM 空间。</li>
+</ul>
+</li>
+<li>
+<p><strong>数据 (回顾 Chapter 02, 08)</strong></p>
+<ul>
+<li><strong>总 Tokens</strong>: <code>T_tokens = 1T</code> (1,000,000,000,000)。这个数字并非随意设定，它源于 Chapter 4 讨论的 Chinchilla-style Scaling Laws，对于 7B-13B 级别的模型，1T-2T tokens 是一个接近“计算最优”的训练数据量。</li>
+<li><strong>格式与策略</strong>: 预分词、<strong>打包 (packed)</strong> 并切分为 shards 的 WebDataset 或 Parquet 格式，存储于 CPFS。<strong>打包</strong>至关重要：它将多个短文档拼接成一个 <code>L_ctx</code> 长度的序列，中间用特殊 token 分隔，并构建相应的 attention mask。这确保了每个 token 都在参与计算，消除了因 padding 带来的巨大计算浪费，是提升训练效率的关键技巧。</li>
+<li><strong>加载</strong>: 采用流式加载（streaming），每个 DP rank 读取独立的 shard 子集并通过 PyTorch DataLoader 的 <code>prefetch_factor</code> 和 <code>num_workers</code> 机制确保数据供给始终快于 GPU 计算，避免 I/O 成为瓶颈。</li>
+</ul>
+</li>
+<li>
+<p><strong>数值精度与性能优化 (回顾 Chapter 03, 07)</strong></p>
+<ul>
+<li><strong>训练精度</strong>: <code>bf16</code> (Brain Floating Point)。H100 Tensor Core 对 <code>bf16</code> 提供原生硬件加速。相较于 <code>fp16</code>，<code>bf16</code> 拥有与 <code>fp32</code> 相同的 8 位指数位，动态范围更广，极大降低了训练中梯度下溢（underflow）或溢出（overflow）的风险，使得混合精度训练更加稳定，通常不再需要复杂的动态损失缩放（Dynamic Loss Scaling）。</li>
+<li><strong>核心算子</strong>: 全面启用 <strong>FlashAttention v2</strong>、<strong>fused RMSNorm</strong>、<strong>fused SwiGLU</strong> 和 <strong>fused RoPE</strong>。这些算子通过将多个操作合并到一个 CUDA kernel 中执行，大幅减少了 HBM 显存读写和 kernel launch 开销，是榨干 H100 算力的关键。它们不仅提升了 <code>tokens/sec</code> 吞吐率，有时还能因减少中间步骤的舍入误差而改善数值稳定性。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2">2. 基线配置表：理论与实践的结合</h2>
+<p>以下配置表是本章的核心。这些数字并非孤立存在，而是 Scaling Laws、硬件限制和稳定性考量三者博弈的结果。</p>
+<h3 id="21-a-4k-l_ctx-4096">2.1 配置表 A: 4k 上下文 (<code>L_ctx = 4096</code>)</h3>
+<p>这是大多数开源模型起步的经典配置，在通用能力和训练成本之间取得了良好平衡。</p>
+<p>| 参数 (Parameter)                    | 3B 模型                               | 7B 模型                               | 13B 模型                              | 说明/权衡 (Explanation/Trade-off)                                                                                                                                                                             |</p>
+<table>
+<thead>
+<tr>
+<th>参数 (Parameter)</th>
+<th>3B 模型</th>
+<th>7B 模型</th>
+<th>13B 模型</th>
+<th>说明/权衡 (Explanation/Trade-off)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>模型架构</strong> (LLaMA-style)</td>
+<td></td>
+<td></td>
+<td></td>
+<td>沿用 LLaMA 论文的成功设计，确保了结构的稳定性和效率。</td>
+</tr>
+<tr>
+<td><code>d_model</code></td>
+<td>3200</td>
+<td>4096</td>
+<td>5120</td>
+<td>隐藏层维度，模型容量的核心。</td>
+</tr>
+<tr>
+<td><code>n_layers</code></td>
+<td>32</td>
+<td>32</td>
+<td>40</td>
+<td>模型深度。更深的模型通常能学习更复杂的层次化特征。</td>
+</tr>
+<tr>
+<td><code>n_heads</code></td>
+<td>32</td>
+<td>32</td>
+<td>40</td>
+<td>多头注意力机制的头数。</td>
+</tr>
+<tr>
+<td><code>n_kv_heads</code></td>
+<td>(可选 GQA) 8</td>
+<td>(可选 GQA) 8</td>
+<td>(可选 GQA) 8</td>
+<td>Grouped-Query Attention。在训练阶段，其对性能影响不大，但能显著减少推理时 K/V 缓存大小，是现代模型设计的趋势。</td>
+</tr>
+<tr>
+<td><code>intermediate_size</code> (SwiGLU)</td>
+<td>8640</td>
+<td>11008</td>
+<td>13824</td>
+<td>FFN 中间层大小。LLaMA 使用 SwiGLU 激活函数，其公式为 <code>2/3 * 4 * d_model</code> 并向上取整到 128 的倍数，以优化硬件利用率。</td>
+</tr>
+<tr>
+<td><strong>训练目标</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td>固定的训练预算，用于横向对比不同模型。</td>
+</tr>
+<tr>
+<td><code>T_tokens</code> (总训练 Token)</td>
+<td>1T</td>
+<td>1T</td>
+<td>1T</td>
+<td></td>
+</tr>
+<tr>
+<td><code>L_ctx</code> (上下文长度)</td>
+<td>4096</td>
+<td>4096</td>
+<td>4096</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>批量与扩展</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>核心权衡区</strong>：在 Chinchilla 最优的统计效率、硬件可承受的显存压力和通信开销之间寻找最佳实践点。</td>
+</tr>
+<tr>
+<td><code>Global Batch Size (GB_tok)</code></td>
+<td>2.1M (2,097,152)</td>
+<td>4.2M (4,194,304)</td>
+<td>4.2M (4,194,304)</td>
+<td><strong>关键参数</strong>。遵循 Scaling Law，更大模型需要更大 batch 来稳定梯度、充分利用并行计算并获得更好的最终性能。2M-4M token 是当前大模型训练的“甜蜜点”。</td>
+</tr>
+<tr>
+<td><code>μ_batch</code> (单卡样本数)</td>
+<td>8</td>
+<td>4</td>
+<td>2</td>
+<td><strong>显存调优的第一旋钮</strong>。此值直接决定了单次前向/反向传播的显存峰值。必须确保 <code>μ_batch * L_ctx</code> 对应的激活和梯度能被 HBM 容纳。</td>
+</tr>
+<tr>
+<td><code>μ_tok</code> (单卡 micro-batch tokens)</td>
+<td>32,768</td>
+<td>16,384</td>
+<td>8,192</td>
+<td><code>μ_tok = μ_batch * L_ctx</code>。这个指标反映了单次 GPU kernel 计算的规模。</td>
+</tr>
+<tr>
+<td><code>A</code> (梯度累积步数)</td>
+<td><code>2.1M / (32k * 64) ≈ 1</code></td>
+<td><code>4.2M / (16k * 64) ≈ 4</code></td>
+<td><code>4.2M / (8k * 64) ≈ 8</code></td>
+<td><code>A = GB_tok / (μ_tok * #GPUs)</code>。梯度累积是用计算时间换取显存的技巧，它在不增加显存占用的情况下模拟了超大 batch size，但代价是参数更新频率降低，可能影响收敛动态。</td>
+</tr>
+<tr>
+<td><strong>优化器与学习率</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td>学习率和优化器参数的设定直接决定训练的成败。</td>
+</tr>
+<tr>
+<td><code>Optimizer</code></td>
+<td>AdamW</td>
+<td>AdamW</td>
+<td>AdamW</td>
+<td>默认且最稳健的选择。<code>β₁=0.9, β₂=0.95, ε=1e-8</code>。<code>β₂=0.95</code> 是针对大模型训练稳定性进行的常见调整（相较于默认的 0.999）。</td>
+</tr>
+<tr>
+<td><code>η</code> (Peak Learning Rate)</td>
+<td>3.0e-4</td>
+<td>3.0e-4</td>
+<td>1.5e-4</td>
+<td>根据 large-batch scaling 原则调整，但非严格线性。经验法则是：模型越大，LR 越小；Batch越大，LR 越大。13B 模型使用更低的 LR 是为了抑制潜在的不稳定性。</td>
+</tr>
+<tr>
+<td><code>min_lr</code></td>
+<td><code>η / 10</code></td>
+<td><code>η / 10</code></td>
+<td><code>η / 10</code></td>
+<td>Cosine schedule 的终点学习率，确保训练末期模型仍在微调。</td>
+</tr>
+<tr>
+<td><code>Warmup Tokens</code></td>
+<td>2B</td>
+<td>3B</td>
+<td>3B</td>
+<td>训练初期，模型权重随机，梯度巨大且方向不定。Warmup 阶段让 LR 从零缓慢增长，给予模型一个“热身”期来稳定梯度，防止初期就“跑飞”。</td>
+</tr>
+<tr>
+<td><code>LR Schedule</code></td>
+<td>Cosine Decay</td>
+<td>Cosine Decay</td>
+<td>Cosine Decay</td>
+<td>经过 warmup 后，学习率按余弦曲线平滑衰减至 <code>min_lr</code>。这是目前最常用且效果最好的调度策略。</td>
+</tr>
+<tr>
+<td><code>wd</code> (Weight Decay)</td>
+<td>0.1</td>
+<td>0.1</td>
+<td>0.1</td>
+<td>L2 正则化，防止模型参数过大，提高泛化能力。</td>
+</tr>
+<tr>
+<td><code>grad_clip</code></td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>按全局梯度范数进行裁剪，这是防止梯度爆炸、确保训练稳定的最后一道防线。</td>
+</tr>
+<tr>
+<td><strong>内存优化</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Activation Checkpointing</code></td>
+<td>Off</td>
+<td>On</td>
+<td>On</td>
+<td><strong>空间换时间</strong>。开启后，在前向传播时不再存储所有中间激活，而是在反向传播时重新计算它们。这会增加约 20-30% 的计算耗时，但能极大降低显存占用，对于 7B+ 模型几乎是必需的。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="22-b-8k-l_ctx-8192">2.2 配置表 B: 8k 上下文 (<code>L_ctx = 8192</code>)</h3>
+<p>扩展到 8k 上下文是提升模型长文本能力的关键。这主要对显存和位置编码提出挑战，配置需相应调整。</p>
+<p>| 参数 (Parameter)                  | 3B 模型                     | 7B 模型                      | 13B 模型                     | 说明/权衡 (Explanation/Trade-off)                                                                                                                                                                             |</p>
+<table>
+<thead>
+<tr>
+<th>参数 (Parameter)</th>
+<th>3B 模型</th>
+<th>7B 模型</th>
+<th>13B 模型</th>
+<th>说明/权衡 (Explanation/Trade-off)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>L_ctx</code> (上下文长度)</td>
+<td><strong>8192</strong></td>
+<td><strong>8192</strong></td>
+<td><strong>8192</strong></td>
+<td>上下文长度翻倍，Attention 矩阵的计算和存储开销增长为 <strong>平方级别</strong> (<code>L_ctx²</code>)，这是主要的性能和显存瓶颈。</td>
+</tr>
+<tr>
+<td><strong>RoPE Scaling</strong> (回顾 Chapter 03)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>RoPE Scaling Type</code></td>
+<td>YaRN</td>
+<td>YaRN</td>
+<td>YaRN</td>
+<td>YaRN (Yet another RoPE extensioN) 通过插值和外推的结合，在扩展长上下文时，相比 PI 或 NTK-aware scaling 能更好地保持模型的短文本性能和长文本 PPL，是当前的主流选择。</td>
+</tr>
+<tr>
+<td><code>RoPE Scaling Factor</code></td>
+<td>2.0</td>
+<td>2.0</td>
+<td>2.0</td>
+<td><code>(目标长度 / 原始长度)</code>，即 <code>8192 / 4096 = 2.0</code>。</td>
+</tr>
+<tr>
+<td><code>RoPE Original Max Pos</code></td>
+<td>4096</td>
+<td>4096</td>
+<td>4096</td>
+<td>告知 YaRN 算法原始 RoPE 的设计基线。</td>
+</tr>
+<tr>
+<td><strong>批量与扩展 (调整后)</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Global Batch Size (GB_tok)</code></td>
+<td>2.1M</td>
+<td>4.2M</td>
+<td>4.2M</td>
+<td><strong>保持不变</strong>。Scaling Law 关注的是参数更新的信噪比，主要与模型参数量和 tokens 总量相关，上下文长度对其影响较小，因此我们保持 <code>GB_tok</code> 来维持相似的收敛动态。</td>
+</tr>
+<tr>
+<td><code>μ_batch</code> (单卡样本数)</td>
+<td><strong>4</strong> (vs 8)</td>
+<td><strong>2</strong> (vs 4)</td>
+<td><strong>1</strong> (vs 2)</td>
+<td><strong>核心调整</strong>。由于 <code>L_ctx</code> 翻倍导致 Attention 显存开销 4 倍增长，我们必须将单卡处理的样本数减半，以避免 OOM。这是最直接有效的应对策略。</td>
+</tr>
+<tr>
+<td><code>μ_tok</code> (单卡 micro-batch tokens)</td>
+<td>32,768</td>
+<td>16,384</td>
+<td>8,192</td>
+<td><code>μ_tok</code> 保持不变，这是通过 <code>μ_batch</code> 的减半来抵消 <code>L_ctx</code> 翻倍的结果。维持 <code>μ_tok</code> 有助于保持计算核的利用率。</td>
+</tr>
+<tr>
+<td><code>A</code> (梯度累积步数)</td>
+<td><code>2.1M / (32k * 64) ≈ 1</code></td>
+<td><code>4.2M / (16k * 64) ≈ 4</code></td>
+<td><code>4.2M / (8k * 64) ≈ 8</code></td>
+<td>由于 <code>μ_tok</code> 和 <code>GB_tok</code> 均未变，<code>A</code> 也不需要改变。</td>
+</tr>
+<tr>
+<td><code>Activation Checkpointing</code></td>
+<td><strong>On</strong> (vs Off)</td>
+<td>On</td>
+<td>On</td>
+<td><strong>强制开启</strong>。对于 8k 上下文，即使是 3B 模型，激活值的显存占用也会非常巨大，开启激活重计算是避免 OOM 的必要手段。</td>
+</tr>
+<tr>
+<td><strong>其它参数</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><em>其它所有参数</em></td>
+<td><em>同 4k 配置</em></td>
+<td><em>同 4k 配置</em></td>
+<td><em>同 4k 配置</em></td>
+<td>LR、优化器、warmup 等策略通常可直接沿用。但需更密切关注稳定性，因为更长的上下文意味着更长的依赖链，能放大数值误差，增加梯度消失/爆炸的风险。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3">3. 训练日志样例解读：成为“炼丹宗师”的第一步</h2>
+<p>启动训练后，持续监控日志是你作为 AI Scientist 最重要的工作。日志是模型的“心电图”，能揭示其内部状态。</p>
+<ul>
+<li><strong>损失曲线 (Loss Curve)</strong><ul>
+<li><strong>健康状态</strong>: 整体呈平滑下降趋势，符合幂律分布（在 log-log 图上接近一条直线）。曲线在放大后有正常的随机噪声波动，但整体趋势稳定向下。训练初期下降快，后期逐渐放缓。</li>
+<li><strong>异常信号与诊断</strong>:<ul>
+<li><strong>尖峰 (Spike)</strong>: 损失突然暴增后回落。<ul>
+<li><strong>日志表现</strong>: <code>loss</code> 从 <code>2.5</code> 突然跳到 <code>5.0</code>，几步后又回到 <code>2.5</code> 附近。</li>
+<li><strong>可能原因</strong>: 1. <strong>数据问题</strong>: 遇到了一个包含乱码、超长数字序列或格式错误的“毒样本”。2. <strong>学习率过高</strong>: 在某个特定的梯度方向上子迈得太大。3. <strong>数值不稳定</strong>: <code>bf16</code> 在极端情况下精度不足。</li>
+<li><strong>行动</strong>: 如果偶尔出现且能恢复，可忽略。若频繁出现，应降低 LR 或检查数据清洗流程。</li>
+</ul>
+</li>
+<li><strong>停滞 (Plateau)</strong>: 损失在数千步内几乎不再下降。<ul>
+<li><strong>日志表现</strong>: <code>loss</code> 长期在 <code>1.85 ± 0.02</code> 范围内波动。</li>
+<li><strong>可能原因</strong>: 1. <strong>学习率衰减过快/过低</strong>: 模型失去了进一步优化的动力。2. <strong>数据耗尽/多样性不足</strong>: 模型已“背熟”了训练数据。3. <strong>陷入局部最优</strong>。</li>
+<li><strong>行动</strong>: 检查 LR schedule，考虑“重启” LR (LR restart)。检查数据混比策略，是否某个高质量数据源已用尽。</li>
+</ul>
+</li>
+<li><strong>发散 (Divergence)</strong>: 损失持续增大，最终变为 <code>NaN</code>。<ul>
+<li><strong>日志表现</strong>: <code>loss</code> 从 <code>3.0</code> -&gt; <code>4.5</code> -&gt; <code>10.2</code> -&gt; <code>NaN</code>。</li>
+<li><strong>可能原因</strong>: <strong>灾难性问题</strong>。通常是学习率过高、梯度爆炸、RoPE scaling 实现有 bug、或严重的硬件/CUDA 问题。</li>
+<li><strong>行动</strong>: <strong>立即停止训练</strong>。从最后一个正常的 checkpoint 回滚，大幅降低学习率（例如减半），并仔细检查代码和数据。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="k">[健康 log-log 图]  [尖峰]             [停滞]             [发散]</span>
+<span class="w">  </span><span class="na">log(loss)|         loss|              loss|              loss|</span>
+<span class="w">           </span><span class="na">|           | spike          |                |</span>
+<span class="w">  </span><span class="na">\        |          / \               |                |</span>
+<span class="w">   </span><span class="na">\       |         /   \              |                |     .----</span>
+<span class="w">    </span><span class="na">\      |        /     \             |----.           .----&#39;</span>
+<span class="w">     </span><span class="na">\_____|       /_______\_           |     `----.----&#39;</span>
+<span class="na">-----------+-----&gt;-----------+-----&gt;   -----------+-----&gt;   -----------+-----&gt;</span>
+<span class="w">      </span><span class="na">log(iter)         iter             iter             iter</span>
+</code></pre></div>
+
+<ul>
+<li>
+<p><strong>梯度范数与优化器状态 (Gradient Norm &amp; Optimizer States)</strong></p>
+<ul>
+<li><strong>监控点</strong>:<ol>
+<li><strong>全局梯度范数 (Global Grad Norm)</strong>: 在梯度裁剪前，所有参数梯度的 L2 范数。一个健康的梯度范数应在 warmup 后稳定在一个数量级内（例如 1.0-10.0 之间），有波动但无持续增长趋势。如果该值频繁地、远超 <code>grad_clip</code> (1.0)，说明学习过程非常不稳定，是 LR 过高的明确信号。</li>
+<li><strong>DeepSpeed 溢出监控</strong>: <code>overflow</code> 计数器。如果该计数器不为零，说明在 <code>bf16</code> 梯度计算中出现了 <code>inf</code> 或 <code>nan</code>。偶尔的溢出可以被跳过，但如果持续增加，说明存在严重的数值稳定性问题。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>吞吐率与硬件利用率 (Throughput &amp; Utilization)</strong></p>
+<ul>
+<li><strong>核心指标</strong>: <code>samples/sec</code>, <code>tokens/sec/gpu</code>, <code>TFLOPs/gpu</code>。</li>
+<li><strong>目标</strong>: 对于 H100，一个经过优化的 7B 模型训练，单卡 TFLOPs 理论峰值约为 989 (<code>bf16</code>)，实际利用率（MFU, Model FLOPs Utilization）能达到 50-60% 即为优秀，对应约 500 TFLOPs。这转化为一个非常可观的 <code>tokens/sec</code>。</li>
+<li><strong>诊断</strong>: 如果吞率远低于预期（例如 MFU &lt; 30%），使用 PyTorch Profiler 分析 <code>step</code> 时间构成。常见瓶颈包括：<ul>
+<li><code>data_loading</code>: I/O 或 CPU 预处理成为瓶颈。</li>
+<li><code>all_reduce</code>/<code>all_gather</code>: ZeRO 或 TP 的通信开销过大。</li>
+<li><code>optimizer.step</code>: 优化器更新步骤耗时过长，可能是 CPU offload 带来的瓶颈。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="_2">本章小结</h2>
+<ul>
+<li><strong>配方是科学与艺术的结合</strong>: 本章提供的配置表是基于 Scaling Laws 的科学推导和大量工程实践经验的结合，是启动大规模训练的坚实基础。</li>
+<li><strong>权衡无处不在</strong>:<ul>
+<li><strong>模型尺寸 vs. Batch Size</strong>: 更大模型需要更大 <code>Global Batch Size</code> 来稳定收敛。</li>
+<li><strong>上下文长度 vs. 显存</strong>: <code>L_ctx</code> 增加，<code>μ_batch</code> 必须相应减小，并强制开启激活重计算。</li>
+<li><strong>速度 vs. 内存</strong>: ZeRO-3 和激活重计算用通信/计算开销换取了宝贵的显存空间，使得大模型训练成为可能。</li>
+</ul>
+</li>
+<li><strong>并行策略是根基</strong>: <code>TP=8</code> 最大节点内效率，ZeRO-3 解决跨节点显存扩展问题，这套组合拳是当前 H100 集群的标准打法。</li>
+<li><strong>监控日志是航海图</strong>: 深刻理解并持续监控损失、梯度范数和吞吐率，是诊断训练问题、避免在错误航向上浪费数百万 GPU 小时的关键。</li>
+</ul>
+<h2 id="gotchas">常见陷阱与错误 (Gotchas)</h2>
+<ol>
+<li>
+<p><strong>配置“一抄到底”不调整 (Blindly Copying Configs)</strong></p>
+<ul>
+<li><strong>症状</strong>: 将 13B 模型的 LR (<code>1.5e-4</code>) 用于 3B 模型，发现损失下降极其缓慢；反之，将 3B 的 LR (<code>3.0e-4</code>) 用于 13B，训练在几百步内 <code>loss</code> 变为 <code>NaN</code>。</li>
+<li><strong>分析</strong>: 不同规模的模型对学习率的敏感度不同。这是一个必须根据模型规模和 <code>GB_tok</code> 进行调整的核心参数。</li>
+<li><strong>对策</strong>: 遵循“模型越大、LR 越小”的原则。调整 <code>GB_tok</code> 时，参考 Chapter 5 的 <code>linear</code> 或 <code>sqrt</code> scaling 法则来调整 LR。</li>
+</ul>
+</li>
+<li>
+<p><strong>忽视早期的损失尖峰 (Ignoring Early Loss Spikes)</strong></p>
+<ul>
+<li><strong>症状</strong>: 训练前 1k 步，<code>loss</code> 出现数次 &gt; 5.0 的尖峰，但最终都“恢复”了。你认为这很正常并继续训练。</li>
+<li><strong>分析</strong>: 早期的尖峰是训练不稳定的强烈信号。即使恢复，也可能已经对模型权重造成了不可逆的“伤害”，影响最终性能。</li>
+<li><strong>对策</strong>: 立即暂停。<strong>抓取导致尖峰的那个 batch 的数据样本</strong>，进行人工检查。90% 的可能是数据质量问题。同时，可以考虑延长 warmup 步数或降低初始 LR。</li>
+</ul>
+</li>
+<li>
+<p><strong>8k 上下文 OOM 的隐蔽原因 (Subtle OOMs with 8k Context)</strong></p>
+<ul>
+<li><strong>症状</strong>: 将配置从 4k 改为 8k，<code>μ_batch</code> 也已减半，但依然在训练中途随机 OOM。</li>
+<li><strong>分析</strong>: 除了 Attention 矩阵，某些中间激活或临时变量也可能与 <code>L_ctx</code> 相关。例如，如果某个自定义的 <code>fused</code> 操作内部实现不佳，可能会产生一个巨大的临时张量。</li>
+<li><strong>对策</strong>: 使用 <code>torch.cuda.memory_summary()</code> 或 <code>torch.cuda.max_memory_allocated()</code> 在代码关键位插入打印，精确定位 OOM 发生在哪个操作之后。实在不行，只能进一步减小 <code>μ_batch</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>无声的数据加载瓶颈 (The Silent Data Loading Bottleneck)</strong></p>
+<ul>
+<li><strong>症状</strong>: <code>loss</code> 曲线正常，没有错误，但 <code>TFLOPs</code> 利用率只有 20%，远低于预期。GPU 利用率在监控工具中显示为周期性的“波谷”。</li>
+<li><strong>分析</strong>: 这是典型的数据供给慢于 GPU 计算。GPU 在每个 <code>step</code> 开始时都在等待数据。</li>
+<li><strong>对策</strong>: 1. 增加 <code>DataLoader</code> 的 <code>num_workers</code>。2. 开启 <code>pin_memory=True</code>。3. 检查数据预处理逻辑是否有 Python 全局锁（GIL）瓶颈。4. 压测 CPFS 的并发读取性能，确认不是存储端的问题。</li>
+</ul>
+</li>
+<li>
+<p><strong>RoPE Scaling 的精度陷阱 (Precision Pitfalls in RoPE Scaling)</strong></p>
+<ul>
+<li><strong>症状</strong>: 训练 8k 模型时，偶尔出现 <code>NaN</code>，尤其是在梯度累积步数较多的情况下。</li>
+<li><strong>分析</strong>: RoPE 的计算涉及三角函数和旋转操作。在长序列和 <code>bf16</code> 精度下，些中间计算结果可能超出 <code>bf16</code> 的表示范围或损失过多精度，最终导致 <code>inf</code> 或 <code>nan</code> 在 attention score 中传播。</li>
+<li><strong>对策</strong>: 强制 RoPE 的部分计算（例如生成 <code>cos</code> 和 <code>sin</code> 值）在 <code>fp32</code> 下进行，然后再 cast 回 <code>bf16</code>。这会带来微小的性能开销，但能显著提升数值稳定性。</li>
+</ul>
+</li>
+</ol>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter10.html" class="nav-link prev">← chapter10.md — 评估：验证困惑度</a><a href="chapter12.html" class="nav-link next">第十二章 端到端：CPT / 继续预训练 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

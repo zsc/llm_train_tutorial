@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第九章 — 并行与内存：Lightning + DeepSpeed 配方</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">从零到可复现：LLM 训练实战（算法向，Lightning + DeepSpeed）—**索引**</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter01.md — 总览与可复现环境</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter03.md — 架构细节：LLaMA 风格与 8k 扩展</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter05.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 05 — 大批量训练与学习率策略</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter06.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：多数据集动态混比——从“大锅饭”到“交响乐”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter07.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 7 章 — 优化器与数值稳定</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter08.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 8 章：数据加载与存储格式（CPFS）— 榨干 IO 吞吐</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter09.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章 — 并行与内存：Lightning + DeepSpeed 配方</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter10.md — 评估：验证困惑度</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter11.md — 端到端：从零预训练（1T tokens）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章 端到端：CPT / 继续预训练</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 13 章：成本/时长粗估（¥）与 TCO</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter14.md — 常见问题与诊断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter15.md — 附录与参考</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="lightning-deepspeed">第九章 — 并行与内存：Lightning + DeepSpeed 配方</h1>
+<h2 id="_1">开篇段落</h2>
+<p>欢迎来到本教程的“引擎室”。在前面的章节中，我们讨论了模型架构、数据和优化算法，而本章将把这些理论蓝图锻造成可在物理硬件上高速运转的钢铁现实。我们将直面大规模训练中最棘手的敌人——显存 OOM（Out-of-Memory），并学习如何驾驭 PyTorch Lightning 与 DeepSpeed 这对强大的组合，将一个 13B 甚至更大规模的模型，高效地部署在 64x H100 80GB 的庞大集群上。本章的目标不仅是提供一套“复制粘贴”的配置，更是要建立一个系统的决策框架，让您能够根据模型大小上下文长度和硬件拓扑，自信地设计、调试并优化出一套属于您自己的、极致性能的训练方案。</p>
+<hr />
+<h2 id="1">1. 显存预算：一场与“四大吞噬者”的博弈</h2>
+<p>要赢得显存之战，必先知己知彼。在一次训练迭代中，单张 GPU 的显存主要被四大块占用，理解它们的量级是后续所有优化的基础。</p>
+<h4 id="11">1.1 定量分析显存占用</h4>
+<p>让我们以一个 <strong>13B（<code>N_params</code> = 13 × 10⁹）</strong> 的模型为例，进行一次定量计算：</p>
+<ol>
+<li>
+<p><strong>模型权重（Model Parameters）</strong>:</p>
+<ul>
+<li><code>bf16</code> 格式下，每个参数占 2 字节。</li>
+<li><strong>显存占用</strong>: <code>13B * 2 bytes/param = 26 GB</code>。这是最基础的开销。</li>
+</ul>
+</li>
+<li>
+<p><strong>梯度（Gradients）</strong>:</p>
+<ul>
+<li>每个参数都需要一个对应的梯度，其数据类型通常与参数一致。</li>
+<li><strong>显存占用</strong>: <code>13B * 2 bytes/param (bf16) = 26 GB</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>优化器状态（Optimizer States）</strong>:</p>
+<ul>
+<li>这是最隐蔽也最庞大的“吞噬者”。标准的 AdamW 优化器为每参数维护两个动量状态：一阶动量（<code>exp_avg</code>）和二阶动量（<code>exp_avg_sq</code>）。</li>
+<li>为保持精度，这些状态通常以 <code>fp32</code>（4 字节）存储。</li>
+<li><strong>显存占用</strong>: <code>13B * (4 bytes/state_1 + 4 bytes/state_2) = 13B * 8 bytes = 104 GB</code>。</li>
+<li><strong>结论</strong>：仅优化器状态一项，就远超单张 H100 80GB 的容量。<strong>这是我们必须使用 ZeRO 的根本原因。</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>激活值（Activations）</strong>:</p>
+<ul>
+<li>
+<p>这是前向传播中产生的中间结果，其大小与多个因素成正比，近似公式为：
+    <code>Mem_act ≈ L_ctx * μ_bsz * N_layers * D_hidden * (constant)</code>
+    其中 <code>μ_bsz</code> 是单卡 micro-batch size。</p>
+</li>
+<li>
+<p>对于长上下文（如 8k）和多层深层模型，激活值可以轻松达到数十 GB，成为新的显存瓶颈。例如，对于一个 13B 模型（<code>L=40, H=5120</code>）在 <code>L_ctx=8k</code>，<code>μ_bsz=1</code> 的情况下，激活值可能达到 <code>8192 * 1 * 40 * 5120 * 10 (approx factor) ≈ 16 GB</code>。这个数字会随着 <code>μ_bsz</code> 线性增长。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>小结</strong>：对于 13B 模型，在 <code>bf16</code> 下，一次迭代的理论显存峰值（未优化）至少为 <code>26 (weights) + 26 (grads) + 104 (optim) + Activations ≈ 156 GB + Activations</code>。这清晰地表明，不采用高级并行与内存优化技术，训练是完全不可行的。</p>
+<h4 id="12">1.2 并行策略的“三驾马车”</h4>
+<p>| 策略                | 核心思想                                 | 优点                                       | 缺点                                                         | 适用场景                                     |</p>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>核心思想</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>数据并行 (DP)</strong></td>
+<td>每卡复制完整模型，切分数据</td>
+<td>实现简单，逻辑清晰</td>
+<td>显存冗余巨大，无法容纳大模型</td>
+<td>小型或显存极其充裕的场景（几乎不再单独使用）</td>
+</tr>
+<tr>
+<td><strong>张量并行 (TP)</strong></td>
+<td>在卡间切分单个算子（如矩阵乘法）</td>
+<td>降低单卡峰值显存（权重+激活），提高计算并行度</td>
+<td>通信密集（高带宽、低延迟要求），需修改模型代码，通常限于节点内</td>
+<td>模型层过大，单卡无法容纳其权重或中间激活值</td>
+</tr>
+<tr>
+<td><strong>流水线并行 (PP)</strong></td>
+<td>在卡间切分模型层（<code>stage</code>）</td>
+<td>可扩展至巨大模型，通信量相对 TP 较少</td>
+<td>存在“流水线气泡”导致硬件利用率下降，实现复杂，负载均衡困难</td>
+<td>超巨型模型（&gt;100B），或跨节点并行</td>
+</tr>
+</tbody>
+</table>
+<p>而我们将要深入的 <strong>DeepSpeed ZeRO</strong>，可以看作是数据并行的“究极进化版”，它系统性地解决了 DP 的显存冗余问题。</p>
+<hr />
+<h2 id="2-deepspeed-zero">2. DeepSpeed ZeRO：数据并行的终极形态</h2>
+<p>ZeRO（Zero Redundancy Optimizer）的核心哲学是：<strong>在数据并行的计算流程中，将一切可以分割的状态（优化器、梯度、权重）都进行分割（Partition），只在计算需要时才通过通信临时重组</strong>。</p>
+<h4 id="21-zero">2.1 ZeRO 的三个阶段</h4>
+<ul>
+<li>
+<p><strong>ZeRO-Stage 1</strong>: <strong>分割优化器状态</strong></p>
+<ul>
+<li><strong>机制</strong>: <code>N</code> 个 GPU，每个 GPU 只持有 <code>1/N</code> 的优化器状态。在 <code>optimizer.step()</code> 时，每个 GPU 通过 <code>All-Gather</code> 收集齐自己负责更新的那部分参数所对应的<strong>完整</strong>优化器状态，执行更新，然后丢弃。</li>
+<li><strong>显存节省</strong>: 优化器状态从 <code>O</code> 减少到 <code>O/N</code>。通信量相比标准 DP 几乎不变。</li>
+<li><strong>适用</strong>: 能显著降低显存，但模型权重和梯度仍在每卡复制，对于 13B 模型仍不足够。</li>
+</ul>
+</li>
+<li>
+<p><strong>ZeRO-Stage 2</strong>: <strong>分割优化器状态 + 梯度</strong></p>
+<ul>
+<li><strong>机制</strong>: 在 Stage 1 基础上，反向传播计算出的梯度也进行分割。每个 GPU 只保留自己负责那部分参数的梯度。传统 DP 的 <code>All-Reduce</code> 被 <code>Reduce-Scatter</code> 替代，即计算全局梯度总和后直接分发到对应的 GPU，避了每卡存储完整梯度。</li>
+<li><strong>显存节省</strong>: 优化器状态和梯度都减少到 <code>1/N</code>。</li>
+<li><strong>适用</strong>: 进一步节省显存，通常是 7B 以下模型在显存较紧张（如 A100 40GB）时的不错选择。</li>
+</ul>
+</li>
+<li>
+<p><strong>ZeRO-Stage 3</strong>: <strong>分割优化器状态 + 梯度 + 模型权重</strong></p>
+<ul>
+<li><strong>机制</strong>: 这是最彻底的模式。在任何时刻，每个 GPU 只持久化存储 <code>1/N</code> 的模型权重。</li>
+<li><strong>训练步骤剖析</strong>:<ol>
+<li><strong>前向传播</strong>: 在计算某一层（如 <code>TransformerBlock_i</code>）之前，所有 GPU 通过 <code>All-Gather</code> 临时获取该层的完整权重。</li>
+<li>计算完成后，<strong>立即释放</strong>非自己持有的那部分权重，只保留自己的 <code>1/N</code> 分片。</li>
+<li><strong>后向传播</strong>: 流程类似，需要梯度时，先 <code>All-Gather</code> 对应层的权重。</li>
+</ol>
+</li>
+<li><strong>显存节省</strong>: 权重、梯度、优化器状态都被分割。理论上，只要集群总显存足够，可以训练任意大小的模型。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<p><strong>ASCII 图：ZeRO-3 中一个数分片（slice）的生命周期</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="w">                           </span><span class="o">+--------------------------------+</span>
+<span class="w">                           </span><span class="o">|</span><span class="w">           </span><span class="n">GPU_k</span><span class="w"> </span><span class="p">(</span><span class="n">owns</span><span class="w"> </span><span class="n">P_k</span><span class="p">)</span><span class="w">     </span><span class="o">|</span>
+<span class="w">                           </span><span class="o">+--------------------------------+</span>
+<span class="w">                                           </span><span class="o">|</span>
+<span class="p">(</span><span class="n">Forward</span><span class="w"> </span><span class="n">Pass</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Layer_i</span><span class="p">)</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="ow">All</span><span class="o">-</span><span class="n">Gather</span><span class="p">(</span><span class="n">P_i</span><span class="p">)</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="ow">all</span><span class="w"> </span><span class="n">GPUs</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="o">[</span><span class="n">P_i_full</span><span class="o">]</span><span class="w"> </span><span class="k">temporary</span>
+<span class="w">                                           </span><span class="o">|</span>
+<span class="w">                                  </span><span class="k">Compute</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">P_i_full</span><span class="p">)</span>
+<span class="w">                                           </span><span class="o">|</span>
+<span class="w">                           </span><span class="k">Release</span><span class="p">(</span><span class="n">P_i_full</span><span class="p">),</span><span class="w"> </span><span class="n">keep</span><span class="w"> </span><span class="k">only</span><span class="w"> </span><span class="o">[</span><span class="n">P_k</span><span class="o">]</span>
+<span class="w">                                           </span><span class="o">|</span>
+<span class="p">(</span><span class="n">Backward</span><span class="w"> </span><span class="n">Pass</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Layer_i</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="ow">All</span><span class="o">-</span><span class="n">Gather</span><span class="p">(</span><span class="n">P_i</span><span class="p">)</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="ow">all</span><span class="w"> </span><span class="n">GPUs</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="o">[</span><span class="n">P_i_full</span><span class="o">]</span><span class="w"> </span><span class="k">temporary</span>
+<span class="w">                                           </span><span class="o">|</span>
+<span class="w">                           </span><span class="k">Compute</span><span class="w"> </span><span class="n">Grads</span><span class="p">,</span><span class="w"> </span><span class="n">Reduce</span><span class="o">-</span><span class="n">Scatter</span><span class="p">(</span><span class="n">G_i</span><span class="p">)</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="o">[</span><span class="n">G_k</span><span class="o">]</span><span class="w"> </span><span class="n">stored</span>
+<span class="w">                                           </span><span class="o">|</span>
+<span class="p">(</span><span class="n">Optimizer</span><span class="w"> </span><span class="n">Step</span><span class="p">)</span><span class="w"> </span><span class="c1">---------&gt; Update(P_k, G_k, OptimState_k) --&gt; [P_k_updated] stored</span>
+</code></pre></div>
+
+<hr />
+<p><strong>Rule-of-thumb (经验法则):</strong></p>
+<blockquote>
+<p>对于我们的 64x H100 80GB 场景，训练 7B 及以上模型，<strong>直接将 ZeRO-3 设为默认配置</strong>。它提供了最大的显存优化能力，让我们能将宝贵的显存用于提升 <code>μ_tok</code> 或 <code>L_ctx</code>，从而压榨硬件性能，提升最终的 <code>tokens/s</code>。</p>
+</blockquote>
+<h4 id="22-cpunvme-offload">2.2 CPU/NVMe Offload：最后的救生筏（但需谨慎）</h4>
+<ul>
+<li><strong>Paged Optimizer &amp; Offload</strong>: DeepSpeed 允许将 ZeRO 分割后的状态进一步“卸载”到 CPU 内存（Offload）或 NVMe 硬盘。</li>
+<li><strong>性能警示</strong>: 这是一个典型的用<strong>时间换空间</strong>的策略，但代价极为高昂。<ul>
+<li><strong>带宽阶梯</strong>: H100 内部 NVLink/NVSwitch (<code>~900 GB/s</code>) &gt;&gt; PCIe 5.0 (<code>~128 GB/s</code>) &gt;&gt; 高速 NVMe (<code>~14 GB/s</code>)。</li>
+<li>将数据从 GPU 卸载到 CPU，意味着通信带宽下降了一个数量级；卸载到 NVMe 则下降了两个数量级。这会使训练从<strong>计算密集型</strong>转变为<strong>I/O 密集型</strong>，<code>tokens/s</code> 会急剧下降。<blockquote>
+<p><strong>Rule-of-thumb</strong>: 在 H100 集群上，<strong>应尽一切可能避免使用 Offload</strong>。宁可减小 micro-batch size，或增加 TP 因子，也不要轻易打开 Offload。它只适用于研究或调试目的，在追求极致性能的生产环境中几乎没有位置。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="3-tensor-parallelism">3. 张量并行（Tensor Parallelism）：在微观层面瓦解巨型算子</h2>
+<p>即便 ZeRO-3 将模型参数分片存储，但在前向/后向计算的瞬间，单层完整的权重仍需被 <code>All-Gather</code> 到每个 GPU。如果模型极宽（如 MoE 的 FFN 层），这一瞬间的显存峰值也可能导致 OOM。<strong>张量并行 (TP)</strong> 正是解决这一问题的利器。</p>
+<p>它将一个大的矩阵运算（如 <code>Y = XA</code>）分解到多个 GPU 上。</p>
+<ul>
+<li>
+<p><strong>列并行 (Column-Parallel Linear)</strong>:</p>
+<ul>
+<li>将权重矩阵 <code>A</code> 按列切分 <code>A = [A_1 | A_2]</code>, <code>TP=2</code>。</li>
+<li><code>GPU_1</code> 计算 <code>Y_1 = XA_1</code>，<code>GPU_2</code> 计算 <code>Y_2 = XA_2</code>。</li>
+<li>前向传播需要一次 <code>All-Gather</code> 操作将 <code>X</code> 广播给所有 TP-group 内的 GPU。</li>
+<li>输出 <code>Y = [Y_1 | Y_2]</code> 是天然分片的。</li>
+<li><strong>适用</strong>: Transformer 中的 <strong>QKV 投影</strong>和 <strong>FFN 的第一层（up-projection）</strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>行并行 (Row-Parallel Linear)</strong>:</p>
+<ul>
+<li>将权重矩阵 <code>A</code> 按行切分 <code>A = [A_1; A_2]</code>。</li>
+<li>输入 <code>X</code> 本身是分片的 <code>X = [X_1 | X_2]</code>（来自前一个列并行层）。</li>
+<li><code>GPU_1</code> 计算 <code>Z_1 = X_1 * A_1</code>，<code>GPU_2</code> 计算 <code>Z_2 = X_2 * A_2</code>。</li>
+<li>后向传播需要一次 <code>All-Gather</code>。</li>
+<li>输出需要一次 <code>All-Reduce</code> 将部分结果相加：<code>Y = Z_1 + Z_2</code>。</li>
+<li><strong>适用</strong>: Transformer 中的 <strong>注意力输出投影</strong> 和 <strong>FFN 的第二层（down-projection）</strong>。</li>
+</ul>
+</li>
+</ul>
+<p><strong>Rule-of-thumb:</strong></p>
+<blockquote>
+<ul>
+<li><strong>TP 规模与拓扑</strong>: TP 引入了大量的即时通信，必须在<strong>高速互联（NVLink/NVSwitch）的节点内部</strong>使用。对于 8x H100 的节点，<code>TP</code> 因子通常设为 <code>2</code>, <code>4</code>, 或 <code>8</code>。跨节点 TP 性能会急剧下降。</li>
+<li><strong>模型适配</strong>: 使用 TP 需要模型代码的明确支持（例如，使用 <code>megatron-core</code> 提供的 <code>RowParallelLinear</code> 和 <code>ColumnParallelLinear</code> 替换 <code>nn.Linear</code>）。</li>
+<li><strong>何选择</strong>:<ul>
+<li><strong>7B 模型</strong>: <code>TP=1</code> (不用) 或 <code>TP=2</code> 通常足够。</li>
+<li><strong>13B 模型</strong>: <code>TP=2</code> 或 <code>TP=4</code> 是一个很好的起点。<code>TP=4</code> 意味着一个 13B 模型的单层在单卡上看起来更像一个 ~3B 模型的层，显著降低了激活值和临时权重的峰值显存。</li>
+<li><strong>权衡</strong>: 增加 TP 因子会降低单卡显存峰值，但也增加了通信开销。当 <code>tokens/s</code> 随着 TP 增加而下降时，说明通信开销已经超过了显存优化带来的收益。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<hr />
+<h2 id="4-activation-checkpointing">4. 激活检查点（Activation Checkpointing）：用算力换取“无限”上下文</h2>
+<p>长序列训练中，激活值是显存的主要消耗者。<strong>激活检查点（AC）</strong>，或称<strong>重计算（Recomputation）</strong>，是一种优雅的“时间换空间”策略。</p>
+<ul>
+<li>
+<p><strong>原理</strong>: 在前向传播时，对于被“检查点”包裹的模块（通常是每个 Transformer Block），我们不存储其内部产生的所有中间激活值，<strong>只保存该模块的输入</strong>。当反向传播需要这些活值来计算梯度时，我们<strong>临时重新执行一次该模块的前向计算</strong>，得到所需的激活值，用完后立即丢弃。</p>
+</li>
+<li>
+<p><strong>开销与收益分析</strong>:</p>
+<ul>
+<li><strong>收益</strong>: 显存占用从与层数 <code>N_layers</code> 线性相关，变为近似 <code>O(1)</code>（只存一个 block 的激活），从而可以支持极长的序列。</li>
+<li><strong>开销</strong>:<ul>
+<li>一次标准的训练迭代包含 <code>1F</code> (前向) + <code>1B</code> (后向)。</li>
+<li>使用 AC 后，变为 <code>1F</code> + <code>1F_recompute</code> + <code>1B</code>。</li>
+<li>粗略估计，后向传播的计算量约是前向的 2 倍 (<code>B ≈ 2F</code>)。</li>
+<li>因此，理论计算开销增加了 <code>F_recompute / (F + B) ≈ F / (3F) ≈ 33%</code>。</li>
+<li>然而，这是一个值得的交换。如果不用 AC 导致 <code>μ_bsz</code> 只能设为 1，而用了 AC 后可以设为 4，那么整体的 <code>tokens/s</code> 反而会大幅提升，因为硬件并行度得到了更好的利用。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Rule-of-thumb:</strong></p>
+<blockquote>
+<ul>
+<li>对于 <code>L_ctx &gt;= 4k</code> 的任何训练任务，<strong>无条件开启激活检查点</strong>。这是现代 LLM 长序列训练的标配。</li>
+<li>在 PyTorch Lightning 中，通过 <code>strategy=DeepSpeedStrategy(activation_checkpointing={"partition_activations": True, "cpu_checkpointing": False})</code> 或直接在模型代码中使用 <code>torch.utils.checkpoint.checkpoint</code> 即可轻松启用。</li>
+<li>DeepSpeed 的 <code>partition_activations</code> 选项可以与 ZeRO-3 配合，进一步将 AC 重计算出的激活值在 DP group 内进行分割，再次降低显存。</li>
+</ul>
+</blockquote>
+<hr />
+<h2 id="5-gradient-accumulation">5. 梯度累积（Gradient Accumulation）：用时间堆砌出“虚拟大批量”</h2>
+<p>Scaling Laws 指导我们需要使用百万级别的 <code>GB_tok</code>（全局批大小）。但单次迭代能放入集群总显存的数据量是有限的。<strong>梯度累积（Gradient Accumulation Steps, GAS）</strong> 是弥合这一差距的桥梁。</p>
+<ul>
+<li><strong>机制</strong>:<ol>
+<li>执行一次 micro-batch 的 <code>forward()</code> 和 <code>backward()</code>。</li>
+<li>梯度被计算并存储在 <code>.grad</code> 属性中。</li>
+<li><strong>跳过</strong> <code>optimizer.step()</code> 和 <code>optimizer.zero_grad()</code>。</li>
+<li>重复步骤 1-2 <code>A</code> 次，新计算的梯度会<strong>累加</strong>到已有的梯度上。</li>
+<li>在第 <code>A</code> 次 micro-batch 之后，执行一次 <code>optimizer.step()</code>（使用累加了 <code>A</code> 次的梯度），然后 <code>optimizer.zero_grad()</code> 清零。</li>
+</ol>
+</li>
+</ul>
+<hr />
+<p><strong>ASCII 图：梯度累积流程</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">Global_Step</span><span class="w"> </span><span class="n">k</span><span class="o">:</span>
+<span class="w">  </span><span class="n">Micro_Step</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="w"> </span><span class="n">Fwd</span><span class="p">(</span><span class="n">data_1</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Bwd</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Grad_Buffer</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">grad_1</span>
+<span class="w">  </span><span class="n">Micro_Step</span><span class="w"> </span><span class="mi">2</span><span class="o">:</span><span class="w"> </span><span class="n">Fwd</span><span class="p">(</span><span class="n">data_2</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Bwd</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Grad_Buffer</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">grad_2</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="w">  </span><span class="n">Micro_Step</span><span class="w"> </span><span class="n">A</span><span class="o">:</span><span class="w"> </span><span class="n">Fwd</span><span class="p">(</span><span class="n">data_A</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Bwd</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Grad_Buffer</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">grad_A</span>
+<span class="w">  </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">optimizer</span><span class="p">.</span><span class="n">step</span><span class="p">()</span><span class="w">  </span><span class="c1">// A single update using summed gradients</span>
+<span class="w">  </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">optimizer</span><span class="p">.</span><span class="n">zero_grad</span><span class="p">()</span>
+<span class="n">Global_Step</span><span class="w"> </span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="o">:</span>
+<span class="w">  </span><span class="p">...</span>
+</code></pre></div>
+
+<hr />
+<ul>
+<li>
+<p><strong>核心关系式</strong>:
+    <code>GB_tok = μ_tok × A × D</code></p>
+<ul>
+<li><code>GB_tok</code>: 我们的目标全局批大小（以 tokens 计），由 Scaling Law 决定。</li>
+<li><code>μ_tok</code>: 单卡上的 micro-batch（<code>μ_bsz * L_ctx</code>），由单卡显存容量决定。</li>
+<li><code>A</code>: 梯度累积步数，是我们需要计算的“自由”变量。</li>
+<li><code>D</code>: 数据并行路数（<code>#GPUs / (TP * PP)</code>）。</li>
+</ul>
+</li>
+</ul>
+<p><strong>Rule-of-thumb:</strong></p>
+<blockquote>
+<ol>
+<li><strong>最大化 <code>μ_tok</code></strong>: 你的首要任务是，在给定模型、<code>L_ctx</code> 和并行策略（ZeRO, TP）下，通过实验找到能塞满 H100 显存（例如，用到 70-75GB）的<strong>最大 <code>μ_bsz</code></strong>。更高的 <code>μ_bsz</code> 意味着更好的 GPU 计算核心利用率（MFU）。</li>
+<li><strong>计算 <code>A</code></strong>: 根据你的目标 <code>GB_tok</code>（例如 4M tokens），用上述公式反解出 <code>A</code>： <code>A = GB_tok / (μ_tok * D)</code>。<code>A</code> 的值取一个合理的整数，如 8, 16, 32。</li>
+</ol>
+</blockquote>
+<hr />
+<h2 id="6-lightning-deepspeed-profiling">6. Lightning + DeepSpeed 实战配方与 Profiling 工作流</h2>
+<p>现在，我们将所有组件整合成一个为 64x H100 集群训练 13B LLaMA（8k 上下文）模型的决策工作流。</p>
+<p><strong>目标</strong>: <code>GB_tok = 4M tokens</code>, 模型 <code>13B</code>, <code>L_ctx = 8k</code>。</p>
+<ol>
+<li>
+<p><strong>Step 1: 基础并行策略选择 (ZeRO-3 + TP)</strong></p>
+<ul>
+<li><strong>ZeRO</strong>: 毋庸置疑，选择 <code>deepspeed_stage_3</code>。</li>
+<li><strong>TP</strong>: 在 8-GPU 节点内，<code>TP=4</code> 是一个攻守兼备的选择，显著降低单层计算的显存压力。</li>
+<li><strong>DP</strong>: 数据并行路数 <code>D = #GPUs / TP = 64 / 4 = 16</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>Step 2: 启用标准内存优化</strong></p>
+<ul>
+<li><strong>AC</strong>: 8k 上下文，必须启用激活检查点。</li>
+<li><strong>BF16</strong>: H100 原生支持，启用 <code>precision="bf16-mixed"</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>Step 3: 经验性确定 Micro-Batch Size (<code>μ_bsz</code>)</strong></p>
+<ul>
+<li>这是一个<strong>经验性搜索</strong>过程。在单节点（8卡，TP=4）上开始实验。</li>
+<li>尝试 <code>μ_bsz = 1</code>。如果能跑通且显存占用率低（如 &lt; 60%），尝试 <code>μ_bsz = 2</code>。</li>
+<li>持续增加 <code>μ_bsz</code>，直到发生 OOM，然后回退到上一个成功的值。</li>
+<li>假设我们最终确定 <code>μ_bsz = 2</code> 是稳定的最大值。</li>
+<li>那么，<code>μ_tok = μ_bsz * L_ctx = 2 * 8192 = 16,384</code> tokens。</li>
+</ul>
+</li>
+<li>
+<p><strong>Step 4: 计算梯度累积步数 (<code>A</code>)</strong></p>
+<ul>
+<li><code>A = GB_tok / (μ_tok * D) = 4,194,304 / (16,384 * 16) = 16</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>Step 5: 组装 DeepSpeed &amp; Lightning 配置</strong></p>
+<ul>
+<li><strong>Lightning Trainer</strong>:</li>
+</ul>
+</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+    <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span>
+    <span class="n">devices</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+    <span class="n">num_nodes</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">precision</span><span class="o">=</span><span class="s2">&quot;bf16-mixed&quot;</span><span class="p">,</span>
+    <span class="n">strategy</span><span class="o">=</span><span class="n">DeepSpeedStrategy</span><span class="p">(</span>
+        <span class="n">stage</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">tensor_parallel</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;tp_size&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+        <span class="n">activation_checkpointing</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;partition_activations&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+        <span class="c1"># ... 其他deepspeed配置</span>
+    <span class="p">),</span>
+    <span class="n">accumulate_grad_batches</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="k">*</span>   **DeepSpeed JSON (部分)**:
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;train_micro_batch_size_per_gpu&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;bf16&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;zero_optimization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;stage&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;contiguous_gradients&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;overlap_comm&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;reduce_bucket_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">5e8</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<ol start="6">
+<li><strong>Step 6: Profile, 分析, 迭代</strong><ul>
+<li>启动训练后，不要只看 Loss。使用 Lightning 的 <code>AdvancedProfiler</code> 或 NVIDIA <code>Nsight Systems</code> (nsys) 进行性能剖析。</li>
+<li><strong>关键监控指标</strong>:<ul>
+<li><strong>tokens/sec/GPU</strong>: 这是最终的效率黄金指标。</li>
+<li><strong>TFLOPS/GPU</strong>: 衡量 GPU 的计算单元被利用的程度。对于 H100 <code>bf16</code>，一个好的目标是达到理论峰值（989 TFLOPS）的 50% 以上，即 ~500 TFLOPS。</li>
+<li><strong>Step Time Breakdown</strong>: 分析<code>forward</code>, <code>backward</code>, <code>optimizer_step</code> 的耗时。如果 <code>optimizer_step</code> 耗时过长，可能表示 ZeRO 的通信或梯度同步存在瓶颈。如果 step 之间有很大空闲，说明是数据加载（<code>chapter08</code>）问题。</li>
+<li><strong>Comm/Compute Overlap</strong>: 理想情况下，ZeRO 的通信 (<code>overlap_comm</code>) 应该与计算并行，profiler 可以验证这一点。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="_2">本章小结</h2>
+<p>本章我们构建了一套系统性的方法论，用于在 Lightning+DeepSpeed 框架下配置大规模训练。</p>
+<ul>
+<li>我们从<strong>定量分析显存占用</strong>入手，明确了使用高级并行策略的必要性。</li>
+<li><strong>ZeRO-3</strong> 被确立为大规模训练的基石，因为它能最大化地消除显存冗余。</li>
+<li><strong>张量并行（TP）</strong> 作为 ZeRO-3 的补充，用于解决单层算子过大导致的瞬时显存峰值。</li>
+<li><strong>激活检查点（AC）</strong> 和 <strong>梯度累积（GAS）</strong> 是分别应对长序列和巨大全局批次挑战的标准武器。</li>
+<li>最后，我们将这些技术整合进一个<strong>六步决策工作流</strong>，从策略选择到参数计算，再到性能剖析，形成一个完整的闭环优化流程。掌握这套流程，你将能为任何规模的模型和硬件集群，设计出高效、稳健的训练方案。</li>
+</ul>
+<hr />
+<h2 id="gotchas">常见陷阱与错误 (Gotchas)</h2>
+<ol>
+<li>
+<p><strong>ZeRO-3 的“假死”与检查点 OOM</strong></p>
+<ul>
+<li><strong>症状</strong>: 在保存模型检查点时（尤其是在训练结束或验证步骤），rank 0 的 GPU 突然 OOM，整个任务失败。</li>
+<li><strong>原因</strong>: 标准的 <code>torch.save(model.state_dict())</code> 会尝试在 rank 0 上聚合完整的模型权重，这会瞬间摧毁 ZeRO-3 的显存优势。</li>
+<li><strong>解决方案</strong>: <strong>严格使用 DeepSpeed 的检查点保存/加载 API</strong>。在 Lightning 中，这是自动处理的。如果需要导出为单个文件，确保在 DeepSpeed 配置中 <code>zero_optimization</code> 设置 <code>"stage3_gather_16bit_weights_on_model_save": true</code>，并确保 CPU 有足够内存。</li>
+</ul>
+</li>
+<li>
+<p><strong>梯度累积与学习率调度器的“步数错位”</strong></p>
+<ul>
+<li><strong>症状</strong>: Loss 曲线过早地、异常迅速地收敛到一个次优点，或者完全不收敛。</li>
+<li><strong>原因</strong>: 学习率调度器（如 Cosine Annealing）是按“优化器更新次数”来计算进度的。如果错误地让它按“micro-batch 次数”更新，它的周期会缩短 <code>A</code> 倍，导致学习率在训练早期就衰减到零。</li>
+<li><strong>解决方案</strong>: PyTorch Lightning 内部正确处理了这一点，其 <code>trainer.fit()</code> 循环会自动以优化器步数（global step）为单位。如果你手动控制循环，务必确保 LR scheduler 的 <code>step()</code> 是在 <code>optimizer.step()</code> 之后调用的，而不是在每次 <code>backward()</code> 之后。</li>
+</ul>
+</li>
+<li>
+<p><strong>TP 因子与模型配置的“整除灾难”</strong></p>
+<ul>
+<li><strong>症状</strong>: 训练启动时直接报错，信息通常包含 <code>AssertionError</code> 或 <code>ValueError</code>，出某个维度（如 <code>num_attention_heads</code>）无法被 <code>tp_size</code> 整除。</li>
+<li><strong>解决方案</strong>: 在设计模型和并行策略时，就确保可并行化的维度是 TP 因子的整数倍。例如，如果计划使用 <code>TP=4</code>，那么注意力头数最好是 32, 40, 64 等可以被 4 整除的数。</li>
+</ul>
+</li>
+<li>
+<p><strong>混合精度训练中的 <code>inf</code>/<code>NaN</code> 梯度</strong></p>
+<ul>
+<li><strong>症状</strong>: 训练过程中 Loss 突然变为 <code>NaN</code>。</li>
+<li><strong>原因</strong>: 在 <code>bf16</code> 或 <code>fp16</code> 下，梯度的数值范围变小，可能出现下溢（变为 0）或上溢（变为 <code>inf</code>）。</li>
+<li><strong>解决方案</strong>:<ul>
+<li><strong>梯度裁剪 (Gradient Clipping)</strong>: 在 Lightning Trainer 中设置 <code>gradient_clip_val=1.0</code> 是一个稳健的默认值。</li>
+<li><strong>损失缩放 (Loss Scaling)</strong>: DeepSpeed 会自动处理动态损失缩放，但如果问题持续，可以检查其配置，确保 <code>loss_scaling</code> 相关参数是合理的。</li>
+<li>检查数据或模型初始化中是否存在数值不稳定的源头。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>“沉默的颈”：GPU 利用率不足</strong></p>
+<ul>
+<li><strong>症状</strong>: 训练可以正常运行，没有错误，但 <code>tokens/s</code> 远低于预期，通过 <code>nvidia-smi</code> 或 <code>dcgm</code> 观察到 GPU SM 利用率（GPU-Util）周期性地跌落到很低的值。</li>
+<li><strong>原因</strong>: 这通常不是计算问题，而是<strong>数据供给</strong>或<strong>CPU 瓶颈</strong>。可能是数据加载太慢、预处理太耗时，或者是 ZeRO-3 的某些 CPU 端操作成为了瓶颈。</li>
+<li><strong>调试技巧</strong>: 使用 profiler 确认 GPU 是否在等待数据。如果是，请回到 <code>chapter08</code> 优化数据加载流程。检查主进程的 CPU 使用率，如果某个核心持续 100%，可能存在瓶颈。</li>
+</ul>
+</li>
+</ol>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter08.html" class="nav-link prev">← 第 8 章：数据加载与存储格式（CPFS）— 榨干 IO 吞吐</a><a href="chapter10.html" class="nav-link next">chapter10.md — 评估：验证困惑度 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

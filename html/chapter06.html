@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第六章：多数据集动态混比——从“大锅饭”到“交响乐”</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">从零到可复现：LLM 训练实战（算法向，Lightning + DeepSpeed）—**索引**</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter01.md — 总览与可复现环境</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter03.md — 架构细节：LLaMA 风格与 8k 扩展</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter05.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Chapter 05 — 大批量训练与学习率策略</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter06.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：多数据集动态混比——从“大锅饭”到“交响乐”</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter07.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 7 章 — 优化器与数值稳定</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter08.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 8 章：数据加载与存储格式（CPFS）— 榨干 IO 吞吐</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter09.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章 — 并行与内存：Lightning + DeepSpeed 配方</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter10.md — 评估：验证困惑度</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter11.md — 端到端：从零预训练（1T tokens）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章 端到端：CPT / 继续预训练</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第 13 章：成本/时长粗估（¥）与 TCO</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter14.md — 常见问题与诊断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">chapter15.md — 附录与参考</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="_1">第六章：多数据集动态混比——从“大锅饭”到“交响乐”</h1>
+<h2 id="_2">开篇段落</h2>
+<p>在真实世界的大模型训练中，我们面对的不是单一纯净的语料库，而是一个由海量、异构数据源组成的复杂生态。这里有结构严谨的百科全书、逻辑清晰的代码仓库、深度专业的学术论文，以及包罗万但噪声巨大的网页文本。将它们简单地按固定比例混合，就像把所有食材扔进一个锅里煮“大杂烩”，虽能“喂饱”模型，却难以成就“美味”。本章将深入探讨<strong>多数据集动态混比（Dynamic Dataset Mixing）</strong>的艺术与科学。我们的目标是成为一名“数据总指挥”，将不同的数据集视作乐团中的不同声部，通过精妙的调度与编排，奏响一曲高效收敛、泛化卓越的“训练交响乐”。学完本章，你将不仅掌握温度采样、课程学习等核心技术，更能为从零预训练和 CPT 场景设计出高度定制化、目标导向的数据混比策略。</p>
+<h2 id="_3">文字论述</h2>
+<h3 id="21">2.1 混比的目标：一个多目标优化问题</h3>
+<p>数据混比的根本目标是优化模型在多种评估维度上的综合表现，这本质上是一个多目标优化问题。将这个宏大目标分解，我们关注以下三个核心且相互关联的子目标：</p>
+<ol>
+<li>
+<p><strong>提升收敛速度与最终困惑度 (Perplexity)</strong>：这是最基本的训练目标。高质量、低信息熵的数据（如精校书籍、维基百科）提供了清晰的语言模式和事实知识。在训练初期优先供给这类数据，能帮助模型快速构建起世界模型和语言结构的基础，如同为建筑打下坚实的地基，从而加速损失（Loss）的下降并达到更低的收敛点。</p>
+</li>
+<li>
+<p><strong>增强领域泛化能力 (Domain Generalization)</strong>：模型的能力不应局限于通用对话。我们需要它能写代码、读懂财报、分析法律文书。通过混入特定领域的数据（如 The Stack 用于代码，PubMed 用于生物医学），模型能学习到该领域的专业词汇（jargon）、独特的句法结构乃至隐含的推理模式。这直接决定了模型在专业应用场景的“即战力”。</p>
+</li>
+<li>
+<p><strong>提高分布鲁棒性 (Distributional Robustness)</strong>：真实世界的用户输入是不可预测的，充满了口语、拼写错误、俚语甚至多语言混杂。如果我们只用“阳春白雪”般的纯净语料训练模型，它在面对“下里巴人”式的真实输入时将非常脆弱。混入经过轻度清洗的网页文本（如 C4, RefinedWeb）等，相当于为模型提供了“噪声免疫训练”，使其对真实世界的多样化和非理想化输入有更强的适应能力，这是一种有效的正则化手段，防止模型对过于“干净”的训练数据分布产生过拟合。</p>
+</li>
+</ol>
+<p>这三个目标之间存在着内在的张力与权衡。例如，过多低质量网页数据会污染模型的知识库，拖慢收敛；而完全不使用则会损害模型的泛化和鲁棒性。动态混比的艺术，正是在训练的不同阶段，对这三个目标的优先级进行动态调整。</p>
+<h3 id="22">2.2 静态混比：一个简单但次优的基线</h3>
+<p>最直接的数据混合方式是<strong>静态混比（Static Mixing）</strong>。即在训练开始前，为每个数据集分配一个固定的采样权重，整个训练过程中这个比例保持不变。例如，一个在许多开源模型常见的静态配比可能是：</p>
+<ul>
+<li>通用网络语料 (RefinedWeb-style): 60%</li>
+<li>代码 (The Stack-style): 20%</li>
+<li>书籍 (Books): 15%</li>
+<li>学术论文 (arXiv): 5%</li>
+</ul>
+<p><strong>优点</strong>：实现简单，易于复现。数据加载逻辑清晰，只需一个加权随机采样器即可。</p>
+<p><strong>局限性（为什么它通常是次优的）</strong>：</p>
+<ul>
+<li><strong>学习效率的“木桶效应”</strong>：在训练初期，模型最需要的是高质量、结构化的信息来学习基本语法和世界知识。此时，大量相对嘈杂的网页数据如同噪音，干扰了这一过程，限制了学习效率。</li>
+<li><strong>无法匹配模型能力的发育阶段</strong>：模型的学习过程是有阶段性的。静态混比策略如同让一个从婴儿到成年的学生每天都吃同样的营养配餐，完全忽略了其在不同成长阶段对营养需求的变化。</li>
+<li><strong>知识吸收不充分</strong>：对于占比很小的数据集（如上述的学术论文），在巨大的数据流中可能被严重“稀释”。模型可能在“遗忘”从该数据中学到的知识之前，没有足够的机会再次看到它，导致对该领域的学习“浅尝辄止”。</li>
+</ul>
+<h3 id="23">2.3 动态混比核心策略：让数据供给“智能化”</h3>
+<p>为了克服静态混比的缺点，我们引入<strong>动态混比（Dynamic Mixing）</strong>，即在训练过程中根据预设的策略或模型状态，实时调整不同数据集的采样比例。</p>
+<h4 id="231-temperature-sampling">2.3.1 温度采样（Temperature Sampling）</h4>
+<p>这是一种优雅且灵活的平滑调整数据源权重分布的方法。假设我们有 $k$ 个数据集，每个数据集有一个由专家设定的基础权重 $w_i$（代表其质量或重要性），在训练的某个时刻，从数据源 $i$ 采样的概率 $p_i$ 由 softmax with temperature 公式决定：</p>
+<p>$$
+p_i(T) = \frac{e^{\log(w_i)/T}}{\sum_{j=1}^{k} e^{\log(w_j)/T}} \equiv \frac{w_i^{1/T}}{\sum_{j=1}^{k} w_j^{1/T}}
+$$</p>
+<p>其中 $T$ 是<strong>温度（Temperature）</strong>参数，它扮演着“随机性控制器”的角色：</p>
+<ul>
+<li><strong>高温度 ($T &gt; 1$)</strong>：分布得更平滑。$T \to \infty$ 时，$p_i \to 1/k$，趋向于均匀采样，鼓励模型在训练初期<strong>探索</strong>所有数据源。</li>
+<li><strong>单位温度 ($T = 1$)</strong>：$p_i \propto w_i$，采样概率正比于基础权重。</li>
+<li><strong>低温度 ($T &lt; 1$)</strong>：分布变得更尖锐。$T \to 0$ 时，概率分布趋向于“赢者通吃”，几乎所有采样都将来自权重最高的那个数据集，鼓励模型在训练后期<strong>利用</strong>最高质量的数据。</li>
+</ul>
+<p><strong>实践中的温度调度 (Temperature Scheduling)</strong>：
+我们通常不会固定温度，而是让它随着训练步数（step） <code>s</code> 变化。一个常见的策略是<strong>温度退火（Annealing）</strong>：</p>
+<ul>
+<li><strong>线性退火</strong>：$T(s) = T_{\text{initial}} - (T_{\text{initial}} - T_{\text{final}}) \cdot \frac{s}{S_{\text{total}}}$</li>
+<li><strong>余弦退火</strong>：$T(s) = T_{\text{final}} + \frac{1}{2}(T_{\text{initial}} - T_{\text{final}}) \cdot (1 + \cos(\frac{\pi s}{S_{\text{total}}}))$</li>
+</ul>
+<p><strong>Rule-of-Thumb</strong>：可以从一个较高的初始温度（如 $T_{\text{initial}}=5.0$）开始，让模型在早期广泛接触各类数据。随着训练的进行，逐步将温度退火至最终值（如 $T_{\text{final}}=1.0$ 或 $1.5$），使得数据分布逐渐向我们设定的高质量权重倾斜，进行精细打磨。</p>
+<h4 id="232-curriculum-learning">2.3.2 课程学习（Curriculum Learning）</h4>
+<p>课程学习是一种更结构化、更具解释性的动态策略。它将整个训练过程划分为几个宏观的<strong>阶段（Phase）</strong>，每个阶段有明确的数据混比方案和学习目标，模拟了人类“循序渐进”的学习模式。</p>
+<p>一个精心设计的课程学习示例如下：</p>
+<div class="codehilite"><pre><span></span><code><span class="c">     Training Progress (Tokens Seen) ──────────────────────────────</span><span class="nv">&gt;</span>
+
+<span class="c">Phase 1: Bootstrap &amp; Core Skills (0 </span><span class="nb">-</span><span class="nv">&gt;</span><span class="c"> 200B tokens)</span>
+<span class="c">|   Books: 60%</span><span class="nt">,</span><span class="c"> Wiki/Academic: 30%</span><span class="nt">,</span><span class="c"> Code: 10%</span>
+<span class="c">|   目标: 掌握语法、句法、基本事实、逻辑连贯性。用最纯净的数据构建语言模型的基础骨架。</span>
+<span class="c">&#39;</span><span class="nb">---------------------------------------------------------------------</span>
+
+<span class="c">     Phase 2: Domain Enrichment &amp; Nuance (200B </span><span class="nb">-</span><span class="nv">&gt;</span><span class="c"> 700B tokens)</span>
+<span class="c">     |   Books: 30%</span><span class="nt">,</span><span class="c"> Code: 30%</span><span class="nt">,</span><span class="c"> Wiki/Academic: 20%</span><span class="nt">,</span><span class="c"> Web</span><span class="nb">-</span><span class="c">Text (high quality): 20%</span>
+<span class="c">     |   目标: 在坚实基础上，大规模扩展专业领域知识（代码、科学），并开始接触高质量的网页语言风格。</span>
+<span class="c">     &#39;</span><span class="nb">--------------------------------------------------------------------------</span>
+
+<span class="c">          Phase 3: Robustness &amp; World Knowledge (700B </span><span class="nb">-</span><span class="nv">&gt;</span><span class="c"> 1T tokens)</span>
+<span class="c">          |   Web</span><span class="nb">-</span><span class="c">Text: 50%</span><span class="nt">,</span><span class="c"> Code: 20%</span><span class="nt">,</span><span class="c"> Books: 15%</span><span class="nt">,</span><span class="c"> Wiki/Academic: 15%</span>
+<span class="c">          |   目标: 大量接触真实世界的语料，提升鲁棒性、口语理解能力，并用海量多样化数据填充模型的“长尾知识”。</span>
+<span class="c">          &#39;</span><span class="nb">-------------------------------------------------------------------</span>
+</code></pre></div>
+
+<p><strong>Rule-of-Thumb</strong>：阶段的划分可以基于已处理的 token 总量。阶段间的过渡最好是平滑的（gradual ramp-up），例如用 5-10k 步来线性插值新旧两个阶段的配比，避免数据分布突变带来的训练冲击。</p>
+<h4 id="233">2.3.3 混合策略：课程学习 + 温度采样</h4>
+<p>在实践中，最强大的策略往往是两者的结合。我们可以设计一个课程学习的宏观框架，但在<strong>每个阶段内部</strong>，使用带有退火策略的温度采样来进一步平滑和动态调整。例如，在第二阶段，基础权重可能是 <code>{'books': 0.3, 'code': 0.3, ...}</code>，然后用一个从 $T=2.0$ 退火到 $T=1.0$ 的温度来调节采样，增加阶段内的动态性。</p>
+<h3 id="24-cpt">2.4 CPT 中的特殊考量：在“稳定”与“可塑”间行走钢丝</h3>
+<p>在<strong>继续预训练（Continued Pre-Training, CPT）</strong>中，数据混比的目标从“从零构建”转变为“定向赋能”，面临着经典的<strong>“稳定性-可塑性困境” (Stability-Plasticity Dilemma)</strong>。</p>
+<ol>
+<li><strong>可塑性 (Plasticity) / 域拉升 (Domain Uplifting)</strong>：模型需要快速吸收新领域（如法律、金融）的知识，这要求我们大量喂养新领域数据。</li>
+<li><strong>稳定性 (Stability) / 基座保真 (Base Fidelity)</strong>：模型须保持其在通用领域已经获得的强大能力，不能因为学习新知识而遗忘旧知识，即缓解“灾难性遗忘”。</li>
+</ol>
+<p>CPT 的混比策略就是在这两者之间进行权衡，通常包含两类数据：</p>
+<ul>
+<li><strong>新领域数据 (In-Domain Data)</strong>：CPT 的核心，用于实现“域拉升”。</li>
+<li><strong>基座守护数据 (Guardian/Replay Data)</strong>：少量采样自原始预训练的混合数据。这部分数据的作用就像“记忆锚点”，不断“提醒”模型其通用能力，实现“基座保真”。</li>
+</ul>
+<p><strong>不同混比的权衡</strong>:</p>
+<p>| 新/旧数据比例 | 优点                               | 缺点                                     |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">新/旧数据比例</th>
+<th style="text-align: left;">优点</th>
+<th style="text-align: left;">缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>90% / 10%</strong></td>
+<td style="text-align: left;"><strong>域拉升极快</strong>，短期内新领域 PPL 迅速下降</td>
+<td style="text-align: left;"><strong>高遗忘风险</strong>，通用能力可能显著退化</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>70% / 30%</strong></td>
+<td style="text-align: left;"><strong>推荐起点</strong>。域拉升较快，同时对通用能力有较好保护</td>
+<td style="text-align: left;">可能不是最解，需要根据评估微调</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>50% / 50%</strong></td>
+<td style="text-align: left;"><strong>基座保真性好</strong>，通用能力稳定</td>
+<td style="text-align: left;">域拉升速度较慢，需要更多训练步数才能达到目标</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rule-of-Thumb for CPT</strong>:</p>
+<ul>
+<li>以 <strong>70% 新领域 / 30% 基座守护</strong> 的比例作为稳健的出发点。</li>
+<li>CPT 的学习率调度也应配合数据混比。可以考虑一个短暂的、略高的学习率 warm-up 阶段来“激活”模型对新数据的学习，然后迅速衰减到一个较低的稳定学习率。</li>
+<li>评估时，必须同时监控<strong>新领域验证集</strong>和<strong>通用领域验证集</strong>的 PPL，以量化“域拉升”的收益和“基座遗忘”的代价。</li>
+</ul>
+<h3 id="25-on-the-fly-rebalancing">2.5 实现细节：长度分桶与 On-the-fly Rebalancing</h3>
+<p>宏观的混比策略最终要落实到每个 batch 的数据构成上。为了训练效率（减少 padding），我们通常会采用<strong>长度分桶（Length Bucketing）</strong>。这就带来了一个挑战：如何在一个遵守动态混比比例、又同时追求 packing 效率的数据载器中实现这一切？</p>
+<p>答案是 <strong>On-the-fly Rebalancing</strong>。这可以想象成一个两级采样系统：</p>
+<ol>
+<li><strong>第一级：数据集选择</strong>。数据加载器的“总指挥”在每个 step，根据当前的动态混比策略（无论是温度采样还是课程学习阶段），计算出每个数据集的实时采样概率 $p_i$。然后，它掷一个“带权重的骰子”，决定下一个 batch 的“主题”——即从哪个数据集中抽取。</li>
+<li><strong>第二级：样本选择</strong>。一旦确定了数据集（例如，“代码”），加载器就进入该数据集的内部数据池。为了效率，这个池子通常已经按序列长度分好了桶。加载器会从一个合适的长度桶中抽取足够的样本来构建一个 packed batch。</li>
+</ol>
+<p>这种“先选馆（数据集），再取书（样本）”的方式，优雅地将宏观策略与微观效率结合起来。在 <code>WebDataset</code> 这类流式数据格式中，这通常通过为每个数据集分配一组 shards，然后动态地从些 shard 流中采样来实现。</p>
+<h2 id="_4">本章小结</h2>
+<ul>
+<li><strong>核心目标</strong>：数据混比是一个多目标优化问题，旨在平衡<strong>收敛速度、领域泛化、分布鲁棒性</strong>。</li>
+<li><strong>静态 vs 动态</strong>：静态混比是简单的基线，但动态混比通过适应模型的学习阶段，能实现更高的效率和性能。</li>
+<li><strong>两大策略</strong>：<ul>
+<li><strong>温度采样</strong>：通过调度温度 $T$ 来控制采样分布的随机性，实现从“探索”到“利用”的平滑过渡。</li>
+<li><strong>课程学习</strong>：通过分阶段设定不同的混比方案和学习目标，实现结构化的、循序渐进的训练。</li>
+</ul>
+</li>
+<li><strong>CPT 的特殊性</strong>：在 CPT 中，混比的核心是在“域拉升”（可塑性）和“基座保真”（稳定性）之间取得平衡，通常通过混合新领域数据和“基座守护数据”来实现。</li>
+<li><strong>高效实现</strong>：<strong>On-the-fly Rebalancing</strong> 结合<strong>长度分桶</strong>，是实现复杂动态混比策略同时保证高训练吞吐的关键技术。</li>
+</ul>
+<h2 id="gotchas">常见阱与错误 (Gotchas)</h2>
+<ol>
+<li>
+<p><strong>数据源饥饿 (Source Starvation)</strong>：</p>
+<ul>
+<li><strong>症状</strong>：在使用低温度采样或权重差异悬殊的设置下，某个数据集的有效采样率远低于预期，甚至接近于零。</li>
+<li><strong>诊断</strong>：在训练日志中，每 N 步（如 1000 步）打印一次各个数据集实际产出的 token 数量和比例，与目标比例进行对比。</li>
+<li><strong>对策</strong>：为每个数据集设置一个<strong>最低采样率配额（min sampling ratio）</strong>，例如，强制保证任何数据集的采样概率不低于 0.5% 或 1%。</li>
+</ul>
+</li>
+<li>
+<p><strong>分布突变冲击 (Distribution Shift Shock)</strong>：</p>
+<ul>
+<li><strong>症状</strong>：在课程学习的阶段切换点，loss 曲线突然出现一个明显的尖峰 (<code>__/</code> 型)，然后才慢慢恢复。</li>
+<li><strong>诊断</strong>：观察 loss 曲线与阶段切换的 step 是否在时间上吻合。</li>
+<li><strong>对策</strong>：在阶段切换时进行<strong>平滑过渡（gradual ramp-up）</strong>，用一个窗口期（如 5k-10k 步）线性地从旧配比插值到新配，给模型一个缓冲适应期。</li>
+</ul>
+</li>
+<li>
+<p><strong>按样本数而非 Token 数混比的经典错误</strong>：</p>
+<ul>
+<li><strong>症状</strong>：模型在短文档领域（如代码片段）的能力远超预期，而在长文档领域（如书籍）的能力远低于预期。</li>
+<li><strong>诊断</strong>：计算并对比各数据集的平均样本 token 数。如果差异巨大（例如，代码平均 500 tokens，书籍平均 5000 tokens），而你按样本数 50/50 混合，那么实际的 token 比例将是 <code>(50*500) / (50*5000) = 1/10</code>，即书籍的 token 量只有代码的 10%！</li>
+<li><strong>对策</strong>：<strong>永远、永远、永远使用 token 数量作为计算混比权重和统计的黄金标准</strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>CPT 中的灾难性遗忘</strong>：</p>
+<ul>
+<li><strong>症状</strong>：新领域的验证 PPL 大幅下降，但通用领域（如 LAMBADA, Hellaswag）的 benchmark 分数断崖式下跌。</li>
+<li><strong>诊断</strong>：建立一个包含新领域和通用领域两类任务的综合评估流水线，在 CPT 过程中持续监控。</li>
+<li><strong>对策</strong>：确“基座守护数据”的比例足够（通常不低于 20%）。在评估报告中，将通用能力的变化作为一等公民指标。</li>
+</ul>
+</li>
+<li>
+<p><strong>数据加载器成为吞吐瓶颈</strong>：</p>
+<ul>
+<li><strong>症状</strong>：GPU 利用率（通过 <code>nvidia-smi</code> 或 <code>dcgm</code> 监控）周期性地下降，或者 step time 远高于预期。</li>
+<li><strong>诊断</strong>：使用 <code>torch.profiler</code> 分析训练 step，如果大量时间消耗在 <code>DataLoader</code> 的 <code>__next__</code> 或相关的数据处理函数上，说明存在瓶颈。</li>
+<li><strong>对策</strong>：简化动态采样逻辑中的 Python 计算；确保数据预处理（如 tokenization）已完全离线完成；增加数据加载的 worker 数量；使用高效的流式数据格式（如 <code>WebDataset</code>）以减少元数据开销和小文件 IO 问题。确保在 <code>LightningDataModule</code> 中正确使用了 <code>prefetching</code>。</li>
+</ul>
+</li>
+</ol>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter05.html" class="nav-link prev">← Chapter 05 — 大批量训练与学习率策略</a><a href="chapter07.html" class="nav-link next">第 7 章 — 优化器与数值稳定 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>
